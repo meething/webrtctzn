@@ -1,28 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Hello!</title>
-    
-    <!-- import the webpage's stylesheet -->
-    <link rel="stylesheet" href="/style.css">
-    
-    <!-- import the webpage's javascript file -->
-    <script src="/script.js" defer></script>
-  </head>  
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <meta name="author" content="Dan Motzenbecker" />
+    <meta
+      name="description"
+      content="Serverless WebRTC matchmaking for painless P2P"
+    />
+    <link href="images/favicon.png" rel="icon" type="image/png" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Trystero</title>
+  </head>
   <body>
-    <h1>Hi there!</h1>
-    
-    <p>
-      I'm your cool new webpage. Made with <a href="https://glitch.com">Glitch</a>!
-    </p>
+    <div id="canvas"></div>
+    <header>
+      <h1>📯 Trystero<sup>0.7.7</sup></h1>
+      <h2>Make any site multiplayer in a few lines.</h2>
+      <h2>Serverless WebRTC matchmaking for painless P2P.</h2>
 
-    <!-- include the Glitch button to show what the webpage is about and
-          to make it easier for folks to view source and remix -->
-    <div class="glitchButton" style="position:fixed;top:20px;right:20px;"></div>
-    <script src="https://button.glitch.me/button.js" defer></script>
+      <div>
+        <div>
+          <a href="https://github.com/dmotz/trystero">repo + docs</a>
+        </div>
+        <div id="room-num"></div>
+      </div>
+    </header>
+
+    <main>
+      <p>
+        Below is some code describing whatʼs happening on this site right now.
+      </p>
+
+      <p>
+        Anyone on this page will connect directly to others in real-time,
+        syncing mouse movement and clicks. (Try it, I dare you).
+      </p>
+
+      <p>
+        Trystero can connect peers via 🌊
+        <a href="https://en.wikipedia.org/wiki/BitTorrent">BitTorrent</a>, 🪐
+        <a href="https://en.wikipedia.org/wiki/InterPlanetary_File_System"
+          >IPFS</a
+        >, and 🔥 <a href="https://firebase.google.com">Firebase</a>.
+      </p>
+
+      <p id="peer-info">
+        Right now youʼre the only person with the page open, but you can cheat
+        and just open this URL in another tab to see what itʼs like with others.
+      </p>
+
+      <hr />
+
+      <p>Hereʼs how you use it.</p>
+
+      <p>Join a room with an app ID and a room ID:</p>
+
+      <pre><code>import {joinRoom} from 'trystero'
+const room = joinRoom({appId: 'trystero-lounge'}, '101')
+</code></pre>
+
+      <p>
+        Listen for peers joining and leaving (leaving out some boring UI code):
+      </p>
+
+      <pre><code>room.onPeerJoin(addCursor)
+room.onPeerLeave(removeCursor)
+</code></pre>
+
+      <p>Make some actions to send and respond to:</p>
+
+      <pre><code>const [sendMove, getMove] = room.makeAction('mouseMove')
+const [sendClick, getClick] = room.makeAction('click')
+</code></pre>
+
+      <p>Broadcast your actions to other peers:</p>
+
+      <pre><code>window.addEventListener('mousemove', e => sendMove([e.clientX, e.clientY]))
+window.addEventListener('click', () => sendClick(randomFruit())
+</code></pre>
+
+      <p>And listen for when peers send theirs:</p>
+
+      <pre><code>getMove(([x, y], peerId) => setCursorPosition(peerId, x, y))
+getClick((fruit, peerId) => dropFruitFrom(peerId, fruit))
+</code></pre>
+
+      <p>
+        Thatʼs all this page is doing, but you can do much more like audio/video
+        streams and binary data (like files).
+        <a href="https://github.com/dmotz/trystero#readme"
+          >Peruse the readme to see how.</a
+        >
+      </p>
+
+      <hr />
+
+      <p>
+        -o-&lt;&lt;| <a href="https://oxism.com">Dan Motzenbecker</a> |
+        <a href="https://github.com/dmotz">github/dmotz</a>
+      </p>
+    </main>
+     <script type="module" src="./script.js"></script>
+     <script type="module" src="https://cdn.jsdelivr.net/npm/trystero@latest/src/index.js/+esm"></script>
   </body>
 </html>
