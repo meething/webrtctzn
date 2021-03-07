@@ -21,6 +21,7 @@
     <title>Trystero</title>
   </head>
   <body>
+    <script src="https://unpkg.com/reun" async onload="reun.require('./script.js')"></script>
     <div id="canvas"></div>
     <header>
       <h1>📯 Trystero<sup>0.7.7</sup></h1>
@@ -109,7 +110,5 @@ getClick((fruit, peerId) => dropFruitFrom(peerId, fruit))
         <a href="https://github.com/dmotz">github/dmotz</a>
       </p>
     </main>
-     <script type="module" src="./script.js"></script>
-     <script type="module" src="https://cdn.jsdelivr.net/npm/trystero@latest/src/index.js/+esm"></script>
   </body>
 </html>
