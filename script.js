@@ -1,4 +1,4 @@
-import {joinRoom, selfId} from 'https://cdn.skypack.dev/trystero'
+import {joinRoom, selfId} from 'https://cdn.skypack.dev/trystero@0.7.8'
 
 var start = function() {
 
@@ -35,6 +35,7 @@ var start = function() {
   let room;
   let sendMove;
   let sendClick;
+  let sendChat;
 
   init(99);
   document.documentElement.className = "ready";
@@ -71,12 +72,17 @@ var start = function() {
     }
   });
 
+  window.chat = function(msg){
+    sendChat(msg);
+  }
+  
   async function init(n) {
     const ns = "room" + n;
     const members = 1;
 
     let getMove;
     let getClick;
+    let getChat;
 
     if (members === roomCap) {
       return init(n + 1);
@@ -85,12 +91,14 @@ var start = function() {
     room = joinRoom(config, ns);
     [sendMove, getMove] = room.makeAction("mouseMove");
     [sendClick, getClick] = room.makeAction("click");
+    [sendChat, getChat] = room.makeAction("chat");
 
     byId("room-num").innerText = "room #" + n;
     room.onPeerJoin(addCursor);
     room.onPeerLeave(removeCursor);
     getMove(moveCursor);
     getClick(dropFruit);
+    getChat(console.log);
   }
 
   function moveCursor([x, y], id) {
