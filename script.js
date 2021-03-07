@@ -1,6 +1,7 @@
 console.log('hello script');
 var init = function() {
-  var { joinRoom, seldId } = require("trystero");
+  
+  
 
   const byId = document.getElementById.bind(document);
   const canvas = byId("canvas");
