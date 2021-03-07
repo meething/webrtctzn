@@ -36,7 +36,7 @@ var start = function() {
   let sendMove;
   let sendClick;
 
-  init(49);
+  init(99);
   document.documentElement.className = "ready";
   addCursor(selfId, true);
 
