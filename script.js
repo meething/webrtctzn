@@ -75,12 +75,11 @@ var start = function() {
     }
   });
 
-  var chatx = function(msg){
+  window.chat = function(msg){
     updateChat(msg, selfId);
     if (room) sendChat(msg);
     return;
   }
-  window.chat = chatx;
   chatbox.addEventListener('keypress', function(e){
     if(e.keyCode == 13){
       window.chat(chatbox.value);
@@ -88,8 +87,8 @@ var start = function() {
       return false;
     }
   });
-  chatbutton.onclick = function({
-    chat(chatbox.value);
+  chatbutton.addEventListener("click", () => {
+    window.chat(chatbox.value);
     chatbox.value = "";
     return false;
   });
@@ -167,7 +166,7 @@ var start = function() {
   
   function updateChat(msg, id){
     //console.log(msg, id);
-    chat.innerHTML += id + ":" + msg + "<br/>";
+    chat.innerHTML = id + ":" + msg + "<br/>" + chat.innerHTML;
   }
 
   function dropFruit([fruit, x, y]) {

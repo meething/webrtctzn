@@ -175,10 +175,18 @@ pre {
   animation: drop 3s ease-in forwards;
 }
 
+.chatp {
+    display: inline-block;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 22.6em;
+    line-height: 1.2em;
+    text-align: justify;
+}
 .chatbox {
   float: left;
   width: 90%;
-  height: 30px
+  height: 30px;
 }
 .chatbutton {
   float: right;
