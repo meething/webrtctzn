@@ -1,12 +1,12 @@
 import {joinRoom, selfId} from 'https://cdn.skypack.dev/trystero'
 
-var init = function() {
+var start = function() {
 
   const byId = document.getElementById.bind(document);
   const canvas = byId("canvas");
   const peerInfo = byId("peer-info");
   const noPeersCopy = peerInfo.innerText;
-  const config = { appId: "trystero-94db3" };
+  const config = { appId: "trystero-glitch" };
   const cursors = {};
   const roomCap = 33;
   const fruits = [
@@ -152,4 +152,4 @@ var init = function() {
 };
 
 
-init();
+start();
