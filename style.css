@@ -81,7 +81,7 @@ h1 {
   text-transform: lowercase;
   display: inline-block;
   position: absolute;
-  transform: rotate(-270deg) translateX(-19%) translateY(57%);
+  transform: rotate(-270deg) translateX(-19%) translateY(44%);
   transform-origin: 0;
 }
 
