@@ -79,7 +79,14 @@ var start = function() {
     if (room) sendChat(msg);
     return;
   }
-  chatbox
+  chatbox.addEventListener('keypress', function(e){
+    if(e.keyCode == 13){
+      console.log(e);
+      window.chat(chatbox.value);
+      chatbox.value = "";
+      return false;
+    }
+  });
   
   async function init(n) {
     const ns = "room" + n;
