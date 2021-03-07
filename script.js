@@ -1,4 +1,6 @@
-console.log('hello script');
+import {joinRoom, selfId} from 'https://cdn.skypack.dev/trystero'
+
+
 var init = function() {
   
   
@@ -151,5 +153,3 @@ var init = function() {
     setTimeout(() => canvas.removeChild(el), 3000);
   }
 };
-
-init();
