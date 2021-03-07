@@ -175,6 +175,18 @@ pre {
   animation: drop 3s ease-in forwards;
 }
 
+.chatbox {
+  float: left;
+  width: 90%;
+  height: 30px
+}
+.chatbutton {
+  float: right;
+  width: 10%;
+  height: 30px
+}
+
+
 @keyframes drop {
   from {
     transform: translateY(0);

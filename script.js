@@ -7,6 +7,7 @@ var start = function() {
   const peerInfo = byId("peer-info");
   const chat = byId("chat");
   const chatbox = byId("chatbox");
+  const chatbutton = byId("chatbutton");
   const noPeersCopy = peerInfo.innerText;
   const config = { appId: "trystero-glitch" };
   const cursors = {};
@@ -74,18 +75,23 @@ var start = function() {
     }
   });
 
-  window.chat = function(msg){
+  var chatx = function(msg){
     updateChat(msg, selfId);
     if (room) sendChat(msg);
     return;
   }
+  window.chat = chatx;
   chatbox.addEventListener('keypress', function(e){
     if(e.keyCode == 13){
-      console.log(e);
       window.chat(chatbox.value);
       chatbox.value = "";
       return false;
     }
+  });
+  chatbutton.onclick = function({
+    chat(chatbox.value);
+    chatbox.value = "";
+    return false;
   });
   
   async function init(n) {
@@ -160,7 +166,7 @@ var start = function() {
   }
   
   function updateChat(msg, id){
-    console.log(msg, id);
+    //console.log(msg, id);
     chat.innerHTML += id + ":" + msg + "<br/>";
   }
 
