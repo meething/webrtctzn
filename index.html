@@ -19,10 +19,13 @@
     />
     <link rel="stylesheet" href="style.css" />
     <title>Trystero</title>
+    <script type="module">
+      import {joinRoom, roomId} from 'https://cdn.skypack.dev/pin/trystero@v0.7.7-830bdVO9aU2yTo9aCPgx/mode=imports,min/optimized/trystero.js'
+    </script>
+    <script src="./script.js" defer async></script>
   </head>
   <body>
     
-    <script src="https://cdn.jsdelivr.net/npm/browser-require@0.1.6/lib/browser-require.min.js" async onload="console.log('loader loaded')"></script>
     <div id="canvas"></div>
     <header>
       <h1>📯 Trystero<sup>0.7.7</sup></h1>
