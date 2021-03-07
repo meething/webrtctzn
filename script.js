@@ -1,9 +1,6 @@
 import {joinRoom, selfId} from 'https://cdn.skypack.dev/trystero'
 
-
 var init = function() {
-  
-  
 
   const byId = document.getElementById.bind(document);
   const canvas = byId("canvas");
@@ -77,7 +74,7 @@ var init = function() {
 
   async function init(n) {
     const ns = "room" + n;
-    const members = (await getOccupants(config, ns)).length;
+    const members = 1;
 
     let getMove;
     let getClick;
@@ -113,7 +110,7 @@ var init = function() {
 
     el.className = `cursor${isSelf ? " self" : ""}`;
     el.style.left = el.style.top = "-99px";
-    img.src = "images/hand.png";
+    img.src = "https://github.com/dmotz/trystero/raw/main/docs/images/hand.png";
     txt.innerText = isSelf ? "you" : id.slice(0, 4);
     el.appendChild(img);
     el.appendChild(txt);
@@ -153,3 +150,6 @@ var init = function() {
     setTimeout(() => canvas.removeChild(el), 3000);
   }
 };
+
+
+init();
