@@ -5,6 +5,7 @@ var start = function() {
   const byId = document.getElementById.bind(document);
   const canvas = byId("canvas");
   const peerInfo = byId("peer-info");
+  const chat = byId("chat");
   const noPeersCopy = peerInfo.innerText;
   const config = { appId: "trystero-glitch" };
   const cursors = {};
@@ -74,6 +75,7 @@ var start = function() {
 
   window.chat = function(msg){
     sendChat(msg);
+    return;
   }
   
   async function init(n) {
@@ -98,7 +100,7 @@ var start = function() {
     room.onPeerLeave(removeCursor);
     getMove(moveCursor);
     getClick(dropFruit);
-    getChat(console.log);
+    getChat(updateChat);
   }
 
   function moveCursor([x, y], id) {
@@ -145,6 +147,11 @@ var start = function() {
           count === 1 ? " is" : "s are"
         } connected with you. Send them some fruit.`
       : noPeersCopy;
+  }
+  
+  function updateChat(msg, id){
+    console.log(msg, id);
+    chat.innerHTML = id + ":" + msg;
   }
 
   function dropFruit([fruit, x, y]) {
