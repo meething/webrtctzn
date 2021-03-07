@@ -6,6 +6,7 @@ var start = function() {
   const canvas = byId("canvas");
   const peerInfo = byId("peer-info");
   const chat = byId("chat");
+  const chatbox = byId("chatbox");
   const noPeersCopy = peerInfo.innerText;
   const config = { appId: "trystero-glitch" };
   const cursors = {};
@@ -74,9 +75,11 @@ var start = function() {
   });
 
   window.chat = function(msg){
-    sendChat(msg);
+    updateChat(msg, selfId);
+    if (room) sendChat(msg);
     return;
   }
+  chatbox
   
   async function init(n) {
     const ns = "room" + n;
@@ -151,7 +154,7 @@ var start = function() {
   
   function updateChat(msg, id){
     console.log(msg, id);
-    chat.innerHTML = id + ":" + msg;
+    chat.innerHTML += id + ":" + msg + "<br/>";
   }
 
   function dropFruit([fruit, x, y]) {
