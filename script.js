@@ -51,7 +51,6 @@ var start = function() {
 
   window.addEventListener("click", () => {
     const payload = [randomFruit(), mouseX, mouseY];
-
     dropFruit(payload);
     if (room) {
       sendClick(payload);
