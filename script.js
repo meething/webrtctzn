@@ -114,6 +114,7 @@ var start = function() {
     byId("room-num").innerText = "room #" + n;
     room.onPeerJoin(addCursor);
     room.onPeerLeave(removeCursor);
+    room.onPeerStream(console.log());
     getMove(moveCursor);
     getClick(dropFruit);
     getChat(updateChat);
