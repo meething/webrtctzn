@@ -114,7 +114,7 @@ var start = function() {
     byId("room-num").innerText = "room #" + n;
     room.onPeerJoin(addCursor);
     room.onPeerLeave(removeCursor);
-    room.onPeerStream(console.log());
+    room.onPeerStream(handleStream);
     getMove(moveCursor);
     getClick(dropFruit);
     getChat(updateChat);
@@ -133,6 +133,8 @@ var start = function() {
     const el = document.createElement("div");
     const img = document.createElement("img");
     const txt = document.createElement("p");
+    const video = document.createElement("video");
+    video.id = id;
 
     el.className = `cursor${isSelf ? " self" : ""}`;
     el.style.left = el.style.top = "-99px";
@@ -140,6 +142,7 @@ var start = function() {
     txt.innerText = isSelf ? "you" : id.slice(0, 4);
     el.appendChild(img);
     el.appendChild(txt);
+    el.appendChild(video);
     canvas.appendChild(el);
     cursors[id] = el;
 
@@ -179,6 +182,28 @@ var start = function() {
     el.style.top = y * window.innerHeight + "px";
     canvas.appendChild(el);
     setTimeout(() => canvas.removeChild(el), 3000);
+  }
+  
+  var talking = false;
+  window.addMedia = async function(){
+    if (talking) { 
+      talking = false; 
+      return;
+      
+    } else {
+      room.addStream(
+        await navigator.mediaDevices.getUserMedia({audio: true, video: false})
+      )
+      talking = true;
+    }
+    room.addStream(
+      await navigator.mediaDevices.getUserMedia({audio: true, video: false})
+    )
+  }
+  
+  function handleStream(stream,id){
+    const peerVideo = byId(id);
+     peerVideo.srcObject = stream;
   }
 };
 

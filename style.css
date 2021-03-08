@@ -203,6 +203,12 @@ pre {
   height: 30px;
   font-family: 'Space Mono', monospace;
 }
+.audiobox {
+  float: right;
+  width: 10%;
+  height: 30px;
+  font-family: 'Space Mono', monospace;
+}
 
 
 @keyframes drop {
