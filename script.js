@@ -39,11 +39,13 @@ var start = function() {
   let sendMove;
   let sendClick;
   let sendChat;
-  let sendAudio;
+  let sendPeer;
   
   var streams = [];
   // sidepeer for calls only
-  var peer = new Peer(selfId); 
+  var peerId = selfId+"_call";
+  var peer = new Peer(peerId); 
+  peer.on('call',handleCall);
   
   init(99);
   document.documentElement.className = "ready";
@@ -106,7 +108,7 @@ var start = function() {
     let getMove;
     let getClick;
     let getChat;
-    let getAudio;
+    let getPeer;
 
     if (members === roomCap) {
       return init(n + 1);
@@ -118,7 +120,7 @@ var start = function() {
     [sendMove, getMove] = room.makeAction("mouseMove");
     [sendClick, getClick] = room.makeAction("click");
     [sendChat, getChat] = room.makeAction("chat");
-    [sendAudio, getAudio] = room.makeAction("audio");
+    [sendPeer, getPeer] = room.makeAction("peer");
 
     byId("room-num").innerText = "room #" + n;
     room.onPeerJoin(addCursor);
@@ -126,7 +128,7 @@ var start = function() {
     getMove(moveCursor);
     getClick(dropFruit);
     getChat(updateChat);
-    getAudio(handleAudio);
+    getPeer(handlePeer);
   }
 
   function moveCursor([x, y], id) {
@@ -212,14 +214,52 @@ var start = function() {
     } else {
       localStream = await navigator.mediaDevices.getUserMedia({audio: true, video: false});
       console.log('ship out',selfId, localStream)
-      sendAudio({ id: selfId})
+      sendPeer({ id: selfId})
       byId('audiobox').innerHTML  = 'MUTE';
     }
   }
   
-  var handleAudio = function(data,id){
+  function handlePeer(data,id){
     console.log('audio reflection received', id, data);
+    var target = byId("vid_"+id);
+    if (!target) { 
+        console.log('we dont know this guy!')
+    } else {
+      
+      // Call them
+      var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+      getUserMedia({video: true, audio: true}, function(stream) {
+        var call = peer.call(id, stream);
+        call.on('stream', function(remoteStream) {
+          // Show stream in some video/canvas element.
+          console.log('got call stream from',id)
+          var target = byId("vid_"+id);
+          target.srcObject = remoteStream;
+          target.play();
+        });
+      }, function(err) {
+        console.log('Failed to get local stream' ,err);
+      });
+      
+      
+    }
   }
+  
+  function handleCall(call){
+    var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+      getUserMedia({video: true, audio: true}, function(stream) {
+        call.answer(stream); // Answer the call with an A/V stream.
+        call.on('stream', function(remoteStream) {
+          // Show stream in some video/canvas element.
+          console.log('got answer stream from',call.peer);
+          var target = byId("vid_"+call.peer);
+          target.srcObject = remoteStream;
+          target.play();
+        });
+      }, function(err) {
+        console.log('Failed to get local stream' ,err);
+      });    
+  }  
   
  
     
