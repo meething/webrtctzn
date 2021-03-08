@@ -1,7 +1,5 @@
 import {joinRoom, selfId} from 'https://cdn.skypack.dev/trystero@0.7.8'
 
-window.joinRoom = joinRoom;
-
 var start = function() {
 
   const byId = document.getElementById.bind(document);
@@ -113,6 +111,8 @@ var start = function() {
     }
 
     room = joinRoom(config, ns);
+    window.room = room;
+    window.self = selfId;
     [sendMove, getMove] = room.makeAction("mouseMove");
     [sendClick, getClick] = room.makeAction("click");
     [sendChat, getChat] = room.makeAction("chat");
