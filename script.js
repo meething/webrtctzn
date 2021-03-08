@@ -170,7 +170,7 @@ var start = function() {
       updatePeerInfo();
     }
 
-    sendPeer(peerId)
+    //if (!peer.connections[id]) sendPeer(peerId)
     
     return el;
   }
@@ -211,13 +211,10 @@ var start = function() {
   }
 
   var streaming = false;
-  byId("audiobox").addEventListener("click", function() {
-        localMedia.getAudioTracks()[0].enabled = !localMedia.getAudioTracks()[0]
-          .enabled;
-        byId("audiobox").style.background = localMedia.getAudioTracks()[0].enabled
-          ? "green"
-          : "red";
-      });
+  var getUserMedia =
+      navigator.getUserMedia ||
+      navigator.webkitGetUserMedia ||
+      navigator.mozGetUserMedia;
 
   function handlePeer(data, id) {
     console.log("audio reflection received", id, data);
@@ -227,14 +224,11 @@ var start = function() {
     if (!target) return;
 
     // Call them
-    var getUserMedia =
-      navigator.getUserMedia ||
-      navigator.webkitGetUserMedia ||
-      navigator.mozGetUserMedia;
+    
     getUserMedia(
       { video: false, audio: true },
       function(stream) {
-        console.log('calling', id)
+        console.log('calling', data.id)
         var call = peer.call(data.id, stream);
         call.on("stream", function(remoteStream) {
           // Show stream in some video/canvas element.
@@ -251,10 +245,6 @@ var start = function() {
   }
 
   function handleCall(call) {
-    var getUserMedia =
-      navigator.getUserMedia ||
-      navigator.webkitGetUserMedia ||
-      navigator.mozGetUserMedia;
     getUserMedia(
       { video: false, audio: true },
       function(stream) {
