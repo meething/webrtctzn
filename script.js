@@ -119,8 +119,8 @@ var start = function() {
     byId("room-num").innerText = "room #" + n;
     room.onPeerJoin(addCursor);
     room.onPeerLeave(removeCursor);
-    //room.onPeerStream(handleStream);
-    room.onPeerStream((stream, id) => console.log(`got stream from ${id}`, stream));
+    room.onPeerStream(handleStream);
+    //room.onPeerStream((stream, id) => console.log(`got stream from ${id}`, stream));
     getMove(moveCursor);
     getClick(dropFruit);
     getChat(updateChat);
@@ -216,7 +216,7 @@ var start = function() {
     }
   }
   
-  function handleStream(stream,id){
+  async function handleStream(stream,id){
     console.log('got stream', id, stream);
     streams[id] = JSON.parse(stream.stream);
     const peerVideo = byId(id);
