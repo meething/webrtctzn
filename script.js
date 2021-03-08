@@ -1,7 +1,6 @@
-import {joinRoom, selfId} from 'https://cdn.skypack.dev/trystero@0.7.8'
+import { joinRoom, selfId } from "https://cdn.skypack.dev/trystero@0.7.8";
 
 var start = function() {
-
   const byId = document.getElementById.bind(document);
   const canvas = byId("canvas");
   const peerInfo = byId("peer-info");
@@ -40,13 +39,20 @@ var start = function() {
   let sendClick;
   let sendChat;
   let sendPeer;
-  
+
   var streams = [];
   // sidepeer for calls only
-  var peerId = selfId+"_call";
-  var peer = new Peer(peerId); 
-  peer.on('call',handleCall);
+  var peerId = selfId + "_call";
+  var peer = new Peer(peerId);
+  peer.on("call", handleCall);
+
   
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  if (!urlParams.has("room")) { init()
+  } else {
+                                
+  }  
   init(99);
   document.documentElement.className = "ready";
   addCursor(selfId, true);
@@ -82,14 +88,14 @@ var start = function() {
     }
   });
 
-  window.chat = function(msg){
+  window.chat = function(msg) {
     if (!msg || msg.length < 1) return;
     updateChat(msg, selfId);
     if (room) sendChat(msg);
     return;
-  }
-  chatbox.addEventListener('keypress', function(e){
-    if(e.keyCode == 13){
+  };
+  chatbox.addEventListener("keypress", function(e) {
+    if (e.keyCode == 13) {
       window.chat(chatbox.value);
       chatbox.value = "";
       return false;
@@ -100,7 +106,7 @@ var start = function() {
     chatbox.value = "";
     return false;
   });
-  
+
   async function init(n) {
     const ns = "room" + n;
     const members = 1;
@@ -183,8 +189,8 @@ var start = function() {
         } connected with you. Send them some fruit.`
       : noPeersCopy;
   }
-  
-  function updateChat(msg, id){
+
+  function updateChat(msg, id) {
     //console.log(msg, id);
     chat.innerHTML = id + ":" + msg + "<br/>" + chat.innerHTML;
   }
@@ -198,73 +204,81 @@ var start = function() {
     canvas.appendChild(el);
     setTimeout(() => canvas.removeChild(el), 3000);
   }
-  
+
   var localStream = false;
-  window.addMedia = async function(){
-    if (localStream) { 
+  window.addMedia = async function() {
+    if (localStream) {
       var tracks = localStream.getTracks();
       tracks.forEach(function(track) {
         track.stop();
       });
-      console.log('stop audio');
-      localStream = null; 
-      byId('audiobox').innerHTML  = 'TALK';
+      console.log("stop audio");
+      localStream = null;
+      byId("audiobox").innerHTML = "TALK";
       return;
-      
     } else {
-      localStream = await navigator.mediaDevices.getUserMedia({audio: true, video: false});
-      console.log('ship out',selfId, localStream)
-      sendPeer({ id: selfId})
-      byId('audiobox').innerHTML  = 'MUTE';
-    }
-  }
-  
-  function handlePeer(data,id){
-    console.log('audio reflection received', id, data);
-    var target = byId("vid_"+id);
-    if (!target) { 
-        console.log('we dont know this guy!')
-    } else {
-      
-      // Call them
-      var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-      getUserMedia({video: true, audio: true}, function(stream) {
-        var call = peer.call(id, stream);
-        call.on('stream', function(remoteStream) {
-          // Show stream in some video/canvas element.
-          console.log('got call stream from',id)
-          var target = byId("vid_"+id);
-          target.srcObject = remoteStream;
-          target.play();
-        });
-      }, function(err) {
-        console.log('Failed to get local stream' ,err);
+      localStream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+        video: false
       });
-      
-      
+      console.log("ship out", selfId, localStream);
+      sendPeer({ id: peerId });
+      byId("audiobox").innerHTML = "MUTE";
     }
-  }
-  
-  function handleCall(call){
-    var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-      getUserMedia({video: true, audio: true}, function(stream) {
-        call.answer(stream); // Answer the call with an A/V stream.
-        call.on('stream', function(remoteStream) {
+  };
+
+  function handlePeer(data, id) {
+    console.log("audio reflection received", id, data);
+    var target = byId("vid_" + id);
+    console.log("media for", target);
+    if (!target) return;
+
+    // Call them
+    var getUserMedia =
+      navigator.getUserMedia ||
+      navigator.webkitGetUserMedia ||
+      navigator.mozGetUserMedia;
+    getUserMedia(
+      { video: false, audio: true },
+      function(stream) {
+        console.log('calling', id)
+        var call = peer.call(data.id, stream);
+        call.on("stream", function(remoteStream) {
           // Show stream in some video/canvas element.
-          console.log('got answer stream from',call.peer);
-          var target = byId("vid_"+call.peer);
+          console.log("got call stream from", id);
+          var target = byId("vid_" + id);
           target.srcObject = remoteStream;
           target.play();
         });
-      }, function(err) {
-        console.log('Failed to get local stream' ,err);
-      });    
-  }  
-  
- 
-    
-   
-}
+      },
+      function(err) {
+        console.log("Failed to get local stream", err);
+      }
+    );
+  }
 
+  function handleCall(call) {
+    var getUserMedia =
+      navigator.getUserMedia ||
+      navigator.webkitGetUserMedia ||
+      navigator.mozGetUserMedia;
+    getUserMedia(
+      { video: false, audio: true },
+      function(stream) {
+        call.answer(stream); // Answer the call with an A/V stream.
+        call.on("stream", function(remoteStream) {
+          // Show stream in some video/canvas element.
+          console.log("got answer stream from", call.peer);
+          var target = byId("vid_" + call.peer);
+          target.srcObject = remoteStream;
+          target.play();
+        });
+      },
+      function(err) {
+        console.log("Failed to get local stream", err);
+      }
+    );
+  }
+};
 
 start();
