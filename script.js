@@ -39,6 +39,8 @@ var start = function() {
   let sendMove;
   let sendClick;
   let sendChat;
+  
+  var streams = [];
 
   init(99);
   document.documentElement.className = "ready";
@@ -157,6 +159,7 @@ var start = function() {
     if (cursors[id]) {
       canvas.removeChild(cursors[id]);
     }
+    room.removeStream(streams[id], id);
     updatePeerInfo();
   }
 
@@ -187,6 +190,7 @@ var start = function() {
   var talking = false;
   window.addMedia = async function(){
     if (talking) { 
+      console.log('stop audio');
       talking = false; 
       return;
       
@@ -194,16 +198,17 @@ var start = function() {
       room.addStream(
         await navigator.mediaDevices.getUserMedia({audio: true, video: false})
       )
+      console.log('start audio');
       talking = true;
     }
-    room.addStream(
-      await navigator.mediaDevices.getUserMedia({audio: true, video: false})
-    )
   }
   
   function handleStream(stream,id){
+    streams[id] = stream;
+    console.log('got stream', id);
     const peerVideo = byId(id);
-     peerVideo.srcObject = stream;
+    console.log('target',peerVideo);
+    peerVideo.srcObject = stream;
   }
 };
 
