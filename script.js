@@ -46,14 +46,15 @@ var start = function() {
   var peer = new Peer(peerId);
   peer.on("call", handleCall);
 
-  
+  // Room Selector
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  if (!urlParams.has("room")) { init()
+  if (urlParams.has("room")) { 
+    init(urlParams.get("room"))
   } else {
-                                
+    init(99);                            
   }  
-  init(99);
+  
   document.documentElement.className = "ready";
   addCursor(selfId, true);
 
@@ -205,23 +206,19 @@ var start = function() {
     setTimeout(() => canvas.removeChild(el), 3000);
   }
 
-  var localStream = false;
+  var streaming = false;
   window.addMedia = async function() {
-    if (localStream) {
-      var tracks = localStream.getTracks();
-      tracks.forEach(function(track) {
-        track.stop();
-      });
+    if (streaming) {
+      console.log('we are connected',peer.connections);
+      peer.destroy();
+      peer = new Peer(peerId);
       console.log("stop audio");
-      localStream = null;
+      streaming = null;
       byId("audiobox").innerHTML = "TALK";
       return;
     } else {
-      localStream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: false
-      });
-      console.log("ship out", selfId, localStream);
+      streaming = true;
+      console.log("ask out as", selfId);
       sendPeer({ id: peerId });
       byId("audiobox").innerHTML = "MUTE";
     }
