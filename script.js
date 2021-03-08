@@ -1,5 +1,7 @@
 import {joinRoom, selfId} from 'https://cdn.skypack.dev/trystero@0.7.8'
 
+window.joinRoom = joinRoom;
+
 var start = function() {
 
   const byId = document.getElementById.bind(document);
