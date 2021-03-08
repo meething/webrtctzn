@@ -76,6 +76,7 @@ var start = function() {
   });
 
   window.chat = function(msg){
+    if (!msg || msg.length < 1) return;
     updateChat(msg, selfId);
     if (room) sendChat(msg);
     return;

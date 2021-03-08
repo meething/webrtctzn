@@ -41,10 +41,10 @@ body {
 
 header {
   margin-top: 2.4rem;
-  margin-bottom: 6rem;
+  margin-bottom: 2.4rem;
   border-top: 10px solid #fff;
   border-bottom: 10px solid #fff;
-  padding: 3rem 0;
+  padding: 1rem 0;
 }
 
 header > div {
@@ -186,6 +186,7 @@ pre {
     max-height: 22.6em;
     line-height: 1.2em;
     text-align: justify;
+    margin-top: 16px;
 }
 .chatbox {
   float: left;
