@@ -42,7 +42,9 @@ var start = function() {
   let sendAudio;
   
   var streams = [];
-
+  // sidepeer for calls only
+  var peer = new Peer(selfId); 
+  
   init(99);
   document.documentElement.className = "ready";
   addCursor(selfId, true);
@@ -121,8 +123,6 @@ var start = function() {
     byId("room-num").innerText = "room #" + n;
     room.onPeerJoin(addCursor);
     room.onPeerLeave(removeCursor);
-    room.onPeerStream(handleStream);
-    //room.onPeerStream((stream, id) => console.log(`got stream from ${id}`, stream));
     getMove(moveCursor);
     getClick(dropFruit);
     getChat(updateChat);
@@ -143,7 +143,7 @@ var start = function() {
     const img = document.createElement("img");
     const txt = document.createElement("p");
     const video = document.createElement("video");
-    video.id = id;
+    video.id = "vid_" + id;
 
     el.className = `cursor${isSelf ? " self" : ""}`;
     el.style.left = el.style.top = "-99px";
@@ -218,12 +218,56 @@ var start = function() {
     }
   }
   
-  async function handleStream(stream,id){
+  var localStream = false;
+  async function handleStream(id){
     console.log('got stream', id, stream);
-    streams[id] = JSON.parse(stream.stream);
-    const peerVideo = byId(id);
-    console.log('target',peerVideo);
-    peerVideo.srcObject = streams[id];
+    var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    if (!localStream){
+      getUserMedia({video: true, audio: true}, function(stream) {
+        localStream = stream;
+        var call = peer.call(id, stream);
+        call.on('stream', function(remoteStream) {
+          // Show stream in some video/canvas element.
+          var target = byId("vid_"+id);
+          target.srcObject = remoteStream;
+        });
+      }, function(err) {
+        console.log('Failed to get local stream' ,err);
+      });
+      
+    } else {
+      var call = peer.call(id, localStream);
+        call.on('stream', function(remoteStream) {
+          // Show stream in some video/canvas element.
+          var target = byId("vid_"+id);
+          target.srcObject = remoteStream;
+        });
+    }
+  }
+  
+  peer.on('call', function(call) {
+    if (!localStream){
+        getUserMedia({video: true, audio: true}, function(stream) {
+          call.answer(stream); // Answer the call with an A/V stream.
+          call.on('stream', function(remoteStream) {
+            // Show stream in some video/canvas element.
+          });
+        }, function(err) {
+          console.log('Failed to get local stream' ,err);
+        });
+    } else {
+        call.answer(localStream); // Answer the call with an A/V stream.
+          call.on('stream', function(remoteStream) {
+            /var target = byId("vid_"+id);
+          target.srcObject = remoteStream;
+          });
+    }
+  });
+    
+    
+    
+    
+   
   }
 };
 
