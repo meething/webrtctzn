@@ -159,7 +159,10 @@ var start = function() {
     if (cursors[id]) {
       canvas.removeChild(cursors[id]);
     }
-    room.removeStream(streams[id], id);
+    if (streams[id]) {
+      room.removeStream(streams[id], id);
+      streams[id] = false;
+    }
     updatePeerInfo();
   }
 
@@ -190,16 +193,20 @@ var start = function() {
   var talking = false;
   window.addMedia = async function(){
     if (talking) { 
+      var tracks = talking.getTracks();
+      tracks.forEach(function(track) {
+        track.stop();
+      });
       console.log('stop audio');
-      talking = false; 
+      talking = null; 
+      byId('audiobox').innerHTML  = 'TALK';
       return;
       
     } else {
-      room.addStream(
-        await navigator.mediaDevices.getUserMedia({audio: true, video: false})
-      )
+      talking = await navigator.mediaDevices.getUserMedia({audio: true, video: false});
+      room.addStream(talking);
       console.log('start audio');
-      talking = true;
+      byId('audiobox').innerHTML  = 'MUTE';
     }
   }
   
