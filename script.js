@@ -44,7 +44,6 @@ var start = function() {
   // sidepeer for calls only
   var peerId = selfId + "_call";
   var peer = new Peer(peerId);
-  peer.on("call", handleCall);
 
   // Room Selector
   const queryString = window.location.search;
@@ -127,7 +126,6 @@ var start = function() {
     [sendMove, getMove] = room.makeAction("mouseMove");
     [sendClick, getClick] = room.makeAction("click");
     [sendChat, getChat] = room.makeAction("chat");
-    [sendPeer, getPeer] = room.makeAction("peer");
 
     byId("room-num").innerText = "room #" + n;
     room.onPeerJoin(addCursor);
@@ -135,8 +133,6 @@ var start = function() {
     getMove(moveCursor);
     getClick(dropFruit);
     getChat(updateChat);
-    getPeer(handlePeer);
-    
     
   }
 
@@ -169,8 +165,6 @@ var start = function() {
     if (!isSelf) {
       updatePeerInfo();
     }
-
-    //if (!peer.connections[id]) sendPeer(peerId)
     
     return el;
   }
@@ -210,58 +204,6 @@ var start = function() {
     setTimeout(() => canvas.removeChild(el), 3000);
   }
 
-  var streaming = false;
-  var getUserMedia =
-      navigator.getUserMedia ||
-      navigator.webkitGetUserMedia ||
-      navigator.mozGetUserMedia;
-
-  function handlePeer(data, id) {
-    console.log("audio reflection received", id, data);
-    if (peer.connections[data.id]) { console.log('existing peer'); return; }
-    var target = byId("vid_" + id);
-    console.log("media for", target);
-    if (!target) return;
-
-    // Call them
-    
-    getUserMedia(
-      { video: false, audio: true },
-      function(stream) {
-        console.log('calling', data.id)
-        var call = peer.call(data.id, stream);
-        call.on("stream", function(remoteStream) {
-          // Show stream in some video/canvas element.
-          console.log("got call stream from", id);
-          var target = byId("vid_" + id);
-          target.srcObject = remoteStream;
-          target.play();
-        });
-      },
-      function(err) {
-        console.log("Failed to get local stream", err);
-      }
-    );
-  }
-
-  function handleCall(call) {
-    getUserMedia(
-      { video: false, audio: true },
-      function(stream) {
-        call.answer(stream); // Answer the call with an A/V stream.
-        call.on("stream", function(remoteStream) {
-          // Show stream in some video/canvas element.
-          console.log("got answer stream from", call.peer);
-          var target = byId("vid_" + call.peer);
-          target.srcObject = remoteStream;
-          target.play();
-        });
-      },
-      function(err) {
-        console.log("Failed to get local stream", err);
-      }
-    );
-  }
 };
 
 start();
