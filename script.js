@@ -219,8 +219,8 @@ var start = function() {
   }
   
   var localStream = false;
-  async function handleStream(id){
-    console.log('got stream', id, stream);
+  function callPeer(id){
+    console.log('calling remote', id);
     var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
     if (!localStream){
       getUserMedia({video: true, audio: true}, function(stream) {
@@ -246,8 +246,10 @@ var start = function() {
   }
   
   peer.on('call', function(call) {
+    console.log('answering call..')
     if (!localStream){
         getUserMedia({video: true, audio: true}, function(stream) {
+          localStream = stream;
           call.answer(stream); // Answer the call with an A/V stream.
           call.on('stream', function(remoteStream) {
             // Show stream in some video/canvas element.
@@ -258,8 +260,8 @@ var start = function() {
     } else {
         call.answer(localStream); // Answer the call with an A/V stream.
           call.on('stream', function(remoteStream) {
-            /var target = byId("vid_"+id);
-          target.srcObject = remoteStream;
+            var target = byId("vid_"+id);
+            target.srcObject = remoteStream;
           });
     }
   });
