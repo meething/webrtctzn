@@ -136,6 +136,8 @@ var start = function() {
     getClick(dropFruit);
     getChat(updateChat);
     getPeer(handlePeer);
+    
+    
   }
 
   function moveCursor([x, y], id) {
@@ -168,6 +170,8 @@ var start = function() {
       updatePeerInfo();
     }
 
+    sendPeer(peerId)
+    
     return el;
   }
 
@@ -207,25 +211,17 @@ var start = function() {
   }
 
   var streaming = false;
-  window.addMedia = async function() {
-    if (streaming) {
-      console.log('we are connected',peer.connections);
-      peer.destroy();
-      peer = new Peer(peerId);
-      console.log("stop audio");
-      streaming = null;
-      byId("audiobox").innerHTML = "TALK";
-      return;
-    } else {
-      streaming = true;
-      console.log("ask out as", selfId);
-      sendPeer({ id: peerId });
-      byId("audiobox").innerHTML = "MUTE";
-    }
-  };
+  byId("audiobox").addEventListener("click", function() {
+        localMedia.getAudioTracks()[0].enabled = !localMedia.getAudioTracks()[0]
+          .enabled;
+        byId("audiobox").style.background = localMedia.getAudioTracks()[0].enabled
+          ? "green"
+          : "red";
+      });
 
   function handlePeer(data, id) {
     console.log("audio reflection received", id, data);
+    if (peer.connections[data.id]) { console.log('existing peer'); return; }
     var target = byId("vid_" + id);
     console.log("media for", target);
     if (!target) return;
