@@ -126,7 +126,7 @@ var start = function() {
     getMove(moveCursor);
     getClick(dropFruit);
     getChat(updateChat);
-    getAudio(callPeer);
+    getAudio(handleAudio);
   }
 
   function moveCursor([x, y], id) {
@@ -212,9 +212,13 @@ var start = function() {
     } else {
       localStream = await navigator.mediaDevices.getUserMedia({audio: true, video: false});
       console.log('ship out',selfId, localStream)
-      sendAudio(selfId)
+      sendAudio({ id: selfId})
       byId('audiobox').innerHTML  = 'MUTE';
     }
+  }
+  
+  var handleAudio = function(data,id){
+    console.log('audio reflection received', id, data);
   }
   
  
