@@ -119,7 +119,8 @@ var start = function() {
     byId("room-num").innerText = "room #" + n;
     room.onPeerJoin(addCursor);
     room.onPeerLeave(removeCursor);
-    room.onPeerStream(handleStream);
+    //room.onPeerStream(handleStream);
+    room.onPeerStream((stream, id) => console.log(`got stream from ${id}`, stream));
     getMove(moveCursor);
     getClick(dropFruit);
     getChat(updateChat);
@@ -209,8 +210,7 @@ var start = function() {
     } else {
       talking = await navigator.mediaDevices.getUserMedia({audio: true, video: false});
       console.log('ship out',talking)
-      //room.addStream(talking);
-      sendAudio(talking);
+      room.addStream(talking);
       console.log('start audio');
       byId('audiobox').innerHTML  = 'MUTE';
     }
@@ -218,10 +218,10 @@ var start = function() {
   
   function handleStream(stream,id){
     console.log('got stream', id, stream);
-    streams[id] = stream;
+    streams[id] = JSON.parse(stream.stream);
     const peerVideo = byId(id);
     console.log('target',peerVideo);
-    peerVideo.srcObject = stream;
+    peerVideo.srcObject = streams[id];
   }
 };
 
