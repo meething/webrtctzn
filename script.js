@@ -148,6 +148,8 @@ var start = function() {
     el.srcObject = stream;
     el.setAttribute('autoplay', true);
     el.setAttribute('inline', true);
+    el.setAttribute('height', 240);
+    el.setAttribute('width', 480);
     el.style.width = "200 !important";
     el.style.height = "200 !important";
   }
