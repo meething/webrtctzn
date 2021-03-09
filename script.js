@@ -150,8 +150,8 @@ var start = function() {
     el.setAttribute('inline', true);
     el.setAttribute('height', 240);
     el.setAttribute('width', 480);
-    el.style.width = "200 !important";
-    el.style.height = "200 !important";
+    el.style.width = "200px !important";
+    el.style.height = "200px !important";
   }
   
   function moveCursor([x, y], id) {
