@@ -42,6 +42,8 @@ var start = function() {
   let sendPeer;
   let sendCmd;
 
+  const peerAlias = {};
+  
   var streams = [];
   // sidepeer for calls only
   var peerId = selfId + "_call";
