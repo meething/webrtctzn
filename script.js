@@ -133,9 +133,9 @@ var start = function() {
       var tracks = streaming.getTracks();
       tracks.forEach(function(track) {
         track.stop();
+        var el = byId("vid_" + selfId )
+        el.srcObject.removeTrack(track);
       });
-      // remove video circle
-      var el = byId("vid_" + selfId ).remove();
       streaming = null;
       muted = true;
       talkbutton.innerHTML = '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:green;"></i>';
