@@ -133,6 +133,9 @@ var start = function() {
       talkbutton.innerHTML = "TALK";
       sendCmd({peerId: peerId, cmd: "stop_video"})
     }  
+    mutebutton.disabled = streaming ? false : true;
+    
+    
   })
   var muted = false;
   mutebutton.addEventListener("click", async () => {

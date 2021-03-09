@@ -193,19 +193,19 @@ pre {
 }
 .chatbox {
   float: left;
-  width: 90%;
+  width: 80%;
   height: 30px;
   font-family: 'Space Mono', monospace;
 }
 .chatbutton {
   float: right;
-  width: 10%;
+  width: 20%;
   height: 30px;
   font-family: 'Space Mono', monospace;
 }
 .smallbutton {
   float: right;
-  width: 5%;
+  width: 10%;
   height: 30px;
   font-family: 'Space Mono', monospace;
 }
@@ -220,6 +220,8 @@ pre {
   border-radius: 50%;
   object-fit: cover;
   width: 250px;
+  max-width: 250px;
+  margin-left: -40%;
 }
 
 @keyframes drop {
