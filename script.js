@@ -8,6 +8,7 @@ var start = function() {
   const chatbox = byId("chatbox");
   const chatbutton = byId("chatbutton");
   const talkbutton = byId("talkbutton");
+  const mutebutton = byId("mutebutton");
   const noPeersCopy = peerInfo.innerText;
   const config = { appId: "trystero-glitch" };
   const cursors = {};
@@ -123,6 +124,14 @@ var start = function() {
       sendCmd({peerId: peerId, cmd: "stop_video"})
     }  
   })
+  var muted = false;
+  mutebutton.addEventListener("click", async () => {
+    if (!muted){
+      mutebutton.innerHTML = "<span style='color: green;'>MUTED</span>";
+    } else {
+      mutebutton.innerHTML = "<span style='color: red;'>MUTE</span>";
+    }
+   });
   
   async function init(n) {
     const ns = "room" + n;
@@ -167,10 +176,10 @@ var start = function() {
     }
   }
   
-
   function handleStream (stream, peerId) {
     console.log('received stream', stream.id, peerId);
     var el = byId("vid_" + peerId);
+    if (!el) console.error('target video frame not found!', peerId)
     el.srcObject = stream;
     el.setAttribute('autoplay', true);
     el.setAttribute('inline', true);

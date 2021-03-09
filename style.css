@@ -203,6 +203,12 @@ pre {
   height: 30px;
   font-family: 'Space Mono', monospace;
 }
+.smallbutton {
+  float: right;
+  width: 5%;
+  height: 30px;
+  font-family: 'Space Mono', monospace;
+}
 .audiobox {
   float: right;
   width: 10%;
