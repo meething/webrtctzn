@@ -137,6 +137,14 @@ var start = function() {
     
   }
 
+  function handleStream (stream, peerId) {
+    console.log('received stream', stream.id, peerId);
+    var audio = document.createElement('video');
+    audio.setAttribute('autoplay', 'true');
+    audio.srcObject = stream;
+    document.body.appendChild(audio);
+  }
+  
   function moveCursor([x, y], id) {
     const el = cursors[id];
 
