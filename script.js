@@ -57,6 +57,12 @@ var start = function() {
     init(99);                            
   }  
   
+  // focus on chat input all the time
+  var focus = function(){
+      document.getElementById('chatbox').focus();
+  }; focus();
+  window.addEventListener('focus', focus);
+  
   document.documentElement.className = "ready";
   addCursor(selfId, true);
 
@@ -270,3 +276,4 @@ var start = function() {
 };
 
 start();
+
