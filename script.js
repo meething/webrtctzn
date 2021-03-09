@@ -1,4 +1,4 @@
-import { joinRoom, selfId } from "https://cdn.skypack.dev/trystero@0.7.8";
+import { joinRoom, selfId } from "https://cdn.skypack.dev/trystero@0.7.9";
 
 var start = function() {
   const byId = document.getElementById.bind(document);
@@ -21,7 +21,7 @@ var start = function() {
     "🍉",
     "🍇",
     "🍓",
-    // '🫐',
+    '🫐', //do you not like blueberry!!!???
     "🍈",
     "🍒",
     "🍑",
@@ -130,7 +130,7 @@ var start = function() {
     byId("room-num").innerText = "room #" + n;
     room.onPeerJoin(addCursor);
     room.onPeerLeave(removeCursor);
-    room.on
+    room.onPeerStream(handleStream);
     getMove(moveCursor);
     getClick(dropFruit);
     getChat(updateChat);
