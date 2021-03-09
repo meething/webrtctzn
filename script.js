@@ -127,11 +127,13 @@ var start = function() {
   var muted = false;
   mutebutton.addEventListener("click", async () => {
     if (!muted){
-      mutebutton.innerHTML = "<span style='color: green;'>MUTED</span>";
+      mutebutton.innerHTML = '<i class="fa fa-volume-up" aria-hidden="true"></i>';
+      muted = true;
     } else {
-      mutebutton.innerHTML = "<span style='color: red;'>MUTE</span>";
+      mutebutton.innerHTML = '<i class="fa fa-volume-off" aria-hidden="true"></i>';
+      muted = false;
     }
-   });
+  });
   
   async function init(n) {
     const ns = "room" + n;
