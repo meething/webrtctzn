@@ -218,14 +218,16 @@ var start = function() {
       var selfStream = stream;
       stream = new MediaStream(selfStream.getVideoTracks());
     }
-    console.log('received stream', stream, peerId);
     var el = byId("vid_" + peerId);
     if (!el) console.error('target video frame not found!', peerId)
-    el.srcObject = stream;
-    el.setAttribute('autoplay', true);
-    el.setAttribute('inline', true);
-    el.setAttribute('height', 240);
-    el.setAttribute('width', 480);
+    console.log('received stream', stream, peerId, el);
+    setTimeout(function () {
+      el.setAttribute('autoplay', true);
+      el.setAttribute('inline', true);
+      el.setAttribute('height', 240);
+      el.setAttribute('width', 480);
+      el.srcObject = stream;
+    }, 100);
   }
   
   function moveCursor([x, y], id) {
