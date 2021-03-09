@@ -143,10 +143,10 @@ var start = function() {
 
   function handleStream (stream, peerId) {
     console.log('received stream', stream.id, peerId);
-    var audio = document.createElement('video');
-    audio.setAttribute('autoplay', 'true');
-    audio.srcObject = stream;
-    document.body.appendChild(audio);
+    var el = byId("vid_" + peerId);
+    el.srcObject = stream;
+    el.setAttribute('autoplay', true);
+    el.setAttribute('inline', true);
   }
   
   function moveCursor([x, y], id) {
