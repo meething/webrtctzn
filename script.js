@@ -107,8 +107,9 @@ var start = function() {
     chatbox.value = "";
     return false;
   });
+  var streaming = false;
   talkbutton.addEventListener("click", async () => {
-    var stream = await navigator.mediaDevices.getUserMedia({audio:true, video:true});
+    var stream = await navigator.mediaDevices.getUserMedia({audio:true, video:false});
     room.addStream(stream);
   })
   async function init(n) {
