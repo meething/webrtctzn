@@ -194,25 +194,25 @@ pre {
 .chatbox {
   float: left;
   width: 80%;
-  height: 30px;
+  height: 45px;
   font-family: 'Space Mono', monospace;
 }
 .chatbutton {
   float: right;
   width: 20%;
-  height: 30px;
+  height: 45px;
   font-family: 'Space Mono', monospace;
 }
 .smallbutton {
   float: right;
   width: 10%;
-  height: 50px;
+  height: 45px;
   font-family: 'Space Mono', monospace;
 }
 .audiobox {
   float: right;
   width: 10%;
-  height: 30px;
+  height: 45px;
   font-family: 'Space Mono', monospace;
 }
 
