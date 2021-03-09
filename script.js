@@ -147,6 +147,8 @@ var start = function() {
     el.srcObject = stream;
     el.setAttribute('autoplay', true);
     el.setAttribute('inline', true);
+    el.style.width = "200 !important";
+    el.style.height = "200 !important";
   }
   
   function moveCursor([x, y], id) {
