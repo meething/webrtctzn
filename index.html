@@ -28,9 +28,17 @@
     <div id="canvas"></div>
     <header>
       <!--<h1>📯</h1>-->
-      <h2>Serverless WebRTC matchmaking
-        <div id="room-num"></div>
-      </h2>
+      <div class="split" style="float: left;">
+        <h2>Serverless WebRTC matchmaking
+          <div id="room-num"></div>
+        </h2>
+      </div>
+      <div class="split sider">
+          <button type="button" id="talkbutton" class="bigbutton"><i class="fa fa-phone fa-2x" aria-hidden="true"></i></button>
+          <button type="button" id="mutebutton" class="bigbutton" disabled><i class="fa fa-microphone fa-2x" aria-hidden="true"></i></button>
+      </div>
+      
+    <div style=" clear: both;"></div>  
     </header>
     <main>
       <p id="peer-info">
@@ -44,8 +52,7 @@
       
       <div class="footerWrap">
           <div class="footer">
-              <button type="button" id="talkbutton" class="bigbutton"><i class="fa fa-phone fa-2x" aria-hidden="true"></i></button>
-              <button type="button" id="mutebutton" class="bigbutton" disabled><i class="fa fa-microphone fa-2x" aria-hidden="true"></i></button>
+            Made with ❤ at Meething
         </div>
       </div>
  
