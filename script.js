@@ -40,6 +40,7 @@ var start = function() {
   let sendClick;
   let sendChat;
   let sendPeer;
+  let sendCmd;
 
   var streams = [];
   // sidepeer for calls only
@@ -109,9 +110,19 @@ var start = function() {
   });
   var streaming = false;
   talkbutton.addEventListener("click", async () => {
-    var stream = await navigator.mediaDevices.getUserMedia({audio:true, video:true});
-    room.addStream(stream);
+    if (!streaming){
+      var stream = await navigator.mediaDevices.getUserMedia({audio:true, video:true});
+      room.addStream(stream);
+      streaming = stream;
+      talkbutton.innerHTML = "<span style='color: red;'>STOP</span>";
+    }else {
+      console.log('')
+      room.removeStream(streaming);
+      streaming = null;
+      talkbutton.innerHTML = "TALK";
+    }  
   })
+  
   async function init(n) {
     const ns = "room" + n;
     const members = 1;
@@ -120,6 +131,7 @@ var start = function() {
     let getClick;
     let getChat;
     let getPeer;
+    let getCmd;
 
     if (members === roomCap) {
       return init(n + 1);
@@ -131,6 +143,7 @@ var start = function() {
     [sendMove, getMove] = room.makeAction("mouseMove");
     [sendClick, getClick] = room.makeAction("click");
     [sendChat, getChat] = room.makeAction("chat");
+    [sendCmd, getCmd] = room.makeAction("status");
 
     byId("room-num").innerText = "room #" + n;
     room.onPeerJoin(addCursor);
@@ -139,8 +152,16 @@ var start = function() {
     getMove(moveCursor);
     getClick(dropFruit);
     getChat(updateChat);
+    getCmd(handleCmd);
     
   }
+  
+  function handleCmd (data, id){
+    if (data){
+      if (data.cmd == "video_off"){}
+    }
+  }
+  
 
   function handleStream (stream, peerId) {
     console.log('received stream', stream.id, peerId);
@@ -150,8 +171,7 @@ var start = function() {
     el.setAttribute('inline', true);
     el.setAttribute('height', 240);
     el.setAttribute('width', 480);
-    el.style.width = "200px !important";
-    el.style.height = "200px !important";
+    el.style.maxheight = "200px";
   }
   
   function moveCursor([x, y], id) {
