@@ -193,13 +193,13 @@ pre {
 }
 .chatbox {
   float: left;
-  width: 61%;
+  width: 80%;
   height: 45px;
   font-family: 'Space Mono', monospace;
 }
 .chatbutton {
   float: right;
-  width: 13%;
+  width: 20%;
   height: 45px;
   font-family: 'Space Mono', monospace;
 }
@@ -210,8 +210,8 @@ pre {
   font-family: 'Space Mono', monospace;
 }
 .bigbutton {
-  float: right;
-  width: 30%;
+  float: center;
+  width: 15%;
   height: 60px;
   font-family: 'Space Mono', monospace;
 }
@@ -240,17 +240,14 @@ pre {
   filer: invert(114%) sepia(45%) saturate(3139%) hue-rotate(170deg) brightness(95%) contrast(77%);
 }
 
-.footerWrap {
-    width:50%;
-    position:fixed;
-    bottom: 0px;
-}
-.footer {
-    width:400px;
-    margin:auto;
-}
 
-.footer p {float:left; width:100%; text-align:center; }
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
 
 
 @keyframes drop {
@@ -282,4 +279,5 @@ pre {
     position: static;
     transform: none;
   }
+
 }
