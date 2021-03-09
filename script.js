@@ -293,8 +293,8 @@ var start = function() {
   }
 
   function updateChat(msg, id) {
-    if (isValidHttpUrl(msg)) iframe.src = msg; // "https://excalidraw.com/#room="+selfId+",00"+selfId;
-    else chat.innerHTML = id + ":" + msg + "<br/>" + chat.innerHTML;
+    //if (isValidHttpUrl(msg)) iframe.src = msg; // "https://excalidraw.com/#room="+selfId+",00"+selfId;
+    //else chat.innerHTML = id + ":" + msg + "<br/>" + chat.innerHTML;
     
     chat.innerHTML = id + ":" + msg + "<br/>" + chat.innerHTML;
     
