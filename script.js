@@ -123,6 +123,7 @@ var start = function() {
       room.addStream(stream);
       streaming = stream;
       muted = false;
+      sendCmd({peerId: peerId, cmd: "hand", state: true });
       talkbutton.innerHTML = '<i class="fa fa-phone-square fa-2x" aria-hidden="true" style="color:red;"></i>';
     }else {
       console.log('')
@@ -134,7 +135,8 @@ var start = function() {
       streaming = null;
       muted = true;
       talkbutton.innerHTML = '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:green;"></i>';
-      sendCmd({peerId: peerId, cmd: "stop_video"})
+      sendCmd({peerId: peerId, cmd: "stop_video"});
+      sendCmd({peerId: peerId, cmd: "hand", state: false });
     }  
     mutebutton.disabled = streaming ? false : true;
   })
@@ -196,6 +198,11 @@ var start = function() {
         // which one is it? :)
         el = byId("vid_" + peerId);
         if (el) el.srcObject = null;
+      } else 
+      if (data.cmd == "hand"){
+        var el = byId("hand_" + id);
+        if (el && data.state) el.classList.add("handgray");
+        else el.classList.remove("handgray");
       }
     }
   }
@@ -223,6 +230,7 @@ var start = function() {
   function addCursor(id, isSelf) {
     const el = document.createElement("div");
     const img = document.createElement("img");
+    img.id = "hand_" + id;
     const txt = document.createElement("p");
     const video = document.createElement("video");
     video.id = "vid_" + id;

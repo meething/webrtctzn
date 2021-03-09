@@ -224,7 +224,13 @@ pre {
   margin-left: -40%;
 }
 
-.hand-
+.handgreen {
+      filter: invert(48%) sepia(18%) saturate(3137%) hue-rotate(130deg) brightness(95%) contrast(80%);
+}
+
+.handgray {
+  filer: invert(114%) sepia(45%) saturate(3139%) hue-rotate(170deg) brightness(95%) contrast(77%);
+}
 
 
 @keyframes drop {
