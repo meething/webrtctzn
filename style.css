@@ -216,6 +216,11 @@ pre {
   font-family: 'Space Mono', monospace;
 }
 
+.video-circle {
+  border-radius: 50%;
+  object-fit: cover;
+  width: 250px;
+}
 
 @keyframes drop {
   from {

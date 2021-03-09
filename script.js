@@ -219,6 +219,7 @@ var start = function() {
     const txt = document.createElement("p");
     const video = document.createElement("video");
     video.id = "vid_" + id;
+    video.className = "video-circle";
 
     el.style.float = "left";
     el.className = `cursor${isSelf ? " self" : ""}`;
