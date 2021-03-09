@@ -23,7 +23,6 @@ var start = function() {
     "🍉",
     "🍇",
     "🍓",
-    '🫐', //do you not like blueberry!!!???
     "🍈",
     "🍒",
     "🍑",
@@ -110,11 +109,13 @@ var start = function() {
       return false;
     }
   });
+  
   chatbutton.addEventListener("click", () => {
     window.chat(chatbox.value);
     chatbox.value = "";
     return false;
   });
+  
   var streaming = false;
   var muted = false;
   talkbutton.addEventListener("click", async () => {
@@ -126,13 +127,15 @@ var start = function() {
       muted = false;
       sendCmd({peerId: peerId, cmd: "hand", state: true });
       talkbutton.innerHTML = '<i class="fa fa-phone-square fa-2x" aria-hidden="true" style="color:red;"></i>';
-    }else {
+    } else {
       console.log('')
       room.removeStream(streaming);
       var tracks = streaming.getTracks();
       tracks.forEach(function(track) {
         track.stop();
       });
+      // remove video circle
+      var el = byId("vid_" + selfId ).remove();
       streaming = null;
       muted = true;
       talkbutton.innerHTML = '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:green;"></i>';
