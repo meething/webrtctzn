@@ -132,6 +132,7 @@ var start = function() {
         track.stop();
       });
       streaming = null;
+      muted = true;
       talkbutton.innerHTML = '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:green;"></i>';
       sendCmd({peerId: peerId, cmd: "stop_video"})
     }  
@@ -140,12 +141,13 @@ var start = function() {
   
   mutebutton.addEventListener("click", async () => {
     if (!streaming) return;
+    var state = streaming.getAudioTracks()[0].enabled;
     if (!muted){
-      mutebutton.innerHTML = '<i class="fa fa-microphone fa-2x" aria-hidden="true"></i>';
+      mutebutton.innerHTML = '<i class="fa fa-microphone-slash fa-2x" aria-hidden="true"></i>';
       muted = true;
       streaming.getAudioTracks()[0].enabled = false;
     } else {
-      mutebutton.innerHTML = '<i class="fa fa-microphone-slash fa-2x" aria-hidden="true"></i>';
+      mutebutton.innerHTML = '<i class="fa fa-microphone fa-2x" aria-hidden="true"></i>';
       muted = false;
       streaming.getAudioTracks()[0].enabled = true;
     }
