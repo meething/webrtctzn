@@ -45,7 +45,7 @@ var start = function() {
   var streams = [];
   // sidepeer for calls only
   var peerId = selfId + "_call";
-  var peer = new Peer(peerId);
+  //var peer = new Peer(peerId);
 
   // Room Selector
   const queryString = window.location.search;
