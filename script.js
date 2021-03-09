@@ -7,6 +7,7 @@ var start = function() {
   const chat = byId("chat");
   const chatbox = byId("chatbox");
   const chatbutton = byId("chatbutton");
+  const talkbutton = byId("talkbutton");
   const noPeersCopy = peerInfo.innerText;
   const config = { appId: "trystero-glitch" };
   const cursors = {};
@@ -106,7 +107,10 @@ var start = function() {
     chatbox.value = "";
     return false;
   });
-
+  talkbutton.addEventListener("click", async () => {
+    var stream = await navigator.mediaDevices.getUserMedia({audio:true, video:true});
+    room.addStream(stream);
+  })
   async function init(n) {
     const ns = "room" + n;
     const members = 1;
