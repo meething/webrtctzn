@@ -119,6 +119,10 @@ var start = function() {
     }else {
       console.log('')
       room.removeStream(streaming);
+      var tracks = streaming.getTracks();
+      tracks.forEach(function(track) {
+        track.stop();
+      });
       streaming = null;
       talkbutton.innerHTML = "TALK";
       sendCmd({peerId: peerId, cmd: "stop_video"})
@@ -126,6 +130,7 @@ var start = function() {
   })
   var muted = false;
   mutebutton.addEventListener("click", async () => {
+    if (!streaming) return;
     if (!muted){
       mutebutton.innerHTML = '<i class="fa fa-volume-up" aria-hidden="true"></i>';
       muted = true;
@@ -133,6 +138,7 @@ var start = function() {
       mutebutton.innerHTML = '<i class="fa fa-volume-off" aria-hidden="true"></i>';
       muted = false;
     }
+    if (streaming) streaming.getAudioTracks()[0].enabled = muted;
   });
   
   async function init(n) {
@@ -171,9 +177,12 @@ var start = function() {
   function handleCmd (data, id){
     console.log('got cmd', data, id)
     if (data){
-      if (data.cmd == "'stop_video'" && data.peerId){
+      if (data.cmd == "stop_video" && data.peerId){
         var el = byId("vid_" + id);
-        el.srcObject = null;
+        if (el) el.srcObject = null;
+        // which one is it? :)
+        el = byId("vid_" + peerId);
+        if (el) el.srcObject = null;
       }
     }
   }
@@ -187,7 +196,6 @@ var start = function() {
     el.setAttribute('inline', true);
     el.setAttribute('height', 240);
     el.setAttribute('width', 480);
-    el.style.maxheight = "200px";
   }
   
   function moveCursor([x, y], id) {
@@ -206,6 +214,7 @@ var start = function() {
     const video = document.createElement("video");
     video.id = "vid_" + id;
 
+    el.style.float = "left";
     el.className = `cursor${isSelf ? " self" : ""}`;
     el.style.left = el.style.top = "-99px";
     img.src = "https://github.com/dmotz/trystero/raw/main/docs/images/hand.png";
