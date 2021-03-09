@@ -209,7 +209,7 @@ pre {
 }
 .bigbutton {
   float: right;
-  width: 15%;
+  width: 33%;
   height: 60px;
   font-family: 'Space Mono', monospace;
 }
@@ -241,8 +241,13 @@ pre {
 .sider{
   float: right;
 }
-.split {
-  width: 50%;
+.splitleft {
+  width: 70%;
+  float: left;
+}
+.splitright {
+  width: 30%;
+  float: right;
 }
 
 .footer {
@@ -284,4 +289,11 @@ pre {
     transform: none;
   }
 
+  .bigbutton {
+    float: right;
+    width: 45%;
+    height: 60px;
+    font-family: 'Space Mono', monospace;
+  }
+  
 }
