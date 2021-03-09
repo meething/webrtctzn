@@ -293,9 +293,11 @@ var start = function() {
   }
 
   function updateChat(msg, id) {
-    //console.log(msg, id);
     if (isValidHttpUrl(msg)) iframe.src = msg; // "https://excalidraw.com/#room="+selfId+",00"+selfId;
+    else chat.innerHTML = id + ":" + msg + "<br/>" + chat.innerHTML;
+    
     chat.innerHTML = id + ":" + msg + "<br/>" + chat.innerHTML;
+    
   }
 
   function dropFruit([fruit, x, y]) {
