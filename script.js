@@ -208,7 +208,7 @@ var start = function() {
   }
   
   function handleStream (stream, peerId) {
-    console.log('received stream', stream.id, peerId);
+    console.log('received stream', stream, peerId);
     var el = byId("vid_" + peerId);
     if (!el) console.error('target video frame not found!', peerId)
     el.srcObject = stream;
@@ -235,6 +235,7 @@ var start = function() {
     const video = document.createElement("video");
     video.id = "vid_" + id;
     video.className = "video-circle";
+    video.addEventListener('loadedmetadata', function(data) { console.log('metaload',data) });
 
     el.style.float = "left";
     el.className = `cursor${isSelf ? " self" : ""}`;
