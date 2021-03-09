@@ -120,6 +120,7 @@ var start = function() {
       room.removeStream(streaming);
       streaming = null;
       talkbutton.innerHTML = "TALK";
+      sendCmd({peerId: peerId, cmd: "stop_video"})
     }  
   })
   
@@ -143,7 +144,7 @@ var start = function() {
     [sendMove, getMove] = room.makeAction("mouseMove");
     [sendClick, getClick] = room.makeAction("click");
     [sendChat, getChat] = room.makeAction("chat");
-    [sendCmd, getCmd] = room.makeAction("status");
+    [sendCmd, getCmd] = room.makeAction("cmd");
 
     byId("room-num").innerText = "room #" + n;
     room.onPeerJoin(addCursor);
@@ -157,8 +158,12 @@ var start = function() {
   }
   
   function handleCmd (data, id){
+    console.log('got cmd', data, id)
     if (data){
-      if (data.cmd == "video_off"){}
+      if (data.cmd == "'stop_video'" && data.peerId){
+        var el = byId("vid_" + id);
+        el.srcObject = null;
+      }
     }
   }
   
