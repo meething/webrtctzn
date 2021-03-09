@@ -193,19 +193,19 @@ pre {
 }
 .chatbox {
   float: left;
-  width: 65%;
+  width: 61%;
   height: 45px;
   font-family: 'Space Mono', monospace;
 }
 .chatbutton {
   float: right;
-  width: 15%;
+  width: 13%;
   height: 45px;
   font-family: 'Space Mono', monospace;
 }
 .smallbutton {
   float: right;
-  width: 10%;
+  width: 13%;
   height: 45px;
   font-family: 'Space Mono', monospace;
 }
