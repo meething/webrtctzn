@@ -201,8 +201,8 @@ var start = function() {
       } else 
       if (data.cmd == "hand"){
         var el = byId("hand_" + id);
-        if (el && data.state) el.classList.add("handgray");
-        else el.classList.remove("handgray");
+        if (el && data.state) el.classList.add("handgreen");
+        else el.classList.remove("handgreen");
       }
     }
   }
