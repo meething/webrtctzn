@@ -121,6 +121,7 @@ var start = function() {
     if (!streaming){
       var stream = await navigator.mediaDevices.getUserMedia({audio:true, video:true});
       room.addStream(stream);
+      handleStream(stream, selfId);
       streaming = stream;
       muted = false;
       sendCmd({peerId: peerId, cmd: "hand", state: true });
@@ -208,6 +209,10 @@ var start = function() {
   }
   
   function handleStream (stream, peerId) {
+    if(peerId == selfId) { 
+      var selfStream = stream;
+      stream = new MediaStream(selfStream.getVideoTracks());
+    }
     console.log('received stream', stream, peerId);
     var el = byId("vid_" + peerId);
     if (!el) console.error('target video frame not found!', peerId)
