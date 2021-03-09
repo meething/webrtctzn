@@ -130,6 +130,7 @@ var start = function() {
     byId("room-num").innerText = "room #" + n;
     room.onPeerJoin(addCursor);
     room.onPeerLeave(removeCursor);
+    room.on
     getMove(moveCursor);
     getClick(dropFruit);
     getChat(updateChat);
