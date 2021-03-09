@@ -17,7 +17,7 @@ html {
 body {
   background-color: #fff;
   color: #000;
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   font-family: 'Space Mono', monospace;
   padding: 1rem;
@@ -226,7 +226,7 @@ pre {
 }
 
 .handgreen {
-      filter: invert(48%) sepia(18%) saturate(3137%) hue-rotate(130deg) brightness(95%) contrast(80%);
+  filter: invert(48%) sepia(18%) saturate(3137%) hue-rotate(130deg) brightness(95%) contrast(80%);
 }
 
 .handgray {
