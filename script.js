@@ -116,12 +116,14 @@ var start = function() {
     return false;
   });
   var streaming = false;
+  var muted = false;
   talkbutton.addEventListener("click", async () => {
     if (!streaming){
       var stream = await navigator.mediaDevices.getUserMedia({audio:true, video:true});
       room.addStream(stream);
       streaming = stream;
-      talkbutton.innerHTML = "<span style='color: red;'>STOP</span>";
+      muted = false;
+      talkbutton.innerHTML = '<i class="fa fa-phone-square fa-2x" aria-hidden="true" style="color:red;"></i>';
     }else {
       console.log('')
       room.removeStream(streaming);
@@ -130,24 +132,24 @@ var start = function() {
         track.stop();
       });
       streaming = null;
-      talkbutton.innerHTML = "TALK";
+      talkbutton.innerHTML = '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:green;"></i>';
       sendCmd({peerId: peerId, cmd: "stop_video"})
     }  
     mutebutton.disabled = streaming ? false : true;
-    
-    
   })
-  var muted = false;
+  
   mutebutton.addEventListener("click", async () => {
     if (!streaming) return;
     if (!muted){
-      mutebutton.innerHTML = '<i class="fa fa-volume-up" aria-hidden="true"></i>';
+      mutebutton.innerHTML = '<i class="fa fa-microphone fa-2x" aria-hidden="true"></i>';
       muted = true;
+      streaming.getAudioTracks()[0].enabled = false;
     } else {
-      mutebutton.innerHTML = '<i class="fa fa-volume-off" aria-hidden="true"></i>';
+      mutebutton.innerHTML = '<i class="fa fa-microphone-slash fa-2x" aria-hidden="true"></i>';
       muted = false;
+      streaming.getAudioTracks()[0].enabled = true;
     }
-    if (streaming) streaming.getAudioTracks()[0].enabled = muted;
+    
   });
   
   async function init(n) {
