@@ -235,6 +235,15 @@ pre {
 }
 
 
+.bottom {
+  position: fixed;
+  bottom: 10px;
+  margin: 0 auto;
+  width: 30%;
+}
+
+
+
 @keyframes drop {
   from {
     transform: translateY(0);
