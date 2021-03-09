@@ -109,7 +109,7 @@ var start = function() {
   });
   var streaming = false;
   talkbutton.addEventListener("click", async () => {
-    var stream = await navigator.mediaDevices.getUserMedia({audio:true, video:false});
+    var stream = await navigator.mediaDevices.getUserMedia({audio:true, video:true});
     room.addStream(stream);
   })
   async function init(n) {
