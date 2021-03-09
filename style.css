@@ -209,6 +209,12 @@ pre {
   height: 45px;
   font-family: 'Space Mono', monospace;
 }
+.bigbutton {
+  float: right;
+  width: 30%;
+  height: 60px;
+  font-family: 'Space Mono', monospace;
+}
 .audiobox {
   float: right;
   width: 10%;
@@ -234,14 +240,17 @@ pre {
   filer: invert(114%) sepia(45%) saturate(3139%) hue-rotate(170deg) brightness(95%) contrast(77%);
 }
 
-
-.bottom {
-  position: fixed;
-  bottom: 10px;
-  margin: 0 auto;
-  width: 30%;
+.footerWrap {
+    width:50%;
+    position:fixed;
+    bottom: 0px;
+}
+.footer {
+    width:400px;
+    margin:auto;
 }
 
+.footer p {float:left; width:100%; text-align:center; }
 
 
 @keyframes drop {
