@@ -258,6 +258,13 @@ pre {
   text-align: center;
 }
 
+.iframe{
+  border: 0;
+  bottom: 10px;
+  position: fixed;
+  height: 50%;
+  left: 0px;
+}
 
 @keyframes drop {
   from {

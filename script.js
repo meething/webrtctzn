@@ -9,6 +9,7 @@ var start = function() {
   const chatbutton = byId("chatbutton");
   const talkbutton = byId("talkbutton");
   const mutebutton = byId("mutebutton");
+  const iframe = byId("iframe");
   const noPeersCopy = peerInfo.innerText;
   const config = { appId: "trystero-glitch" };
   const cursors = {};
@@ -195,6 +196,8 @@ var start = function() {
     getChat(updateChat);
     getCmd(handleCmd);
     
+    //iframe.src = "https://excalidraw.com/#room="+selfId+",00"+selfId;
+    
   }
   
   function handleCmd (data, id){
@@ -291,6 +294,7 @@ var start = function() {
 
   function updateChat(msg, id) {
     //console.log(msg, id);
+    if (isValidHttpUrl(msg)) iframe.src = msg; // "https://excalidraw.com/#room="+selfId+",00"+selfId;
     chat.innerHTML = id + ":" + msg + "<br/>" + chat.innerHTML;
   }
 
@@ -302,6 +306,16 @@ var start = function() {
     el.style.top = y * window.innerHeight + "px";
     canvas.appendChild(el);
     setTimeout(() => canvas.removeChild(el), 3000);
+  }
+  
+  function isValidHttpUrl(string) {
+    let url;
+    try {
+      url = new URL(string);
+    } catch (_) {
+      return false;  
+    }
+    return url.protocol === "http:" || url.protocol === "https:";
   }
 
 };
