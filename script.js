@@ -49,6 +49,7 @@ var start = function() {
   // sidepeer for calls only
   var peerId = selfId + "_call";
   var userName = false;
+  var roomName = false;
   //var peer = new Peer(peerId);
 
   // Room Selector
@@ -62,6 +63,14 @@ var start = function() {
   
   if (urlParams.has("username")) { 
     userName = urlParams.get("username");
+     var refresh =
+            window.location.protocol +
+            "//" +
+            window.location.host +
+            window.location.pathname +
+            "?room=" +
+            randomId;
+          window.history.pushState({ path: refresh }, "", refresh);
   }  
   
   // focus on chat input all the time
@@ -286,7 +295,9 @@ var start = function() {
       updatePeerInfo();
     }
     
-    if (userName && sendCmd) sendCmd({peerId: peerId, cmd: "username", username: userName });
+    if (userName && sendCmd) {
+      sendCmd({peerId: selfId, cmd: "username", username: userName });
+    }
     
     return el;
   }
@@ -305,6 +316,9 @@ var start = function() {
   function updatePeerInfo() {
     const count = room.getPeers().length;
     byId("room-num").innerText = "room #" + window.roomId + ` (${count})`;
+    if (userName && sendCmd) {
+      sendCmd({peerId: selfId, cmd: "username", username: userName });
+    }
     /*
     peerInfo.innerHTML = count
       ? `Right now <em>${count}</em> other peer${
