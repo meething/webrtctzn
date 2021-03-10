@@ -3,14 +3,14 @@ import { joinRoom, selfId } from "https://cdn.skypack.dev/trystero@0.7.9";
 var start = function() {
   const byId = document.getElementById.bind(document);
   const canvas = byId("canvas");
-  const peerInfo = byId("peer-info");
   const chat = byId("chat");
   const chatbox = byId("chatbox");
   const chatbutton = byId("chatbutton");
   const talkbutton = byId("talkbutton");
   const mutebutton = byId("mutebutton");
   const iframe = byId("iframe");
-  const noPeersCopy = peerInfo.innerText;
+  //const peerInfo = byId("peer-info");
+  //const noPeersCopy = peerInfo.innerText;
   const config = { appId: "trystero-glitch" };
   const cursors = {};
   const roomCap = 33;
@@ -48,16 +48,35 @@ var start = function() {
   var streams = [];
   // sidepeer for calls only
   var peerId = selfId + "_call";
+  var userName = false;
+  var roomName = false;
   //var peer = new Peer(peerId);
 
   // Room Selector
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   if (urlParams.has("room")) { 
-    init(urlParams.get("room"))
+    roomName = urlParams.get("room");
+    init(roomName)
   } else {
-    init(99);                            
+    roomName = 99;
+    init(roomName);                            
   }  
+  
+  if (urlParams.has("username")) { 
+    userName = urlParams.get("username");
+    // remove from URL for easy sharing
+     var refresh =
+            window.location.protocol +
+            "//" +
+            window.location.host +
+            window.location.pathname +
+            "?room=" +
+            roomName;
+            window.history.pushState({ path: refresh }, "", refresh);
+  }  else {
+    userName = prompt("Whats your name, stranger?") || selfId;
+  }
   
   // focus on chat input all the time
   var focus = function(){
@@ -128,9 +147,10 @@ var start = function() {
       handleStream(stream, selfId);
       streaming = stream;
       muted = false;
-      sendCmd({peerId: peerId, cmd: "hand", state: true });
       talkbutton.innerHTML = '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:white;"></i>';
       talkbutton.style.background = "red";
+      // notify network
+      sendCmd({peerId: peerId, cmd: "hand", state: true });
     } else {
       console.log('')
       room.removeStream(streaming);
@@ -141,9 +161,13 @@ var start = function() {
       var el = byId("vid_" + selfId )
       el.srcObject = null;
       streaming = null;
-      muted = true;
+      // reset mute
+      mutebutton.innerHTML = '<i class="fa fa-microphone fa-2x" aria-hidden="true"></i>';
+      muted = false;
+      // reset call button
       talkbutton.innerHTML = '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:green;"></i>';
       talkbutton.style.background = "";
+      // notify network
       sendCmd({peerId: peerId, cmd: "stop_video"});
       sendCmd({peerId: peerId, cmd: "hand", state: false });
     }  
@@ -181,6 +205,7 @@ var start = function() {
 
     room = joinRoom(config, ns);
     window.room = room;
+    window.roomId = n;
     window.self = selfId;
     [sendMove, getMove] = room.makeAction("mouseMove");
     [sendClick, getClick] = room.makeAction("click");
@@ -215,6 +240,10 @@ var start = function() {
         var el = byId("hand_" + id);
         if (el && data.state) el.classList.add("handgreen");
         else el.classList.remove("handgreen");
+      } else 
+      if (data.cmd == "username" && data.username){
+        var el = byId("name_" + id);
+        el.innerText = data.username;
       }
     }
   }
@@ -226,14 +255,14 @@ var start = function() {
     }
     var el = byId("vid_" + peerId);
     if (!el) console.error('target video frame not found!', peerId)
-    console.log('received stream', stream, peerId, el);
+    //console.log('received stream', stream, peerId, el);
     setTimeout(function () {
       el.setAttribute('autoplay', true);
       el.setAttribute('inline', true);
       el.setAttribute('height', 240);
       el.setAttribute('width', 480);
       el.srcObject = stream;
-    }, 100);
+    }, 200);
   }
   
   function moveCursor([x, y], id) {
@@ -250,15 +279,16 @@ var start = function() {
     const img = document.createElement("img");
     img.id = "hand_" + id;
     const txt = document.createElement("p");
+    txt.id = "name_" + id;
     const video = document.createElement("video");
     video.id = "vid_" + id;
     video.className = "video-circle";
-    video.addEventListener('loadedmetadata', function(data) { console.log('metaload',data) });
+    //video.addEventListener('loadedmetadata', function(data) { console.log('metaload',data) });
 
     el.style.float = "left";
     el.className = `cursor${isSelf ? " self" : ""}`;
     el.style.left = el.style.top = "-99px";
-    img.src = "https://github.com/dmotz/trystero/raw/main/docs/images/hand.png";
+    img.src = "static/hand.png";
     txt.innerText = isSelf ? "you" : id.slice(0, 4);
     el.appendChild(img);
     el.appendChild(txt);
@@ -268,6 +298,10 @@ var start = function() {
 
     if (!isSelf) {
       updatePeerInfo();
+    }
+    
+    if (userName && sendCmd) {
+      sendCmd({peerId: selfId, cmd: "username", username: userName });
     }
     
     return el;
@@ -286,16 +320,34 @@ var start = function() {
 
   function updatePeerInfo() {
     const count = room.getPeers().length;
+    byId("room-num").innerText = "room #" + window.roomId + ` (${count})`;
+    if (userName && sendCmd) {
+      sendCmd({peerId: selfId, cmd: "username", username: userName });
+    }
+    /*
     peerInfo.innerHTML = count
       ? `Right now <em>${count}</em> other peer${
           count === 1 ? " is" : "s are"
         } connected with you. Send them some fruit.`
       : noPeersCopy;
+    */
   }
 
   function updateChat(msg, id) {
-    //if (isValidHttpUrl(msg)) iframe.src = msg; // "https://excalidraw.com/#room="+selfId+",00"+selfId;
-    //else chat.innerHTML = id + ":" + msg + "<br/>" + chat.innerHTML;
+    
+    if (isValidHttpUrl(msg) && id != selfId) { 
+      var open = window.confirm(id+' is sharing a url. Trust it?');
+      if (open) {
+        // Save it!
+        console.log('opening remote link.');
+        //iframe.src = msg; // "https://excalidraw.com/#room="+selfId+",00"+selfId;
+        window.open(msg, '_blank');
+      } else {
+        // Do nothing!
+        console.log('Ignoring remote link.', id, selfId);
+        chat.innerHTML = id + ":" + msg + "<br/>" + chat.innerHTML;
+      }  
+    } 
     
     chat.innerHTML = id + ":" + msg + "<br/>" + chat.innerHTML;
     

@@ -1,6 +1,6 @@
-# dWebRTC Demo
+# webrtCTZN
 
-Decentralized p2p dWebRTC demo with multi-network peer discovery (bittorrent, ipfs, gun)
+Decentralized p2p dWebRTC for CTZN with multi-network peer discovery (bittorrent, ipfs, gun)
 
 
 ### Ingredients
