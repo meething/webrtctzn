@@ -3,14 +3,14 @@ import { joinRoom, selfId } from "https://cdn.skypack.dev/trystero@0.7.9";
 var start = function() {
   const byId = document.getElementById.bind(document);
   const canvas = byId("canvas");
-  const peerInfo = byId("peer-info");
   const chat = byId("chat");
   const chatbox = byId("chatbox");
   const chatbutton = byId("chatbutton");
   const talkbutton = byId("talkbutton");
   const mutebutton = byId("mutebutton");
   const iframe = byId("iframe");
-  const noPeersCopy = peerInfo.innerText;
+  //const peerInfo = byId("peer-info");
+  //const noPeersCopy = peerInfo.innerText;
   const config = { appId: "trystero-glitch" };
   const cursors = {};
   const roomCap = 33;
@@ -232,14 +232,14 @@ var start = function() {
     }
     var el = byId("vid_" + peerId);
     if (!el) console.error('target video frame not found!', peerId)
-    console.log('received stream', stream, peerId, el);
+    //console.log('received stream', stream, peerId, el);
     setTimeout(function () {
       el.setAttribute('autoplay', true);
       el.setAttribute('inline', true);
       el.setAttribute('height', 240);
       el.setAttribute('width', 480);
       el.srcObject = stream;
-    }, 100);
+    }, 200);
   }
   
   function moveCursor([x, y], id) {
@@ -259,7 +259,7 @@ var start = function() {
     const video = document.createElement("video");
     video.id = "vid_" + id;
     video.className = "video-circle";
-    video.addEventListener('loadedmetadata', function(data) { console.log('metaload',data) });
+    //video.addEventListener('loadedmetadata', function(data) { console.log('metaload',data) });
 
     el.style.float = "left";
     el.className = `cursor${isSelf ? " self" : ""}`;
@@ -292,12 +292,14 @@ var start = function() {
 
   function updatePeerInfo() {
     const count = room.getPeers().length;
-    byId("room-num").innerText = "room #" + window.roomId + `(${count})`;
+    byId("room-num").innerText = "room #" + window.roomId + ` (${count})`;
+    /*
     peerInfo.innerHTML = count
       ? `Right now <em>${count}</em> other peer${
           count === 1 ? " is" : "s are"
         } connected with you. Send them some fruit.`
       : noPeersCopy;
+    */
   }
 
   function updateChat(msg, id) {
