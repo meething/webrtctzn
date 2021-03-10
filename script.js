@@ -201,6 +201,7 @@ var start = function() {
   }
   
   function handleCmd (data, id){
+    if(id == selfId) return;
     console.log('got cmd', data, id)
     if (data){
       if (data.cmd == "stop_video" && data.peerId){
