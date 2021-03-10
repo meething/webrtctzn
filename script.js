@@ -303,23 +303,20 @@ var start = function() {
   }
 
   function updateChat(msg, id) {
-    
+    /*
     //if (isValidHttpUrl(msg)) { 
-    if (msg == '<drawing>') { 
-      if (window.confirm(id+' is sharing a drawing board. Trust it?')) {
+      if (window.confirm(id+' is sharing a url. Trust it?')) {
         // Save it!
         console.log('opening remote link.');
-        iframe.src = "https://excalidraw.com/#room="+selfId+",00"+selfId;
+        iframe.src = msg; // "https://excalidraw.com/#room="+selfId+",00"+selfId;
       } else {
         // Do nothing!
         console.log('Ignoring remote link.', id, selfId);
         chat.innerHTML = id + ":" + msg + "<br/>" + chat.innerHTML;
       }  
-    } else {
-      
-    }
-    
-    
+    } 
+    */
+    chat.innerHTML = id + ":" + msg + "<br/>" + chat.innerHTML;
     
   }
 
