@@ -48,6 +48,7 @@ var start = function() {
   var streams = [];
   // sidepeer for calls only
   var peerId = selfId + "_call";
+  var userId = false;
   //var peer = new Peer(peerId);
 
   // Room Selector
@@ -57,6 +58,10 @@ var start = function() {
     init(urlParams.get("room"))
   } else {
     init(99);                            
+  }  
+  
+  if (urlParams.has("userId")) { 
+    userId = urlParams.get("userId");
   }  
   
   // focus on chat input all the time
