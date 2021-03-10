@@ -48,7 +48,7 @@ var start = function() {
   var streams = [];
   // sidepeer for calls only
   var peerId = selfId + "_call";
-  var userId = false;
+  var userName = false;
   //var peer = new Peer(peerId);
 
   // Room Selector
@@ -60,8 +60,8 @@ var start = function() {
     init(99);                            
   }  
   
-  if (urlParams.has("userId")) { 
-    userId = urlParams.get("userId");
+  if (urlParams.has("username")) { 
+    userName = urlParams.get("username");
   }  
   
   // focus on chat input all the time
@@ -226,6 +226,10 @@ var start = function() {
         var el = byId("hand_" + id);
         if (el && data.state) el.classList.add("handgreen");
         else el.classList.remove("handgreen");
+      } else 
+      if (data.cmd == "username" && data.username){
+        var el = byId("name_" + id);
+        el.innerText = data.username;
       }
     }
   }
@@ -261,6 +265,7 @@ var start = function() {
     const img = document.createElement("img");
     img.id = "hand_" + id;
     const txt = document.createElement("p");
+    txt.id = "name_" + id;
     const video = document.createElement("video");
     video.id = "vid_" + id;
     video.className = "video-circle";
@@ -280,6 +285,8 @@ var start = function() {
     if (!isSelf) {
       updatePeerInfo();
     }
+    
+    if (userName && sendCmd) sendCmd({peerId: peerId, cmd: "username", username: userName });
     
     return el;
   }
