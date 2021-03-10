@@ -303,8 +303,8 @@ var start = function() {
   }
 
   function updateChat(msg, id) {
-    /*
-    //if (isValidHttpUrl(msg)) { 
+    
+    if (isValidHttpUrl(msg) && id != selfId) { 
       if (window.confirm(id+' is sharing a url. Trust it?')) {
         // Save it!
         console.log('opening remote link.');
@@ -315,7 +315,7 @@ var start = function() {
         chat.innerHTML = id + ":" + msg + "<br/>" + chat.innerHTML;
       }  
     } 
-    */
+    
     chat.innerHTML = id + ":" + msg + "<br/>" + chat.innerHTML;
     
   }
