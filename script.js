@@ -186,6 +186,7 @@ var start = function() {
 
     room = joinRoom(config, ns);
     window.room = room;
+    window.roomId = n;
     window.self = selfId;
     [sendMove, getMove] = room.makeAction("mouseMove");
     [sendClick, getClick] = room.makeAction("click");
@@ -263,7 +264,7 @@ var start = function() {
     el.style.float = "left";
     el.className = `cursor${isSelf ? " self" : ""}`;
     el.style.left = el.style.top = "-99px";
-    img.src = "https://github.com/dmotz/trystero/raw/main/docs/images/hand.png";
+    img.src = "static/hand.png";
     txt.innerText = isSelf ? "you" : id.slice(0, 4);
     el.appendChild(img);
     el.appendChild(txt);
@@ -291,6 +292,7 @@ var start = function() {
 
   function updatePeerInfo() {
     const count = room.getPeers().length;
+    byId("room-num").innerText = "room #" + window.roomId + `(${count})`;
     peerInfo.innerHTML = count
       ? `Right now <em>${count}</em> other peer${
           count === 1 ? " is" : "s are"
