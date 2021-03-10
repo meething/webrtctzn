@@ -305,10 +305,12 @@ var start = function() {
   function updateChat(msg, id) {
     
     if (isValidHttpUrl(msg) && id != selfId) { 
-      if (window.confirm(id+' is sharing a url. Trust it?')) {
+      var open = window.confirm(id+' is sharing a url. Trust it?');
+      if (open) {
         // Save it!
         console.log('opening remote link.');
-        iframe.src = msg; // "https://excalidraw.com/#room="+selfId+",00"+selfId;
+        //iframe.src = msg; // "https://excalidraw.com/#room="+selfId+",00"+selfId;
+        window.open(msg, '_blank');
       } else {
         // Do nothing!
         console.log('Ignoring remote link.', id, selfId);
