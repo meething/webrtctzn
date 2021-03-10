@@ -56,22 +56,27 @@ var start = function() {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   if (urlParams.has("room")) { 
-    init(urlParams.get("room"))
+    roomName = urlParams.get("room");
+    init(roomName)
   } else {
-    init(99);                            
+    roomName = 99;
+    init(roomName);                            
   }  
   
   if (urlParams.has("username")) { 
     userName = urlParams.get("username");
+    // remove from URL for easy sharing
      var refresh =
             window.location.protocol +
             "//" +
             window.location.host +
             window.location.pathname +
             "?room=" +
-            randomId;
-          window.history.pushState({ path: refresh }, "", refresh);
-  }  
+            roomName;
+            window.history.pushState({ path: refresh }, "", refresh);
+  }  else {
+    userName = prompt("Whats your name, stranger?") || selfId;
+  }
   
   // focus on chat input all the time
   var focus = function(){
