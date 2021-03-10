@@ -128,9 +128,10 @@ var start = function() {
       handleStream(stream, selfId);
       streaming = stream;
       muted = false;
-      sendCmd({peerId: peerId, cmd: "hand", state: true });
       talkbutton.innerHTML = '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:white;"></i>';
       talkbutton.style.background = "red";
+      // notify network
+      sendCmd({peerId: peerId, cmd: "hand", state: true });
     } else {
       console.log('')
       room.removeStream(streaming);
@@ -141,9 +142,13 @@ var start = function() {
       var el = byId("vid_" + selfId )
       el.srcObject = null;
       streaming = null;
-      muted = true;
+      // reset mute
+      mutebutton.innerHTML = '<i class="fa fa-microphone fa-2x" aria-hidden="true"></i>';
+      muted = false;
+      // reset call button
       talkbutton.innerHTML = '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:green;"></i>';
       talkbutton.style.background = "";
+      // notify network
       sendCmd({peerId: peerId, cmd: "stop_video"});
       sendCmd({peerId: peerId, cmd: "hand", state: false });
     }  
