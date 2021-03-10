@@ -1,4 +1,9 @@
-Trystero Mesh Demo
-=================
+# dWebRTC Demo
 
-Fruit + Chat demo for the [Trystero](https://github.com/dmotz/trystero) browser mesh using bittorrent strategy for peer discovery.
+Decentralized p2p dWebRTC demo with multi-network peer discovery (bittorrent, ipfs, gun)
+
+
+### Ingredients
+
+* [Meething](https://github.com/meething)
+* [Trystero](https://github.com/dmotz/trystero)

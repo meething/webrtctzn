@@ -15,9 +15,9 @@ html {
 }
 
 body {
-  background-color: #000;
-  color: #fff;
-  max-width: 800px;
+  background-color: #fff;
+  color: #000;
+  max-width: 900px;
   margin: 0 auto;
   font-family: 'Space Mono', monospace;
   padding: 1rem;
@@ -42,21 +42,19 @@ body {
 header {
   margin-top: 2.4rem;
   margin-bottom: 2.4rem;
-  border-top: 10px solid #fff;
-  border-bottom: 10px solid #fff;
+  border-top: 5px solid #000;
+  border-bottom: 5px solid #000;
   padding: 1rem 0;
 }
 
 header > div {
-  display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  margin-top: 4rem;
+  margin-top: 1rem;
 }
 
 header a {
   background-color: blue;
-  color: #fff;
+  color: #000;
   text-decoration: none;
   padding: 1rem;
   font-size: 2rem;
@@ -71,17 +69,20 @@ header a {
   font-size: 1.6rem;
 }
 
-header a:hover {
-  background-color: #fff;
-  color: #000;
-}
-
 h1 {
   font-size: 7rem;
   text-transform: lowercase;
   display: inline-block;
+  position: static;
+  transform: none;
+}
+
+h1_side {
+  font-size: 7rem;
+  text-transform: lowercase;
+  display: inline-block;
   position: absolute;
-  transform: rotate(-270deg) translateX(-19%) translateY(44%);
+  transform: rotate(-270deg) translateX(-16%) translateY(44%);
   transform-origin: 0;
 }
 
@@ -158,7 +159,6 @@ pre {
 
 .cursor.self p {
   color: #000;
-  background-color: #fff;
   font-size: 2rem;
   padding: 0 0.5rem;
 }
@@ -171,6 +171,7 @@ pre {
 
 .cursor p {
   text-align: center;
+  text-align: left;
   font-size: 1.2rem;
 }
 
@@ -190,15 +191,80 @@ pre {
 }
 .chatbox {
   float: left;
-  width: 90%;
-  height: 30px;
+  width: 80%;
+  height: 45px;
+  font-family: 'Space Mono', monospace;
 }
 .chatbutton {
   float: right;
+  width: 20%;
+  height: 45px;
+  font-family: 'Space Mono', monospace;
+}
+.smallbutton {
+  float: right;
+  width: 13%;
+  height: 45px;
+  font-family: 'Space Mono', monospace;
+}
+.bigbutton {
+  float: right;
+  width: 33%;
+  height: 60px;
+  font-family: 'Space Mono', monospace;
+}
+.audiobox {
+  float: right;
   width: 10%;
-  height: 30px
+  height: 45px;
+  font-family: 'Space Mono', monospace;
 }
 
+.video-circle {
+  border-radius: 50%;
+  object-fit: cover;
+  width: 120px;
+  height: 120px;
+  max-width: 250px;
+  margin-left: -30%;
+  margin-top: -18px;
+}
+
+.handgreen {
+  filter: invert(48%) sepia(18%) saturate(3137%) hue-rotate(130deg) brightness(95%) contrast(80%);
+}
+
+.handgray {
+  filer: invert(114%) sepia(45%) saturate(3139%) hue-rotate(170deg) brightness(95%) contrast(77%);
+}
+
+.sider{
+  float: right;
+}
+.splitleft {
+  width: 70%;
+  float: left;
+}
+.splitright {
+  width: 30%;
+  float: right;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.iframe{
+  border: 0;
+  bottom: 10px;
+  position: fixed;
+  height: 50%;
+  left: 0px;
+}
 
 @keyframes drop {
   from {
@@ -229,4 +295,12 @@ pre {
     position: static;
     transform: none;
   }
+
+  .bigbutton {
+    float: right;
+    width: 45%;
+    height: 60px;
+    font-family: 'Space Mono', monospace;
+  }
+  
 }
