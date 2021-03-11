@@ -1,17 +1,5 @@
 import { joinRoom, selfId } from "https://cdn.skypack.dev/trystero@0.7.9";
 
-function initFingerprintJS() {
-  FingerprintJS.load().then(fp => {
-    // The FingerprintJS agent is ready.
-    // Get a visitor identifier when you'd like to.
-    fp.get().then(result => {
-      // This is the visitor identifier:
-      window.unique = result.visitorId;
-      console.log(window.unique);
-    });
-  });
-}
-
 var start = function() {
   const byId = document.getElementById.bind(document);
   const canvas = byId("canvas");
@@ -20,7 +8,7 @@ var start = function() {
   const chatbutton = byId("chatbutton");
   const talkbutton = byId("talkbutton");
   const mutebutton = byId("mutebutton");
-  const iframe = byId("iframe");
+
   //const peerInfo = byId("peer-info");
   //const noPeersCopy = peerInfo.innerText;
   const config = { appId: "trystero-glitch" };
@@ -98,10 +86,12 @@ var start = function() {
   }
   
   // focus on chat input all the time
+  /*
   var focus = function(){
       document.getElementById('chatbox').focus();
   }; focus();
   window.addEventListener('focus', focus);
+  */
   
   document.documentElement.className = "ready";
   addCursor(selfId, true);
@@ -239,9 +229,7 @@ var start = function() {
     getClick(dropFruit);
     getChat(updateChat);
     getCmd(handleCmd);
-    
-    //iframe.src = "https://excalidraw.com/#room="+selfId+",00"+selfId;
-    
+        
   }
   
   function handleCmd (data, id){
@@ -361,7 +349,6 @@ var start = function() {
       var open = window.confirm(user+' is sharing a url. Trust it?');
       if (open) {
         console.log('opening remote link.');
-        //iframe.src = msg; // "https://excalidraw.com/#room="+selfId+",00"+selfId;
         window.open(msg, '_blank');
       } 
     } 
