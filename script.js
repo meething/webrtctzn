@@ -9,6 +9,7 @@ var start = function() {
   const talkbutton = byId("talkbutton");
   const mutebutton = byId("mutebutton");
   const shareButton = byId("share-button");
+  const peerGrid = byId("peer-grid");
   var features = { audio: true, video: false };
 
   document.addEventListener("visibilitychange", function(event) {
@@ -241,7 +242,7 @@ var start = function() {
 
   function handleCmd(data, id) {
     if (id == selfId) return;
-    console.log("got cmd", data, id);
+    //console.log("got cmd", data, id);
     if (data) {
       if (data.cmd == "stop_video" && data.peerId) {
         var el = byId("vid_" + id);
