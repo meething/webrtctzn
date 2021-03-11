@@ -9,6 +9,7 @@ var start = function() {
   const talkbutton = byId("talkbutton");
   const mutebutton = byId("mutebutton");
   const shareButton = byId("share-button");
+  var features = { audio: true, video: false };
 
 
   //const peerInfo = byId("peer-info");
@@ -88,12 +89,12 @@ var start = function() {
   }
   
   // focus on chat input all the time
-  /*
+  
   var focus = function(){
       document.getElementById('chatbox').focus();
   }; focus();
   window.addEventListener('focus', focus);
-  */
+  
   
   document.documentElement.className = "ready";
   addCursor(selfId, true);
@@ -148,7 +149,7 @@ var start = function() {
   talkbutton.addEventListener("click", async () => {
     console.log('call button')
     if (!streaming){
-      var stream = await navigator.mediaDevices.getUserMedia({audio:true, video:true});
+      var stream = await navigator.mediaDevices.getUserMedia({audio:true, video:false});
       room.addStream(stream);
       handleStream(stream, selfId);
       streaming = stream;
