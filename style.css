@@ -496,10 +496,13 @@ textarea::placeholder {
   color: #a0aec0;
 }
 
+
 button,
 [role="button"] {
-  cursor: pointer;
+  cursor: none;
+  
 }
+
 
 table {
   border-collapse: collapse;
@@ -108640,14 +108643,14 @@ video {
 }
 
 input {
-    font-size: 18px;
+    font-size: 16px;
     padding: 6px 12px;
     width: 400px;
     outline: none;
 }
 
 label {
-    font-size: 18px;
+    font-size: 16px;
     padding: 6px 12px;
     outline: none;
 }
@@ -108976,4 +108979,14 @@ pre {
     height: 60px;
     font-family: "Space Mono", monospace;
   }
+}
+
+button:hover:disabled{
+  background-color: #e2e8f0;
+  pointer-events: none;
+}
+button:disabled
+{
+    opacity:0.5;
+    pointer-events: none;
 }
