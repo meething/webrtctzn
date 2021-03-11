@@ -8,7 +8,7 @@
     if (imageTypes.includes(fileType)) {
       var reader = new FileReader();
       reader.onload = (function (img) { 
-          console.log('got img',img.target.result);
+          console.log('got img',img.target);
           displayImage(img.target.result); 
       });
       reader.readAsDataURL(ev.dataTransfer.files[0]);
@@ -25,9 +25,9 @@ function allowDrop(ev) {
 }
 
 
-function displayImage(img){
+function displayImage(imgx){
     var cell = document.getElementById("peer-grid");
     var img = document.createElement("img");
-    img.src = img;
+    img.src = imgx;
     cell.appendChild(img);
 }
