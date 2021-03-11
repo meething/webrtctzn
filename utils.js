@@ -1,15 +1,33 @@
  function drop(ev) {
   ev.preventDefault();
-  try {
-    var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
-  } catch(e){
-    console.log(e, data);
-  }
-  
+  var imageTypes = ['image/png', 'image/gif', 'image/bmp', 'image/jpg'];
+  if (ev.dataTransfer && ev.dataTransfer.files) {
+    // ev.dataTransfer.files is a FileList
+    // ev.dataTransfer.files[0].type is a Blob.type
+    var fileType = ev.dataTransfer.files[0].type;
+    if (imageTypes.includes(fileType)) {
+      var reader = new FileReader();
+      reader.onload = (function (img) { 
+          console.log('got img',img.target.result);
+          displayImage(img.target.result); 
+      });
+      reader.readAsDataURL(ev.dataTransfer.files[0]);
+      
+    } else {
+      console.log('dropped file is not an image');
+    }
+  } 
 }
 
 function allowDrop(ev) {
-  ev.target.style.color = 'blue';
+  //ev.target.style.color = 'blue';
   ev.preventDefault();
+}
+
+
+function displayImage(img){
+    var cell = document.getElementById("peer-grid");
+    var img = document.createElement("img");
+    img.src = img;
+    cell.appendChild(img);
 }
