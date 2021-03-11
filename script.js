@@ -229,7 +229,7 @@ var start = function() {
     [sendChat, getChat] = room.makeAction("chat");
     [sendCmd, getCmd] = room.makeAction("cmd");
 
-    byId("room-num").innerText = "room #" + n;
+    byId("room-num").innerText = "#" + n;
     room.onPeerJoin(addCursor);
     room.onPeerLeave(removeCursor);
     room.onPeerStream(handleStream);
@@ -341,7 +341,7 @@ var start = function() {
 
   function updatePeerInfo() {
     const count = room.getPeers().length;
-    byId("room-num").innerText = "room #" + window.roomId + ` (${count})`;
+    byId("room-num").innerText = "#" + window.roomId + ` (${count})`;
     if (userName && sendCmd) {
       sendCmd({ peerId: selfId, cmd: "username", username: userName });
     }

@@ -184,6 +184,7 @@ pre {
 
 .chatp {
   display: block;
+  font-size: 14px;
   word-wrap: break-word;
   overflow: hidden;
   max-height: 77.7em;
