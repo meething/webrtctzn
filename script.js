@@ -10,13 +10,11 @@ var start = function() {
   const mutebutton = byId("mutebutton");
   const shareButton = byId("share-button");
   var features = { audio: true, video: false };
-  
-  document.addEventListener("visibilitychange", function(event){ 
-    console.log(document.visibilityState) 
-    sendCmd({peerId: peerId, cmd: "hand", focus: document.visibilityState });
+
+  document.addEventListener("visibilitychange", function(event) {
+    console.log(document.visibilityState);
+    sendCmd({ peerId: peerId, cmd: "hand", focus: document.visibilityState });
   });
-
-
 
   //const peerInfo = byId("peer-info");
   //const noPeersCopy = peerInfo.innerText;
@@ -53,7 +51,7 @@ var start = function() {
   let sendCmd;
 
   const peerAlias = {};
-  
+
   var streams = [];
   // sidepeer for calls only
   var peerId = selfId + "_call";
@@ -63,45 +61,44 @@ var start = function() {
   // Room Selector
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  if (urlParams.has("room")) { 
+  if (urlParams.has("room")) {
     roomName = urlParams.get("room");
-    init(roomName)
+    init(roomName);
   } else {
-    roomName = 'lobby';
-    init(roomName);                            
-  }  
-  
-  if (urlParams.has("username")) { 
+    roomName = "lobby";
+    init(roomName);
+  }
+
+  if (urlParams.has("username")) {
     userName = urlParams.get("username");
     // remove from URL for easy sharing
-     var refresh =
-            window.location.protocol +
-            "//" +
-            window.location.host +
-            window.location.pathname +
-            "?room=" +
-            roomName;
-            window.history.pushState({ path: refresh }, "", refresh);
-    console.log('set localstorage')
-    localStorage.setItem('username', userName);
-    
-  }  else {
-    if (localStorage.getItem('username')){
-      userName = localStorage.getItem('username');
+    var refresh =
+      window.location.protocol +
+      "//" +
+      window.location.host +
+      window.location.pathname +
+      "?room=" +
+      roomName;
+    window.history.pushState({ path: refresh }, "", refresh);
+    console.log("set localstorage");
+    localStorage.setItem("username", userName);
+  } else {
+    if (localStorage.getItem("username")) {
+      userName = localStorage.getItem("username");
     } else {
       userName = prompt("Whats your name, stranger?") || selfId;
-      localStorage.setItem('username', userName);
+      localStorage.setItem("username", userName);
     }
   }
-  
+
   // focus on chat input all the time
-  
-  var focus = function(){
-      document.getElementById('chatbox').focus();
-  }; focus();
-  window.addEventListener('focus', focus);
-  
-  
+
+  var focus = function() {
+    document.getElementById("chatbox").focus();
+  };
+  focus();
+  window.addEventListener("focus", focus);
+
   document.documentElement.className = "ready";
   addCursor(selfId, true);
 
@@ -138,8 +135,8 @@ var start = function() {
 
   window.chat = function(msg) {
     if (!msg || msg.length < 1) return;
-    updateChat({msg: msg, username: userName}, selfId);
-    if (room) sendChat({msg: msg, username: userName});
+    updateChat({ msg: msg, username: userName }, selfId);
+    if (room) sendChat({ msg: msg, username: userName });
     return;
   };
   chatbox.addEventListener("keypress", function(e) {
@@ -149,59 +146,66 @@ var start = function() {
       return false;
     }
   });
-  
+
   var streaming = false;
   var muted = false;
   talkbutton.addEventListener("click", async () => {
-    console.log('call button')
-    if (!streaming){
-      var stream = await navigator.mediaDevices.getUserMedia({audio:true, video:false});
+    console.log("call button");
+    if (!streaming) {
+      var stream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+        video: false
+      });
       room.addStream(stream);
       handleStream(stream, selfId);
       streaming = stream;
       muted = false;
-      talkbutton.innerHTML = '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:white;"></i>';
+      talkbutton.innerHTML =
+        '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:white;"></i>';
       talkbutton.style.background = "red";
       // notify network
-      sendCmd({peerId: peerId, cmd: "hand", state: true });
+      sendCmd({ peerId: peerId, cmd: "hand", state: true });
     } else {
-      console.log('')
+      console.log("");
       room.removeStream(streaming);
       var tracks = streaming.getTracks();
       tracks.forEach(function(track) {
         track.stop();
       });
-      var el = byId("vid_" + selfId )
+      var el = byId("vid_" + selfId);
       el.srcObject = null;
       streaming = null;
       // reset mute
-      mutebutton.innerHTML = '<i class="fa fa-microphone fa-2x" aria-hidden="true"></i>';
+      mutebutton.innerHTML =
+        '<i class="fa fa-microphone fa-2x" aria-hidden="true"></i>';
       muted = false;
       // reset call button
-      talkbutton.innerHTML = '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:green;"></i>';
+      talkbutton.innerHTML =
+        '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:green;"></i>';
       talkbutton.style.background = "";
       // notify network
-      sendCmd({peerId: peerId, cmd: "stop_video"});
-      sendCmd({peerId: peerId, cmd: "hand", state: false });
-    }  
+      sendCmd({ peerId: peerId, cmd: "stop_video" });
+      sendCmd({ peerId: peerId, cmd: "hand", state: false });
+    }
     mutebutton.disabled = streaming ? false : true;
-  })
-  
+  });
+
   mutebutton.addEventListener("click", async () => {
     if (!streaming) return;
     var state = streaming.getAudioTracks()[0].enabled;
-    if (!muted){
-      mutebutton.innerHTML = '<i class="fa fa-microphone-slash fa-2x" aria-hidden="true"></i>';
+    if (!muted) {
+      mutebutton.innerHTML =
+        '<i class="fa fa-microphone-slash fa-2x" aria-hidden="true"></i>';
       muted = true;
       streaming.getAudioTracks()[0].enabled = false;
     } else {
-      mutebutton.innerHTML = '<i class="fa fa-microphone fa-2x" aria-hidden="true"></i>';
+      mutebutton.innerHTML =
+        '<i class="fa fa-microphone fa-2x" aria-hidden="true"></i>';
       muted = false;
       streaming.getAudioTracks()[0].enabled = true;
     }
-    
   });
-  
+
   async function init(n) {
     const ns = "room" + n;
     const members = 1;
@@ -233,58 +237,54 @@ var start = function() {
     getClick(dropFruit);
     getChat(updateChat);
     getCmd(handleCmd);
-        
   }
-  
-  function handleCmd (data, id){
-    if(id == selfId) return;
-    console.log('got cmd', data, id)
-    if (data){
-      if (data.cmd == "stop_video" && data.peerId){
+
+  function handleCmd(data, id) {
+    if (id == selfId) return;
+    console.log("got cmd", data, id);
+    if (data) {
+      if (data.cmd == "stop_video" && data.peerId) {
         var el = byId("vid_" + id);
         if (el) el.srcObject = null;
         // which one is it? :)
         el = byId("vid_" + peerId);
         if (el) el.srcObject = null;
-      } else 
-      if (data.cmd == "hand"){
-        if (data.focus){
+      } else if (data.cmd == "hand") {
+        if (data.focus) {
           // handle focus
           var el = byId("cursor_" + id);
           if (el && data.focus == "hidden") el.classList.add("handoff");
-          else el.classList.remove("handoff");          
+          else el.classList.remove("handoff");
         } else {
           // handle state
           var el = byId("hand_" + id);
           if (el && data.state) el.classList.add("handgreen");
           else el.classList.remove("handgreen");
         }
-        
-      } else 
-      if (data.cmd == "username" && data.username){
+      } else if (data.cmd == "username" && data.username) {
         var el = byId("name_" + id);
         if (el) el.innerText = data.username;
       }
     }
   }
-  
-  function handleStream (stream, peerId) {
-    if(peerId == selfId) { 
+
+  function handleStream(stream, peerId) {
+    if (peerId == selfId) {
       var selfStream = stream;
       stream = new MediaStream(selfStream.getVideoTracks());
     }
     var el = byId("vid_" + peerId);
-    if (!el) console.error('target video frame not found!', peerId)
+    if (!el) console.error("target video frame not found!", peerId);
     //console.log('received stream', stream, peerId, el);
-    setTimeout(function () {
-      el.setAttribute('autoplay', true);
-      el.setAttribute('inline', true);
-      el.setAttribute('height', 240);
-      el.setAttribute('width', 480);
+    setTimeout(function() {
+      el.setAttribute("autoplay", true);
+      el.setAttribute("inline", true);
+      el.setAttribute("height", 240);
+      el.setAttribute("width", 480);
       el.srcObject = stream;
     }, 200);
   }
-  
+
   function moveCursor([x, y], id) {
     const el = cursors[id];
 
@@ -320,11 +320,11 @@ var start = function() {
     if (!isSelf) {
       updatePeerInfo();
     }
-    
+
     if (userName && sendCmd) {
-      sendCmd({peerId: selfId, cmd: "username", username: userName });
+      sendCmd({ peerId: selfId, cmd: "username", username: userName });
     }
-    
+
     return el;
   }
 
@@ -343,7 +343,7 @@ var start = function() {
     const count = room.getPeers().length;
     byId("room-num").innerText = "room #" + window.roomId + ` (${count})`;
     if (userName && sendCmd) {
-      sendCmd({peerId: selfId, cmd: "username", username: userName });
+      sendCmd({ peerId: selfId, cmd: "username", username: userName });
     }
     /*
     peerInfo.innerHTML = count
@@ -355,20 +355,18 @@ var start = function() {
   }
 
   function updateChat(data, id) {
-    
     var msg = data.msg;
     var user = data.username || id;
-    
-    if (isValidHttpUrl(msg) && id != selfId) { 
-      var open = window.confirm(user+' is sharing a url. Trust it?');
+
+    if (isValidHttpUrl(msg) && id != selfId) {
+      var open = window.confirm(user + " is sharing a url. Trust it?");
       if (open) {
-        console.log('opening remote link.');
-        window.open(msg, '_blank');
-      } 
-    } 
-    
+        console.log("opening remote link.");
+        window.open(msg, "_blank");
+      }
+    }
+
     chat.innerHTML = user + ":" + msg + "<br/>" + chat.innerHTML;
-    
   }
 
   function dropFruit([fruit, x, y]) {
@@ -380,20 +378,19 @@ var start = function() {
     canvas.appendChild(el);
     setTimeout(() => canvas.removeChild(el), 3000);
   }
-  
+
   function isValidHttpUrl(string) {
     let url;
     try {
       url = new URL(string);
     } catch (_) {
-      return false;  
+      return false;
     }
     return url.protocol === "http:" || url.protocol === "https:";
   }
-  
-  
+
   /* globals for compatibility */
-  
+
   window.shareUrl = function() {
     if (!window.getSelection) {
       alert("Clipboard not available, sorry!");
@@ -420,7 +417,7 @@ var start = function() {
     setTimeout(function() {
       shareButton.innerHTML = "Link";
     }, 1000);
-  }
+  };
   function notifyMe(msg) {
     // Let's check if the browser supports notifications
     if (!("Notification" in window)) {
@@ -443,12 +440,9 @@ var start = function() {
       });
     }
 
-  // At last, if the user has denied notifications, and you
-  // want to be respectful there is no need to bother them any more.
-}
-  
-
+    // At last, if the user has denied notifications, and you
+    // want to be respectful there is no need to bother them any more.
+  }
 };
 
 start();
-
