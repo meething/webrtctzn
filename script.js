@@ -141,15 +141,10 @@ var start = function() {
     }
   });
   
-  chatbutton.addEventListener("click", () => {
-    window.chat(chatbox.value);
-    chatbox.value = "";
-    return false;
-  });
-  
   var streaming = false;
   var muted = false;
   talkbutton.addEventListener("click", async () => {
+    console.log('call button')
     if (!streaming){
       var stream = await navigator.mediaDevices.getUserMedia({audio:true, video:true});
       room.addStream(stream);
