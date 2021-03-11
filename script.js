@@ -268,7 +268,7 @@ var start = function() {
       } else if (data.cmd == "username" && data.username) {
         var el = byId("name_" + id);
         if (el) el.innerText = data.username;
-      } else if (data.cmd == "img" && data.data) {
+      } else if (data.cmd == "img" && data.img) {
         console.log('got image', data)
       }
     }

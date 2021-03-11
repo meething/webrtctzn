@@ -10,7 +10,7 @@
       reader.onload = (function (img) { 
           console.log('got img',img.target);
           displayImage(img.target.result); 
-          ctl.sendCmd({ peerId: ctl.peerId, cmd: "img", data: img.target });
+    
       });
       reader.readAsDataURL(ev.dataTransfer.files[0]);
       
@@ -32,4 +32,5 @@ function displayImage(imgx){
     var img = document.createElement("img");
     img.src = imgx;
     cell.appendChild(img);
+    ctl.sendCmd({ peerId: ctl.peerId, cmd: "img", img: JSON.stringify(imgx) } ); 
 }
