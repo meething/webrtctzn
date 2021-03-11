@@ -10,6 +10,12 @@ var start = function() {
   const mutebutton = byId("mutebutton");
   const shareButton = byId("share-button");
   var features = { audio: true, video: false };
+  
+  document.addEventListener("visibilitychange", function(event){ 
+    console.log(document.visibilityState) 
+    sendCmd({peerId: peerId, cmd: "hand", focus: document.visibilityState });
+  });
+
 
 
   //const peerInfo = byId("peer-info");
@@ -242,9 +248,18 @@ var start = function() {
         if (el) el.srcObject = null;
       } else 
       if (data.cmd == "hand"){
-        var el = byId("hand_" + id);
-        if (el && data.state) el.classList.add("handgreen");
-        else el.classList.remove("handgreen");
+        if (data.focus){
+          // handle focus
+          var el = byId("hand_" + id);
+          if (el && data.focus == "hidden") el.classList.add("handgray");
+          else el.classList.remove("handgray");          
+        } else {
+          // handle state
+          var el = byId("hand_" + id);
+          if (el && data.state) el.classList.add("handgreen");
+          else el.classList.remove("handgreen");
+        }
+        
       } else 
       if (data.cmd == "username" && data.username){
         var el = byId("name_" + id);

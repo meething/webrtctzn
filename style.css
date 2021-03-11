@@ -108911,8 +108911,9 @@ pre {
 }
 
 .handgray {
-  filer: invert(114%) sepia(45%) saturate(3139%) hue-rotate(170deg)
+  filter: invert(114%) sepia(45%) saturate(3139%) hue-rotate(170deg)
     brightness(95%) contrast(77%);
+  opacity: 0.2;
 }
 
 .sider {
