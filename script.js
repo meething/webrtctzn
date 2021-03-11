@@ -250,7 +250,7 @@ var start = function() {
       if (data.cmd == "hand"){
         if (data.focus){
           // handle focus
-          var el = byId("hand_" + id);
+          var el = byId("cursor_" + id);
           if (el && data.focus == "hidden") el.classList.add("handoff");
           else el.classList.remove("handoff");          
         } else {
@@ -296,6 +296,7 @@ var start = function() {
 
   function addCursor(id, isSelf) {
     const el = document.createElement("div");
+    el.id = "cursor_" + id;
     const img = document.createElement("img");
     img.id = "hand_" + id;
     const txt = document.createElement("p");
