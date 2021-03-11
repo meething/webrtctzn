@@ -3,7 +3,6 @@ import { joinRoom, selfId } from "https://cdn.skypack.dev/trystero@0.7.9";
 var start = function() {
   const byId = document.getElementById.bind(document);
   const canvas = byId("canvas");
-  var ctx = canvas.getContext('2d');
   const chat = byId("chat");
   const chatbox = byId("chatbox");
   const chatbutton = byId("chatbutton");
@@ -70,7 +69,11 @@ var start = function() {
     roomName = "lobby";
     init(roomName);
   }
-
+  if (urlParams.has("video")) {
+    features.video = true;
+    talkbutton.innerHTML = '<i class="fa fa-video fa-2x" aria-hidden="true"></i>';
+  }
+  
   if (urlParams.has("username")) {
     userName = urlParams.get("username");
     // remove from URL for easy sharing
@@ -112,8 +115,9 @@ var start = function() {
       sendMove([mouseX, mouseY]);
     }
     
+    // whiteboard
+    /*
     if (buttons == 1) {
-        
         ctx.beginPath(); // begin
         ctx.lineCap = 'round';
         ctx.strokeStyle = '#c0392b';
@@ -122,6 +126,7 @@ var start = function() {
         ctx.lineTo(mouseX, mouseY); // to
         ctx.stroke(); // draw it  
     }
+    */
     
   });
 
@@ -166,10 +171,7 @@ var start = function() {
   talkbutton.addEventListener("click", async () => {
     console.log("call button");
     if (!streaming) {
-      var stream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: false
-      });
+      var stream = await navigator.mediaDevices.getUserMedia(features);
       room.addStream(stream);
       handleStream(stream, selfId);
       streaming = stream;
