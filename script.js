@@ -8,6 +8,8 @@ var start = function() {
   const chatbutton = byId("chatbutton");
   const talkbutton = byId("talkbutton");
   const mutebutton = byId("mutebutton");
+  const shareButton = byId("share-button");
+
 
   //const peerInfo = byId("peer-info");
   //const noPeersCopy = peerInfo.innerText;
@@ -245,7 +247,7 @@ var start = function() {
       } else 
       if (data.cmd == "username" && data.username){
         var el = byId("name_" + id);
-        el.innerText = data.username;
+        if (el) el.innerText = data.username;
       }
     }
   }
@@ -371,6 +373,63 @@ var start = function() {
     }
     return url.protocol === "http:" || url.protocol === "https:";
   }
+  
+  
+  /* globals for compatibility */
+  
+  window.shareUrl = function() {
+    if (!window.getSelection) {
+      alert("Clipboard not available, sorry!");
+      return;
+    }
+    const dummy = document.createElement("p");
+    dummy.textContent = window.location.href;
+    document.body.appendChild(dummy);
+
+    const range = document.createRange();
+    range.setStartBefore(dummy);
+    range.setEndAfter(dummy);
+
+    const selection = window.getSelection();
+    // First clear, in case the user already selected some other text
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+
+    notifyMe("link shared to clipboard");
+    shareButton.innerHTML = "Ctrl-v";
+    setTimeout(function() {
+      shareButton.innerHTML = "Link";
+    }, 1000);
+  }
+  function notifyMe(msg) {
+    // Let's check if the browser supports notifications
+    if (!("Notification" in window)) {
+      alert(msg);
+    }
+
+    // Let's check whether notification permissions have already been granted
+    else if (Notification.permission === "granted") {
+      // If it's okay let's create a notification
+      var notification = new Notification(msg);
+    }
+
+    // Otherwise, we need to ask the user for permission
+    else if (Notification.permission !== "denied") {
+      Notification.requestPermission().then(function(permission) {
+        // If the user accepts, let's create a notification
+        if (permission === "granted") {
+          var notification = new Notification(msg);
+        }
+      });
+    }
+
+  // At last, if the user has denied notifications, and you
+  // want to be respectful there is no need to bother them any more.
+}
+  
 
 };
 

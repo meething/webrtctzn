@@ -27,10 +27,9 @@
     <div id="call" style="display: block;" class="flex flex-col min-h-screen box-border px-10 py-5 my-0 mx-auto max-w-4xl">
       <div class="flex flex-row">
         
-        <button id="leave-button" onClick="leaveRoom(event)" style="margin-left: 0em" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full">Leave</button>
+        <!--<button id="leave-button" onClick="leaveRoom(event)" style="margin-left: 0em" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full">Leave</button>-->
 
         <button title="join call" type="button" id="talkbutton" 
-                style="margin-left: 0.5em" 
                 class="bg-gray-300 hover:bg-green-400 text-gray-800 font-bold py-2 px-6 rounded-full">
           <i class="fa fa-phone fa-2x" aria-hidden="true"></i>
         </button>
@@ -39,18 +38,22 @@
                 class="bg-gray-300 hover:bg-pink-400 text-white-800 font-bold py-2 px-6 rounded-full"disabled>
           <i class="fa fa-microphone fa-2x" aria-hidden="true"></i>
         </button>
+        <!--
+          <button id="share-button" onClick="shareUrl()" style="margin-left: 0.5em" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-6 rounded-full">Link</button>
+        -->
         
-        <button id="share-button" onClick="shareUrl()" style="margin-left: 0.5em" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-6 rounded-full">Link</button>
-    </div>
+        <input
+          id="chatbox"
+          name="text"
+          type="text"
+          class="chatbox"
+          placeholder=" type your message here..."
+          autocomplete="off"
+        />
       
-      <input
-        id="chatbox"
-        name="text"
-        type="text"
-        class="chatbox"
-        placeholder=" type your message here..."
-        autocomplete="off"
-      />
+      </div>
+      
+      
       <h1 class="text-5xl" id="room-num"></h1>
       <p id="chat" class="chatp"></p>
       

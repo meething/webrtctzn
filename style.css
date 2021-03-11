@@ -108853,10 +108853,10 @@ pre {
 }
 
 .chatp {
-  display: inline-block;
+  display: block;
   word-wrap: break-word;
   overflow: hidden;
-  max-height: 22.6em;
+  max-height: 77.7em;
   line-height: 1.2em;
   text-align: justify;
   margin-top: 16px;
