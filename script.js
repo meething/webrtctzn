@@ -251,8 +251,8 @@ var start = function() {
         if (data.focus){
           // handle focus
           var el = byId("hand_" + id);
-          if (el && data.focus == "hidden") el.classList.add("handgray");
-          else el.classList.remove("handgray");          
+          if (el && data.focus == "hidden") el.classList.add("handoff");
+          else el.classList.remove("handoff");          
         } else {
           // handle state
           var el = byId("hand_" + id);

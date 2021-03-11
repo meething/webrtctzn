@@ -108913,6 +108913,8 @@ pre {
 .handgray {
   filter: invert(114%) sepia(45%) saturate(3139%) hue-rotate(170deg)
     brightness(95%) contrast(77%);
+}
+.handoff {
   opacity: 0.2;
 }
 
