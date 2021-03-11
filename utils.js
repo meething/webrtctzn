@@ -9,7 +9,7 @@
       var reader = new FileReader();
       reader.onload = (function (img) { 
           console.log('got img',img.target);
-          displayImage(img.target.result); 
+          displayImage(img.target); 
     
       });
       reader.readAsDataURL(ev.dataTransfer.files[0]);
@@ -30,7 +30,6 @@ function allowDrop(ev) {
 function displayImage(imgx){
     var cell = document.getElementById("peer-grid");
     var img = document.createElement("img");
-    img.src = imgx;
+    img.src = imgx.result;
     cell.appendChild(img);
-    ctl.sendCmd({ peerId: ctl.peerId, cmd: "img", img: JSON.stringify(imgx) } ); 
 }
