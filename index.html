@@ -21,6 +21,7 @@
    
   </head>
   <body>
+    <div id="canvas"></div>
     <div id="bins">
     </div>
     <div id="call" style="display: block;" class="flex flex-col min-h-screen box-border px-10 py-5 my-0 mx-auto max-w-4xl">
@@ -41,6 +42,14 @@
       </div>
       
       <h1 class="text-5xl" id="room-num"></h1>
+      <input
+        id="chatbox"
+        name="text"
+        type="text"
+        class="chatbox"
+        placeholder=" type your message here..."
+        autocomplete="off"
+      />
       
       <div id="peer-grid" class="grid grid-flow-row grid-cols-4 gap-10 mb-auto"></div>
       
