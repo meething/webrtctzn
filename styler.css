@@ -312,16 +312,14 @@ pre {
   }
 }
 
-button:hover:disabled{
+button:hover:disabled {
   background-color: #e2e8f0;
   pointer-events: none;
 }
-button:disabled
-{
-    opacity:0.5;
-    pointer-events: none;
+button:disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }
-
 
 #call {
   max-width: 100rem;

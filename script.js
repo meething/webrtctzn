@@ -238,7 +238,7 @@ var start = function() {
     getClick(dropFruit);
     getChat(updateChat);
     getCmd(handleCmd);
-    
+
     // mappings
     window.ctl = { sendCmd: sendCmd, peerId: selfId };
   }
@@ -269,7 +269,7 @@ var start = function() {
         var el = byId("name_" + id);
         if (el) el.innerText = data.username;
       } else if (data.cmd == "img" && data.img) {
-        console.log('got image', data)
+        console.log("got image", data);
       }
     }
   }
