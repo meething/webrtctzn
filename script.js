@@ -107,7 +107,7 @@ var start = function() {
   document.documentElement.className = "ready";
   addCursor(selfId, true);
 
-  window.addEventListener("mousemove", ({ clientX, clientY, buttons }) => {
+  window.addEventListener("mousemove", ({ clientX, clientY }) => {
     mouseX = clientX / window.innerWidth;
     mouseY = clientY / window.innerHeight;
     moveCursor([mouseX, mouseY], selfId);
