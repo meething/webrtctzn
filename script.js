@@ -118,16 +118,17 @@ var start = function() {
     }
     
     // whiteboard
+    /*
     if (buttons == 1) {
-        console.log('drawing...')
         ctx.beginPath(); // begin
         ctx.lineCap = 'round';
         ctx.lineWidth = 1;
         ctx.strokeStyle = '#c2c2c2';
-        ctx.moveTo(mouseX-10, mouseY); // from
-        ctx.lineTo(mouseX, mouseY); // to
+        ctx.moveTo(clientX-1, clientY-1); // from
+        ctx.lineTo(clientX, clientY); // to
         ctx.stroke(); // draw it  
     }
+    */
   });
   
 
@@ -313,7 +314,8 @@ var start = function() {
     if (el) {
       el.style.left = x * window.innerWidth + "px";
       el.style.top = y * window.innerHeight + "px";
-    }
+    }   
+  
   }
 
   function addCursor(id, isSelf) {
