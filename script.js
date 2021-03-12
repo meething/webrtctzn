@@ -3,6 +3,8 @@ import { joinRoom, selfId } from "https://cdn.skypack.dev/trystero@0.7.9";
 var start = function() {
   const byId = document.getElementById.bind(document);
   const canvas = byId("canvas");
+  const whiteboard = byId("whiteboard");
+  const ctx = whiteboard.getContext('2d');
   const chat = byId("chat");
   const chatbox = byId("chatbox");
   const chatbutton = byId("chatbutton");
@@ -107,7 +109,7 @@ var start = function() {
   document.documentElement.className = "ready";
   addCursor(selfId, true);
 
-  window.addEventListener("mousemove", ({ clientX, clientY }) => {
+  window.addEventListener("mousemove", ({ clientX, clientY, button }) => {
     mouseX = clientX / window.innerWidth;
     mouseY = clientY / window.innerHeight;
     moveCursor([mouseX, mouseY], selfId);
@@ -116,17 +118,16 @@ var start = function() {
     }
     
     // whiteboard
-    /*
-    if (buttons == 1) {
+    
+    if (button == 1) {
         ctx.beginPath(); // begin
         ctx.lineCap = 'round';
         ctx.strokeStyle = '#c0392b';
         ctx.moveTo(mouseX, mouseY); // from
-        setPosition({ clientX, clientY });
         ctx.lineTo(mouseX, mouseY); // to
         ctx.stroke(); // draw it  
     }
-    */
+    
     
   });
 
