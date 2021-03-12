@@ -15,7 +15,6 @@ var start = function() {
   var features = { audio: true, video: false };
 
   document.addEventListener("visibilitychange", function(event) {
-    console.log(document.visibilityState);
     sendCmd({ peerId: peerId, cmd: "hand", focus: document.visibilityState });
   });
 
@@ -387,7 +386,7 @@ var start = function() {
       if (open) {
         console.log("opening remote link.");
         window.open(msg, "_blank");
-        chat.innerHTML = user + ": <a href='" + msg + "' target='_blank'>link</a><br/>" + chat.innerHTML;
+        chat.innerHTML = user + ": <a href='" + msg + "' target='_blank' style='color:blue;'>"+msg+"</a><br/>" + chat.innerHTML;
       }
     } else {
       chat.innerHTML = user + ": " + msg + "<br/>" + chat.innerHTML;
