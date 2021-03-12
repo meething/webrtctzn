@@ -137,7 +137,7 @@ var start = function() {
     
     if (isDrawing) {
       plots.push({x: clientX/2 - offsetX, y: clientY/4 - offsetY});
-      drawOnCanvas('blue', plots);
+      drawOnCanvas('#f2f2f2', plots);
     }
   });
   
@@ -491,6 +491,7 @@ var start = function() {
   function drawOnCanvas(color, plots) {
     ctx.strokeStyle = color;
     ctx.beginPath();
+    ctx.lineWidth = 1;
     ctx.moveTo(plots[0].x, plots[0].y);
     for(var i=1; i<plots.length; i++) {
       ctx.lineTo(plots[i].x, plots[i].y);
