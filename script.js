@@ -110,6 +110,20 @@ var start = function() {
   document.documentElement.className = "ready";
   addCursor(selfId, true);
 
+  
+  var isDrawing = false;
+  var plots = [];
+  window.addEventListener("mouseup", (e) => {
+    console.log('mouse stop');
+    isDrawing = false;
+    sendCmd({ peerId: selfId, cmd: "draw", plots: plots, color: 'blue' });
+    plots = [];
+  });
+  window.addEventListener("mousedown", (e) => {
+    console.log('mouse start');
+    isDrawing = true;
+  });
+  
   window.addEventListener("mousemove", ({ clientX, clientY, buttons }) => {
     mouseX = clientX / window.innerWidth;
     mouseY = clientY / window.innerHeight;
@@ -118,18 +132,10 @@ var start = function() {
       sendMove([mouseX, mouseY]);
     }
     
-    // whiteboard
-    /*
-    if (buttons == 1) {
-        ctx.beginPath(); // begin
-        ctx.lineCap = 'round';
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = '#c2c2c2';
-        ctx.moveTo(clientX-1, clientY-1); // from
-        ctx.lineTo(clientX, clientY); // to
-        ctx.stroke(); // draw it  
+    if (isDrawing) {
+      plots.push({x: mouseX, y: mouseY});
+      drawOnCanvas('blue', plots);
     }
-    */
   });
   
 
@@ -288,7 +294,13 @@ var start = function() {
         if (el) el.innerText = data.username;
       } else if (data.cmd == "img" && data.img) {
         console.log("got image", data);
+      } else if (data.cmd == "draw" && data.plots) {
+        if (data.plots && data.color) drawOnCanvas(data.color, data.plots);
       }
+      
+      
+      
+      
     }
   }
 
@@ -472,6 +484,18 @@ var start = function() {
     // At last, if the user has denied notifications, and you
     // want to be respectful there is no need to bother them any more.
   }
+  
+  function drawOnCanvas(color, plots) {
+    ctx.strokeStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(plots[0].x, plots[0].y);
+    for(var i=1; i<plots.length; i++) {
+      ctx.lineTo(plots[i].x, plots[i].y);
+    }
+    ctx.stroke();
+  }
+  
+  
 };
 
 start();
