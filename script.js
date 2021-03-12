@@ -109,7 +109,7 @@ var start = function() {
   document.documentElement.className = "ready";
   addCursor(selfId, true);
 
-  window.addEventListener("mousemove", ({ clientX, clientY, button }) => {
+  window.addEventListener("mousemove", ({ clientX, clientY, buttons }) => {
     mouseX = clientX / window.innerWidth;
     mouseY = clientY / window.innerHeight;
     moveCursor([mouseX, mouseY], selfId);
@@ -118,18 +118,18 @@ var start = function() {
     }
     
     // whiteboard
-    
-    if (button == 1) {
+    if (buttons == 1) {
+        console.log('drawing...')
         ctx.beginPath(); // begin
         ctx.lineCap = 'round';
-        ctx.strokeStyle = '#c0392b';
-        ctx.moveTo(mouseX, mouseY); // from
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = '#c2c2c2';
+        ctx.moveTo(mouseX-10, mouseY); // from
         ctx.lineTo(mouseX, mouseY); // to
         ctx.stroke(); // draw it  
     }
-    
-    
   });
+  
 
   window.addEventListener("click", () => {
     const payload = [randomFruit(), mouseX, mouseY];
