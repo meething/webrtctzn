@@ -1,4 +1,6 @@
 import { joinRoom, selfId } from "https://cdn.skypack.dev/trystero@0.7.9";
+// import { apply, generate, merge } from "https://cdn.skypack.dev/json-merge-patch"
+var doc = {};
 
 var start = function() {
   const byId = document.getElementById.bind(document);
@@ -327,6 +329,7 @@ var start = function() {
     const video = document.createElement("video");
     video.id = "vid_" + id;
     video.className = "video-circle";
+    
     //video.addEventListener('loadedmetadata', function(data) { console.log('metaload',data) });
 
     el.style.float = "left";
