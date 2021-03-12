@@ -387,10 +387,13 @@ var start = function() {
       if (open) {
         console.log("opening remote link.");
         window.open(msg, "_blank");
+        chat.innerHTML = user + ": <a href='" + msg + "' target='_blank'>link</a><br/>" + chat.innerHTML;
       }
+    } else {
+      chat.innerHTML = user + ": " + msg + "<br/>" + chat.innerHTML;
     }
 
-    chat.innerHTML = user + ":" + msg + "<br/>" + chat.innerHTML;
+    
   }
 
   function dropFruit([fruit, x, y]) {
@@ -437,9 +440,9 @@ var start = function() {
     document.body.removeChild(dummy);
 
     notifyMe("link shared to clipboard");
-    shareButton.innerHTML = "Ctrl-v";
+    shareButton.innerHTML = '<i class="fa fa-share-alt-square fa-1x" aria-hidden="true"></i>';
     setTimeout(function() {
-      shareButton.innerHTML = "Link";
+      shareButton.innerHTML = '<i class="fa fa-share-alt fa-1x" aria-hidden="true"></i>';
     }, 1000);
   };
   function notifyMe(msg) {

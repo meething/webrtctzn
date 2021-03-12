@@ -31,7 +31,7 @@
     >
       <div class="flex flex-row">
         <!--<button id="leave-button" onClick="leaveRoom(event)" style="margin-left: 0em" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full">Leave</button>-->
-
+        <!-- call -->
         <button
           title="join call"
           type="button"
@@ -40,6 +40,7 @@
         >
           <i class="fa fa-phone fa-2x" aria-hidden="true"></i>
         </button>
+        <!-- mute-unmute -->
         <button
           title="mute/unmute"
           type="button"
@@ -50,10 +51,8 @@
         >
           <i class="fa fa-microphone fa-2x" aria-hidden="true"></i>
         </button>
-        <!--
-          <button id="share-button" onClick="shareUrl()" style="margin-left: 0.5em" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-6 rounded-full">Link</button>
-        -->
-
+        
+        <!-- chatbox -->
         <input
           id="chatbox"
           name="text"
@@ -62,6 +61,19 @@
           placeholder=" type your message here..."
           autocomplete="off"
         />
+        <!-- share link -->
+        <button 
+                title="share room"
+                type="button"
+                id="share-button" 
+                onClick="shareUrl()" 
+                style="margin-left: 0.5em; float: right;" 
+                class="bg-gray-300 hover:bg-pink-400 text-white-800 font-bold py-2 px-6 rounded-full">
+          <i class="fa fa-share-alt fa-1x" aria-hidden="true"></i>
+        </button>
+        
+
+
       </div>
 
       <h1 class="text-5xl" style="margin-top: 0.5em" id="room-num"></h1>
