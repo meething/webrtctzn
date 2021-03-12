@@ -113,6 +113,9 @@ var start = function() {
   
   var isDrawing = false;
   var plots = [];
+  var rect = canvas.getBoundingClientRect();
+  var offsetX = rect.left;
+  var offsetY = rect.top;
   window.addEventListener("mouseup", (e) => {
     console.log('mouse stop');
     isDrawing = false;
@@ -133,7 +136,7 @@ var start = function() {
     }
     
     if (isDrawing) {
-      plots.push({x: mouseX, y: mouseY});
+      plots.push({x: clientX/2 - offsetX, y: clientY/4 - offsetY});
       drawOnCanvas('blue', plots);
     }
   });
