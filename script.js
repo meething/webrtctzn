@@ -122,7 +122,7 @@ var start = function() {
   window.addEventListener("mouseup", (e) => {
     //console.log('mouse stop');
     isDrawing = false;
-    sendCmd({ peerId: selfId, cmd: "draw", plots: plots, color: 'gray' });
+    sendCmd({ peerId: selfId, cmd: "draw", plots: plots, color: '#f2f2f2' });
     plots = [];
   });
   window.addEventListener("mousedown", (e) => {
@@ -302,7 +302,11 @@ var start = function() {
         console.log("got image", data);
       } else if (data.cmd == "draw" && data.plots) {
         if (data.plots && data.color) drawOnCanvas(data.color, data.plots);
+      } else if (data.cmd == "clear") {
+        if (whiteboard) whiteboard.width = whiteboard.width;
       }
+      
+      // whiteboard.width = whiteboard.width;
       
       
       
@@ -498,6 +502,9 @@ var start = function() {
   
   function drawOnCanvas(color, plots) {
     // x * window.innerWidth
+    if (!plots[0]) return;
+    ctx.fillStyle = "rgba(255,255,255,0.1)";
+    ctx.fillRect(0, 0, whiteboard.width, whiteboard.height);
     ctx.strokeStyle = color;
     ctx.beginPath();
     ctx.lineWidth = 1;
@@ -506,6 +513,11 @@ var start = function() {
       ctx.lineTo(plots[i].x * window.innerWidth, plots[i].y * window.innerHeight);
     }
     ctx.stroke();
+  }
+  
+  function fadeOutCanvas() {
+    
+    setTimeout(fadeOutCanvas,500);
   }
   
   
