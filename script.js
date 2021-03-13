@@ -280,11 +280,12 @@ var start = function() {
   }
   
   // binary pic handler
-  function handlePic(data, meta, id) {
-    console.log('got imagery', meta, id);
+  function handlePic(data, id, meta) {
+    console.log('got imagery', data, id, meta);
     // new Blob([data])
     var img = document.createElement("img");
     img.src =  URL.createObjectURL(new Blob([data]) );
+    console.log('img.src',img.src);
     ctx.drawImage(img, 0, 0);
     
   }

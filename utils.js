@@ -45,6 +45,9 @@ function displayImageOnCanvas(imgx, pos){
   ctx.drawImage(img, newx, newy);
   // net
   if (ctl) {
-    whiteboard.toBlob(blob => ctl.sendPic(blob, null, { peerId: ctl.peerId, cmd: "img", pos: pos }) );
+    whiteboard.toBlob(function(blob) { 
+      ctl.sendPic(blob, null, pos);
+    });
+    
   }
 }
