@@ -192,7 +192,7 @@ var start = function() {
       streaming = stream;
       muted = false;
       talkbutton.innerHTML = !features.video ? 
-        '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:green;"></i>' : '<i class="fa fa-video fa-2x" aria-hidden="true"></i>';
+        '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:white;"></i>' : '<i class="fa fa-video fa-2x" aria-hidden="true" style="color:white;"></i>';
       talkbutton.style.background = "red";
       // notify network
       sendCmd({ peerId: peerId, cmd: "hand", state: true });
@@ -437,6 +437,11 @@ var start = function() {
   }
 
   /* globals for compatibility */
+  
+  window.clearCanvas = function() {
+    if (whiteboard) whiteboard.width = whiteboard.width;
+    sendCmd({ peerId: selfId, cmd: "clear" });
+  };
 
   window.shareUrl = function() {
     if (!window.getSelection) {
