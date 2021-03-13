@@ -191,8 +191,8 @@ var start = function() {
       handleStream(stream, selfId);
       streaming = stream;
       muted = false;
-      talkbutton.innerHTML =
-        '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:white;"></i>';
+      talkbutton.innerHTML = !features.video ? 
+        '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:green;"></i>' : '<i class="fa fa-video fa-2x" aria-hidden="true"></i>';
       talkbutton.style.background = "red";
       // notify network
       sendCmd({ peerId: peerId, cmd: "hand", state: true });
@@ -211,8 +211,8 @@ var start = function() {
         '<i class="fa fa-microphone fa-2x" aria-hidden="true"></i>';
       muted = false;
       // reset call button
-      talkbutton.innerHTML =
-        '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:green;"></i>';
+      talkbutton.innerHTML = !features.video ? 
+        '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:green;"></i>' : '<i class="fa fa-video fa-2x" aria-hidden="true"></i>';
       talkbutton.style.background = "";
       // notify network
       sendCmd({ peerId: peerId, cmd: "stop_video" });
