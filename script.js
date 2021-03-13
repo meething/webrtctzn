@@ -142,7 +142,7 @@ var start = function() {
     
     if (isDrawing) {
       plots.push({x: mouseX, y: mouseY});
-      drawOnCanvas('#c2c2c2', plots);
+      drawOnCanvas('#c2c2c2', plots, true);
     }
   });
   
@@ -520,23 +520,22 @@ var start = function() {
     // want to be respectful there is no need to bother them any more.
   }
   
-  function drawOnCanvas(color, plots) {
+  function drawOnCanvas(color, plots, local) {
     // x * window.innerWidth
     if (!plots[0]) return;
-    fadeOutCanvas();
     ctx.strokeStyle = color;
     ctx.beginPath();
     ctx.lineWidth = 1;
     ctx.moveTo(plots[0].x * window.innerWidth, plots[0].y * window.innerHeight);
     for(var i=1; i<plots.length; i++) {
-      
+      fadeOutCanvas();
       ctx.lineTo(plots[i].x * window.innerWidth, plots[i].y * window.innerHeight);
     }
     ctx.stroke();
   }
   
   function fadeOutCanvas() {
-    ctx.fillStyle = "rgba(255,255,255,0.1)";
+    ctx.fillStyle = "rgba(255,255,255,0.05)";
     ctx.fillRect(0, 0, whiteboard.width, whiteboard.height);
   }
   
