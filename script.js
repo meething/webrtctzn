@@ -7,6 +7,9 @@ var start = function() {
   const canvas = byId("canvas");
   const whiteboard = byId("whiteboard");
   const ctx = whiteboard.getContext('2d');
+  whiteboard.width  = window.innerWidth;
+  whiteboard.height = window.innerHeight;
+  
   const chat = byId("chat");
   const chatbox = byId("chatbox");
   const chatbutton = byId("chatbutton");
@@ -117,13 +120,13 @@ var start = function() {
   var offsetX = rect.left;
   var offsetY = rect.top;
   window.addEventListener("mouseup", (e) => {
-    console.log('mouse stop');
+    //console.log('mouse stop');
     isDrawing = false;
-    sendCmd({ peerId: selfId, cmd: "draw", plots: plots, color: 'blue' });
+    sendCmd({ peerId: selfId, cmd: "draw", plots: plots, color: 'gray' });
     plots = [];
   });
   window.addEventListener("mousedown", (e) => {
-    console.log('mouse start');
+    //console.log('mouse start');
     isDrawing = true;
   });
   
@@ -136,7 +139,7 @@ var start = function() {
     }
     
     if (isDrawing) {
-      plots.push({x: clientX/2 - offsetX, y: clientY/4 - offsetY});
+      plots.push({x: mouseX, y: mouseY});
       drawOnCanvas('#f2f2f2', plots);
     }
   });
@@ -489,13 +492,13 @@ var start = function() {
   }
   
   function drawOnCanvas(color, plots) {
-    ctx.width 
+    // x * window.innerWidth
     ctx.strokeStyle = color;
     ctx.beginPath();
     ctx.lineWidth = 1;
-    ctx.moveTo(plots[0].x, plots[0].y);
+    ctx.moveTo(plots[0].x * window.innerWidth, plots[0].y * window.innerHeight);
     for(var i=1; i<plots.length; i++) {
-      ctx.lineTo(plots[i].x, plots[i].y);
+      ctx.lineTo(plots[i].x * window.innerWidth, plots[i].y * window.innerHeight);
     }
     ctx.stroke();
   }
