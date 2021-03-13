@@ -489,6 +489,7 @@ var start = function() {
   }
   
   function drawOnCanvas(color, plots) {
+    ctx.width 
     ctx.strokeStyle = color;
     ctx.beginPath();
     ctx.lineWidth = 1;
