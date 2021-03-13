@@ -1,6 +1,6 @@
 function drop(ev) {
   ev.preventDefault();
-  var position = { x: ev.clientX, y: ev.clientY };
+  var position = { x: ev.clientX / window.innerWidth, y: ev.clientY / window.innerHeight };
   var imageTypes = ["image/png", "image/gif", "image/bmp", "image/jpg"];
   if (ev.dataTransfer && ev.dataTransfer.files && ev.dataTransfer.files[0]) {
     // ev.dataTransfer.files is a FileList
@@ -33,9 +33,15 @@ function displayImage(imgx) {
 }
 
 function displayImageOnCanvas(imgx, pos){
+  sendCmd({ peerId: selfId, cmd: "img", pos: pos, img: imgx });
+  var newx = pos.x * window.innerWidth;
+  var newy = pos.y * window.innerHeight;
+  if (newx > window.innerWidth || newy > window.innerHeight) {
+    console.log('out of bounds!', newx, newy)
+  }
   var whiteboard = document.getElementById('whiteboard');
   var ctx = whiteboard.getContext('2d');
   var img = document.createElement("img");
   img.src = imgx.result;
-  ctx.drawImage(img, pos.x, pos.y);
+  ctx.drawImage(img, newx, newy);
 }

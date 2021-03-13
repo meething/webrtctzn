@@ -428,7 +428,6 @@ var start = function() {
     el.style.top = y * window.innerHeight + "px";
     canvas.appendChild(el);
     setTimeout(() => canvas.removeChild(el), 3000);
-    fadeOutCanvas();
   }
 
   function isValidHttpUrl(string) {
@@ -516,7 +515,7 @@ var start = function() {
   }
   
   function fadeOutCanvas() {
-    ctx.fillStyle = "rgba(255,255,255,0.2)";
+    ctx.fillStyle = "rgba(255,255,255,0.1)";
     ctx.fillRect(0, 0, whiteboard.width, whiteboard.height);
   }
   
