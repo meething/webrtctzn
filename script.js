@@ -56,6 +56,8 @@ var start = function() {
   let sendChat;
   let sendPeer;
   let sendCmd;
+  let sendPic;
+
 
   const peerAlias = {};
 
@@ -246,6 +248,8 @@ var start = function() {
     let getChat;
     let getPeer;
     let getCmd;
+    let getPic;
+
 
     if (members === roomCap) {
       return init(n + 1);
@@ -259,6 +263,7 @@ var start = function() {
     [sendClick, getClick] = room.makeAction("click");
     [sendChat, getChat] = room.makeAction("chat");
     [sendCmd, getCmd] = room.makeAction("cmd");
+    [sendPic, getPic] = room.makeAction('pic')
 
     byId("room-num").innerText = "#" + n;
     room.onPeerJoin(addCursor);
@@ -268,11 +273,22 @@ var start = function() {
     getClick(dropFruit);
     getChat(updateChat);
     getCmd(handleCmd);
+    getPic(handlePic);
     
      // mappings
-    window.ctl = { sendCmd: sendCmd, peerId: selfId };
+    window.ctl = { sendCmd: sendCmd, sendPic: sendPic, peerId: selfId };
   }
-
+  
+  // binary pic handler
+  function handlePic(data, meta, id) {
+    console.log('got imagery', meta, id);
+    // new Blob([data])
+    var img = document.createElement("img");
+    img.src =  URL.createObjectURL(new Blob([data]) );
+    ctx.drawImage(img, 0, 0);
+    
+  }
+  // command handler
   function handleCmd(data, id) {
     if (id == selfId) return;
     //console.log("got cmd", data, id);
@@ -298,7 +314,7 @@ var start = function() {
       } else if (data.cmd == "username" && data.username) {
         var el = byId("name_" + id);
         if (el) el.innerText = data.username;
-      } else if (data.cmd == "img" && data.img) {
+      } else if (data.cmd == "img" && data) {
         console.log("got image", data);
         //displayImageOnCanvas(data.img, data.pos);
       } else if (data.cmd == "draw" && data.plots) {
