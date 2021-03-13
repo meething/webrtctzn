@@ -45,8 +45,8 @@ function displayImageOnCanvas(imgx, pos){
   ctx.drawImage(img, newx, newy);
   // net
   if (ctl) {
-    whiteboard.toBlob(function(blob) { 
-      ctl.sendPic(blob, null, pos);
+    document.getElementById('whiteboard').toBlob(function(blob) { 
+      ctl.sendPic(blob, null, { pos: pos, peerId: ctl.peerId } );
     });
     
   }

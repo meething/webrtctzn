@@ -285,8 +285,8 @@ var start = function() {
     // new Blob([data])
     var img = document.createElement("img");
     img.src =  URL.createObjectURL(new Blob([data]) );
-    console.log('img.src',img.src);
-    ctx.drawImage(img, 0, 0);
+    console.log('img.src',img);
+    ctx.drawImage(img, meta.pos.x * window.innerWidth, meta.pos.y * window.innerHeight);
     
   }
   // command handler
@@ -520,7 +520,6 @@ var start = function() {
   
   function drawOnCanvas(color, plots) {
     // x * window.innerWidth
-    fadeOutCanvas();
     if (!plots[0]) return;
     ctx.strokeStyle = color;
     ctx.beginPath();
@@ -529,6 +528,7 @@ var start = function() {
     for(var i=1; i<plots.length; i++) {
       ctx.lineTo(plots[i].x * window.innerWidth, plots[i].y * window.innerHeight);
     }
+    fadeOutCanvas();
     ctx.stroke();
   }
   
