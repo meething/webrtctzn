@@ -281,12 +281,14 @@ var start = function() {
   
   // binary pic handler
   function handlePic(data, id, meta) {
-    console.log('got imagery', data, id, meta);
-    // new Blob([data])
+    if (id == selfId) return;
+    console.log('got imagery', id, meta);
     var img = document.createElement("img");
     img.src =  URL.createObjectURL(new Blob([data]) );
-    console.log('img.src',img);
-    ctx.drawImage(img, meta.pos.x * window.innerWidth, meta.pos.y * window.innerHeight);
+    img.onload =  function(){
+      console.log('img.src',img.src);
+      ctx.drawImage(img, meta.pos.x * window.innerWidth, meta.pos.y * window.innerHeight); 
+    }
     
   }
   // command handler
@@ -521,14 +523,15 @@ var start = function() {
   function drawOnCanvas(color, plots) {
     // x * window.innerWidth
     if (!plots[0]) return;
+    fadeOutCanvas();
     ctx.strokeStyle = color;
     ctx.beginPath();
     ctx.lineWidth = 1;
     ctx.moveTo(plots[0].x * window.innerWidth, plots[0].y * window.innerHeight);
     for(var i=1; i<plots.length; i++) {
+      
       ctx.lineTo(plots[i].x * window.innerWidth, plots[i].y * window.innerHeight);
     }
-    fadeOutCanvas();
     ctx.stroke();
   }
   

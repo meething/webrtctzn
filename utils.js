@@ -42,12 +42,19 @@ function displayImageOnCanvas(imgx, pos){
   var ctx = whiteboard.getContext('2d');
   var img = document.createElement("img");
   img.src = imgx.result;
-  ctx.drawImage(img, newx, newy);
-  // net
-  if (ctl) {
-    document.getElementById('whiteboard').toBlob(function(blob) { 
-      ctl.sendPic(blob, null, { pos: pos, peerId: ctl.peerId } );
-    });
-    
+  img.onload =  function(){
+    ctx.drawImage(img, newx, newy);
+      // network share
+      if (ctl) {
+        var canvas = document.createElement('canvas');
+        canvas.width  = img.width;
+        canvas.height = img.height;
+        var newctx = canvas.getContext('2d');
+        newctx.drawImage(img, 0, 0);
+        canvas.toBlob(function(blob) { 
+          ctl.sendPic(blob, null, { pos: pos, peerId: ctl.peerId } );
+        });
+      }
   }
+  
 }
