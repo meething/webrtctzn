@@ -1,5 +1,6 @@
 function drop(ev) {
   ev.preventDefault();
+  var position = { x: ev.clientX, y: ev.clientY };
   var imageTypes = ["image/png", "image/gif", "image/bmp", "image/jpg"];
   if (ev.dataTransfer && ev.dataTransfer.files && ev.dataTransfer.files[0]) {
     // ev.dataTransfer.files is a FileList
@@ -8,8 +9,9 @@ function drop(ev) {
     if (imageTypes.includes(fileType)) {
       var reader = new FileReader();
       reader.onload = function(img) {
-        console.log("got img", img.target);
-        displayImage(img.target);
+        console.log("got image drop", img.target, position);
+        //displayImage(img.target);
+        displayImageOnCanvas(img.target, position);
       };
       reader.readAsDataURL(ev.dataTransfer.files[0]);
     } else {
@@ -28,4 +30,12 @@ function displayImage(imgx) {
   var img = document.createElement("img");
   img.src = imgx.result;
   cell.appendChild(img);
+}
+
+function displayImageOnCanvas(imgx, pos){
+  var whiteboard = document.getElementById('whiteboard');
+  var ctx = whiteboard.getContext('2d');
+  var img = document.createElement("img");
+  img.src = imgx.result;
+  ctx.drawImage(img, pos.x, pos.y);
 }

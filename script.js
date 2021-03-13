@@ -122,7 +122,7 @@ var start = function() {
   window.addEventListener("mouseup", (e) => {
     //console.log('mouse stop');
     isDrawing = false;
-    sendCmd({ peerId: selfId, cmd: "draw", plots: plots, color: '#f2f2f2' });
+    sendCmd({ peerId: selfId, cmd: "draw", plots: plots, color: '#b2b2b2' });
     plots = [];
   });
   window.addEventListener("mousedown", (e) => {
@@ -140,7 +140,7 @@ var start = function() {
     
     if (isDrawing) {
       plots.push({x: mouseX, y: mouseY});
-      drawOnCanvas('#f2f2f2', plots);
+      drawOnCanvas('#c2c2c2', plots);
     }
   });
   
@@ -428,6 +428,7 @@ var start = function() {
     el.style.top = y * window.innerHeight + "px";
     canvas.appendChild(el);
     setTimeout(() => canvas.removeChild(el), 3000);
+    fadeOutCanvas();
   }
 
   function isValidHttpUrl(string) {
@@ -502,9 +503,8 @@ var start = function() {
   
   function drawOnCanvas(color, plots) {
     // x * window.innerWidth
+    fadeOutCanvas();
     if (!plots[0]) return;
-    ctx.fillStyle = "rgba(255,255,255,0.1)";
-    ctx.fillRect(0, 0, whiteboard.width, whiteboard.height);
     ctx.strokeStyle = color;
     ctx.beginPath();
     ctx.lineWidth = 1;
@@ -516,8 +516,8 @@ var start = function() {
   }
   
   function fadeOutCanvas() {
-    
-    setTimeout(fadeOutCanvas,500);
+    ctx.fillStyle = "rgba(255,255,255,0.2)";
+    ctx.fillRect(0, 0, whiteboard.width, whiteboard.height);
   }
   
   
