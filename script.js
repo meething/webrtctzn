@@ -268,8 +268,8 @@ var start = function() {
     getClick(dropFruit);
     getChat(updateChat);
     getCmd(handleCmd);
-
-    // mappings
+    
+     // mappings
     window.ctl = { sendCmd: sendCmd, peerId: selfId };
   }
 
@@ -300,6 +300,7 @@ var start = function() {
         if (el) el.innerText = data.username;
       } else if (data.cmd == "img" && data.img) {
         console.log("got image", data);
+        //displayImageOnCanvas(data.img, data.pos);
       } else if (data.cmd == "draw" && data.plots) {
         if (data.plots && data.color) drawOnCanvas(data.color, data.plots);
       } else if (data.cmd == "clear") {

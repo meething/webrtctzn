@@ -33,7 +33,6 @@ function displayImage(imgx) {
 }
 
 function displayImageOnCanvas(imgx, pos){
-  sendCmd({ peerId: selfId, cmd: "img", pos: pos, img: imgx });
   var newx = pos.x * window.innerWidth;
   var newy = pos.y * window.innerHeight;
   if (newx > window.innerWidth || newy > window.innerHeight) {
@@ -44,4 +43,8 @@ function displayImageOnCanvas(imgx, pos){
   var img = document.createElement("img");
   img.src = imgx.result;
   ctx.drawImage(img, newx, newy);
+  // net
+  if (ctl) {
+    whiteboard.toBlob(blob => ctl.sendCmd({ peerId: ctl.peerId, cmd: "img", pos: pos, blob: blob }) );
+  }
 }
