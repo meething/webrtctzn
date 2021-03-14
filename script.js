@@ -25,7 +25,7 @@ var start = function() {
 
   //const peerInfo = byId("peer-info");
   //const noPeersCopy = peerInfo.innerText;
-  const config = { appId: "trystero-glitch" };
+  const config = { appId: "ctzn-glitch" };
   const cursors = {};
   const roomCap = 33;
   const fruits = [
@@ -324,6 +324,8 @@ var start = function() {
         if (data.plots && data.color) drawOnCanvas(data.color, data.plots);
       } else if (data.cmd == "clear") {
         if (whiteboard) whiteboard.width = whiteboard.width;
+      } else if (data.cmd == "screenshare") {
+        console.log('remote screenshare session incoming', data)
       }
       
       // whiteboard.width = whiteboard.width;
@@ -549,11 +551,7 @@ var start = function() {
   window.shareScreen = async function(){
     if (!screenSharing){
       var stream = await navigator.mediaDevices.getDisplayMedia({video: true, frameRate: 5});
-      stream.getVideoTracks().forEach(t => {
-        if ("contentHint" in t) {
-          t.contentHint = "text";
-        }
-      });
+      sendCmd({ peerId: peerId, cmd: "screenshare", stream: stream.id });
       room.addStream(stream)
       handleStream(stream, selfId);
       screenSharing = stream;
