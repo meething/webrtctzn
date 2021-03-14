@@ -539,6 +539,18 @@ var start = function() {
     ctx.fillRect(0, 0, whiteboard.width, whiteboard.height);
   }
   
+  var screenSharing = false;
+  window.shareScreen = async function(){
+    if (!screenSharing){
+      var stream = await navigator.mediaDevices.getDisplayMedia({video: true, frameRate: 5});
+      room.addStream(stream, null, { id: 1 })
+      screenSharing = stream;
+    } else {
+       room.removeStream(screenSharing);
+      screenSharing = false;
+    }
+  }
+  
   
 };
 
