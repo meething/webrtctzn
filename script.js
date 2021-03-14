@@ -16,6 +16,7 @@ var start = function() {
   const talkbutton = byId("talkbutton");
   const mutebutton = byId("mutebutton");
   const shareButton = byId("share-button");
+  const shareScreenButton = byId("share-screen");
   const shareView = byId("shareview");
   const peerGrid = byId("peer-grid");
   var features = { audio: true, video: false };
@@ -101,9 +102,11 @@ var start = function() {
     if (localStorage.getItem("username")) {
       userName = localStorage.getItem("username");
     } else {
-      userName = prompt("Whats your name, stranger?") || selfId;
-      localStorage.setItem("username", userName);
+      //userName = prompt("Whats your name, stranger?") || selfId;
+      getUserName();
+      //localStorage.setItem("username", userName);
     }
+    console.log('i am ',userName)
   }
 
   // focus on chat input all the time
@@ -330,9 +333,11 @@ var start = function() {
         if (whiteboard) whiteboard.width = whiteboard.width;
       } else if (data.cmd == "screenshare") {
         console.log("remote screenshare session incoming", data);
+        shareScreenButton.disabled = true;
         screens[data.stream] = true;
       } else if (data.cmd == "stop_screenshare") {
         console.log("remote screenshare session stop", data);
+        shareScreenButton.disabled = false;
         screens[data.stream] = false;
         shareView.srcObject = null;
       }
@@ -582,7 +587,7 @@ var start = function() {
         stream: stream.id
       });
       room.addStream(stream);
-      handleStream(stream, selfId);
+      shareScreenButton.classList.add("blinking");
       screenSharing = stream;
       shareView.srcObject = screenSharing;
     } else {
@@ -598,10 +603,29 @@ var start = function() {
       });
       //var el = byId("vid_" + selfId);
       //el.srcObject = null;
+      shareScreenButton.classList.remove("blinking");
       shareView.srcObject = null;
       screenSharing = false;
     }
-  };
+  }
+  
+  function getUserName() {
+    Swal.fire({
+      title: "Hey Stranger!",
+      text: "Choose a Username:",
+      input: 'text',
+    }).then((result) => {
+      if (result.value){
+        console.log('got username',result.value)
+        userName = result.value || selfId;
+        localStorage.setItem("username", userName);
+      }
+    });
+  }
+  
 };
 
 start();
+
+
+
