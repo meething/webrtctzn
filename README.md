@@ -1,4 +1,4 @@
-# webrtCTZN
+# webrtctzn
 
 #### Decentralized p2p dWebRTC for CTZN with multi-network peer discovery.
 
