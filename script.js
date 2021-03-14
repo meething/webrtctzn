@@ -16,6 +16,7 @@ var start = function() {
   const talkbutton = byId("talkbutton");
   const mutebutton = byId("mutebutton");
   const shareButton = byId("share-button");
+  const shareView = byId("shareview");
   const peerGrid = byId("peer-grid");
   var features = { audio: true, video: false };
 
@@ -62,6 +63,7 @@ var start = function() {
   const peerAlias = {};
 
   var streams = [];
+  var screens = [];
   // sidepeer for calls only
   var peerId = selfId + "_call";
   var userName = false;
@@ -326,6 +328,7 @@ var start = function() {
         if (whiteboard) whiteboard.width = whiteboard.width;
       } else if (data.cmd == "screenshare") {
         console.log('remote screenshare session incoming', data)
+        screens[data.stream] = true;
       }
       
       // whiteboard.width = whiteboard.width;
@@ -337,12 +340,10 @@ var start = function() {
   }
 
   function handleStream(stream, peerId, meta) {
-    stream.getVideoTracks().forEach(t => {
-        if ("contentHint" in t) {
-          console.log('content stream',t)
-        }
-      });
-    if (meta) console.log('handling stream', meta, stream.contentHint)
+    if (stream && screens[stream.id]){
+      console.log('this is a screenshare paylaod!')
+    }
+    console.log('handling stream', stream, peerId)
     if (peerId == selfId) {
       var selfStream = stream;
       stream = new MediaStream(selfStream.getVideoTracks());
@@ -551,7 +552,7 @@ var start = function() {
   window.shareScreen = async function(){
     if (!screenSharing){
       var stream = await navigator.mediaDevices.getDisplayMedia({video: true, frameRate: 5});
-      sendCmd({ peerId: peerId, cmd: "screenshare", stream: stream.id });
+      sendCmd({ peerId: selfId+"_screen", cmd: "screenshare", stream: stream.id });
       room.addStream(stream)
       handleStream(stream, selfId);
       screenSharing = stream;
