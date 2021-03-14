@@ -335,7 +335,12 @@ var start = function() {
   }
 
   function handleStream(stream, peerId, meta) {
-    if (meta) console.log(meta)
+    stream.getVideoTracks().forEach(t => {
+        if ("contentHint" in t) {
+          console.log('content stream',t)
+        }
+      });
+    if (meta) console.log('handling stream', meta, stream.contentHint)
     if (peerId == selfId) {
       var selfStream = stream;
       stream = new MediaStream(selfStream.getVideoTracks());
@@ -544,7 +549,13 @@ var start = function() {
   window.shareScreen = async function(){
     if (!screenSharing){
       var stream = await navigator.mediaDevices.getDisplayMedia({video: true, frameRate: 5});
-      room.addStream(stream, null, { id: 1 })
+      stream.getVideoTracks().forEach(t => {
+        if ("contentHint" in t) {
+          t.contentHint = "text";
+        }
+      });
+      room.addStream(stream)
+      handleStream(stream, selfId);
       screenSharing = stream;
     } else {
       room.removeStream(screenSharing);
