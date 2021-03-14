@@ -96,7 +96,7 @@ var start = function() {
       "?room=" +
       roomName;
     window.history.pushState({ path: refresh }, "", refresh);
-    console.log("set localstorage");
+    //console.log("set localstorage");
     localStorage.setItem("username", userName);
   } else {
     if (localStorage.getItem("username")) {
@@ -106,7 +106,6 @@ var start = function() {
       getUserName();
       //localStorage.setItem("username", userName);
     }
-    console.log('i am ',userName)
   }
 
   // focus on chat input all the time
@@ -189,7 +188,7 @@ var start = function() {
   var streaming = false;
   var muted = false;
   talkbutton.addEventListener("click", async () => {
-    console.log("call button");
+    //console.log("call button");
     if (!streaming) {
       var stream = await navigator.mediaDevices.getUserMedia(features);
       room.addStream(stream);
@@ -203,7 +202,6 @@ var start = function() {
       // notify network
       sendCmd({ peerId: peerId, cmd: "hand", state: true });
     } else {
-      console.log("");
       room.removeStream(streaming);
       var tracks = streaming.getTracks();
       tracks.forEach(function(track) {
@@ -286,11 +284,11 @@ var start = function() {
   // binary pic handler
   function handlePic(data, id, meta) {
     if (id == selfId) return;
-    console.log("got imagery", id, meta);
+    //console.log("got imagery", id, meta);
     var img = document.createElement("img");
     img.src = URL.createObjectURL(new Blob([data]));
     img.onload = function() {
-      console.log("img.src", img.src);
+      //console.log("img.src", img.src);
       ctx.drawImage(
         img,
         meta.pos.x * window.innerWidth,
@@ -325,18 +323,18 @@ var start = function() {
         var el = byId("name_" + id);
         if (el) el.innerText = data.username;
       } else if (data.cmd == "img" && data) {
-        console.log("got image", data);
+        //console.log("got image", data);
         //displayImageOnCanvas(data.img, data.pos);
       } else if (data.cmd == "draw" && data.plots) {
         if (data.plots && data.color) drawOnCanvas(data.color, data.plots);
       } else if (data.cmd == "clear") {
         if (whiteboard) whiteboard.width = whiteboard.width;
       } else if (data.cmd == "screenshare") {
-        console.log("remote screenshare session incoming", data);
+        //console.log("remote screenshare session incoming", data);
         shareScreenButton.disabled = true;
         screens[data.stream] = true;
       } else if (data.cmd == "stop_screenshare") {
-        console.log("remote screenshare session stop", data);
+        //console.log("remote screenshare session stop", data);
         shareScreenButton.disabled = false;
         screens[data.stream] = false;
         shareView.srcObject = null;
@@ -348,8 +346,7 @@ var start = function() {
 
   function handleStream(stream, peerId, meta) {
     if (stream && screens[stream.id]) {
-      console.log("this is a screenshare paylaod!");
-      //shareView
+      // screensharing payload
       var el = shareView;
       setTimeout(function() {
         el.setAttribute("autoplay", true);
@@ -359,7 +356,8 @@ var start = function() {
         el.srcObject = stream;
       }, 200);
     } else {
-      console.log("handling stream", stream, peerId);
+      // videocall payload
+      //console.log("handling stream", stream, peerId);
       if (peerId == selfId) {
         var selfStream = stream;
         stream = new MediaStream(selfStream.getVideoTracks());
@@ -452,9 +450,9 @@ var start = function() {
     var user = data.username || id;
 
     if (isValidHttpUrl(msg) && id != selfId) {
-      var open = window.confirm(user + " is sharing a url. Trust it?");
-      if (open) {
-        console.log("opening remote link.");
+      //var open = window.confirm(user + " is sharing a url. Trust it?");
+      //if (open) {
+        //console.log("opening remote link.");
         window.open(msg, "_blank");
         chat.innerHTML =
           user +
@@ -464,7 +462,7 @@ var start = function() {
           msg +
           "</a><br/>" +
           chat.innerHTML;
-      }
+      //}
     } else {
       chat.innerHTML = user + ": " + msg + "<br/>" + chat.innerHTML;
     }
@@ -616,7 +614,7 @@ var start = function() {
       input: 'text',
     }).then((result) => {
       if (result.value){
-        console.log('got username',result.value)
+        //console.log('got username',result.value)
         userName = result.value || selfId;
         localStorage.setItem("username", userName);
       }
