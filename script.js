@@ -334,7 +334,8 @@ var start = function() {
     }
   }
 
-  function handleStream(stream, peerId) {
+  function handleStream(stream, peerId, meta) {
+    if (meta) console.log(meta)
     if (peerId == selfId) {
       var selfStream = stream;
       stream = new MediaStream(selfStream.getVideoTracks());
@@ -546,8 +547,15 @@ var start = function() {
       room.addStream(stream, null, { id: 1 })
       screenSharing = stream;
     } else {
-       room.removeStream(screenSharing);
+      room.removeStream(screenSharing);
+      var tracks = screenSharing.getTracks();
+      tracks.forEach(function(track) {
+        track.stop();
+      });
+      var el = byId("vid_" + selfId);
+      el.srcObject = null;
       screenSharing = false;
+      sendCmd({ peerId: peerId, cmd: "stop_video" });
     }
   }
   
