@@ -11,9 +11,14 @@ Audio & Video Chat, Whiteboarding, Image and Screensharing with a minimal interf
 
 ### Optional Parameters
 ```
-?room
-?username
+?room=my_secret_room
+?username=my_nickname
 ?video
+```
+
+### Embedding
+```
+<iframe src="https://webrtctzn.glitch.me/?room=myroom" allow="microphone; camera; encrypted-media;"></iframe>
 ```
 
 ### Ingredients
