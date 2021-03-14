@@ -1,6 +1,6 @@
-# WebRTCTZN
+# webrtCTZN
 
-Decentralized p2p dWebRTC for CTZN with multi-network peer discovery.
+#### Decentralized p2p dWebRTC for CTZN with multi-network peer discovery.
 
 ## What does this do?
 Audio & Video Chat, Whiteboarding, Image and Screensharing with a minimal interface.
@@ -17,8 +17,11 @@ Audio & Video Chat, Whiteboarding, Image and Screensharing with a minimal interf
 ```
 
 ### Embedding
-```
-<iframe src="https://webrtctzn.glitch.me/?room=myroom" allow="microphone; camera; encrypted-media;"></iframe>
+```html
+<iframe src="https://webrtctzn.glitch.me"
+  width="100%" height="100%" frameBorder="0" allowusermedia 
+  allow="microphone; camera; encrypted-media;">
+</iframe>
 ```
 
 ### Ingredients
