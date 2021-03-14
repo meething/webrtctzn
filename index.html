@@ -1,18 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
+<<<<<<< HEAD
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no"
     />
     <link href="images/favicon.png" rel="icon" type="image/png" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
+=======
+    <meta name="viewport" content="width=device-width, user-scalable=yes" />
+    <title>Openhouse</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="static/hand.png" rel="icon" type="image/png" />
+>>>>>>> upstream/master
     <link
       href="https://fonts.googleapis.com/css2?family=Space+Mono:ital@0;1&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+<<<<<<< HEAD
     <title>dWebRTC</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css" integrity="sha256-gsmEoJAws/Kd3CjuOQzLie5Q3yshhvmo7YNtBG7aaEY=" crossorigin="anonymous">
     <script type="module" src="./script.js"></script>
@@ -55,5 +63,104 @@
       </div>
  
     </main>
+=======
+    <link rel="stylesheet" href="styler.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css"
+      integrity="sha256-gsmEoJAws/Kd3CjuOQzLie5Q3yshhvmo7YNtBG7aaEY="
+      crossorigin="anonymous"
+    />
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="./utils.js"></script>
+    <script type="module" src="./script.js"></script>
+  </head>
+  <body ondrop="drop(event)" ondragover="allowDrop(event)">
+    <div id="canvas"></div>
+    <div id="bins"></div>
+    <div
+      id="call"
+      style="display: block;"
+      class="flex flex-col min-h-screen box-border px-10 py-5 my-0 mx-auto max-w-4xl"
+    >
+      <div class="flex flex-row">
+        <!--<button id="leave-button" onClick="leaveRoom(event)" style="margin-left: 0em" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full">Leave</button>-->
+        <!-- call -->
+        <button
+          title="join call"
+          type="button"
+          id="talkbutton"
+          class="bg-gray-300 hover:bg-green-400 text-gray-800 font-bold py-2 px-6 rounded-full"
+        >
+          <i class="fa fa-phone fa-2x" aria-hidden="true"></i>
+        </button>
+        <!-- mute-unmute -->
+        <button
+          title="mute/unmute"
+          type="button"
+          id="mutebutton"
+          style="margin-left: 0.5em"
+          class="bg-gray-300 hover:bg-pink-400 text-white-800 font-bold py-2 px-6 rounded-full"
+          disabled
+        >
+          <i class="fa fa-microphone fa-2x" aria-hidden="true"></i>
+        </button>
+
+        <!-- chatbox -->
+        <input
+          id="chatbox"
+          name="text"
+          type="text"
+          class="chatbox"
+          placeholder=" type your message here..."
+          autocomplete="off"
+        />
+        <!-- clear link -->
+        <button
+          title="clear whiteboard"
+          type="button"
+          id="clear-button"
+          onClick="clearCanvas()"
+          style="margin-left: 0.5em; float: right;"
+          class="bg-gray-300 hover:bg-pink-400 text-white-800 font-bold py-2 px-6 rounded-full"
+        >
+          <i class="fa fa-rotate-left fa-1x" aria-hidden="true"></i>
+        </button>
+        <button
+          title="screenshare"
+          type="button"
+          id="share-screen"
+          onClick="shareScreen()"
+          style="margin-left: 0.5em; float: right;"
+          class="bg-gray-300 hover:bg-pink-400 text-white-800 font-bold py-2 px-6 rounded-full"
+        >
+          <i class="fa fa-object-group fa-1x" aria-hidden="true"></i>
+        </button>
+        <!-- share link -->
+        <button
+          title="share room"
+          type="button"
+          id="share-button"
+          onClick="shareUrl()"
+          style="margin-left: 0.5em; float: right;"
+          class="bg-gray-300 hover:bg-pink-400 text-white-800 font-bold py-2 px-6 rounded-full"
+        >
+          <i class="fa fa-chain fa-1x" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <h1 class="text-5xl" style="margin-top: 0.5em" id="room-num"></h1>
+      <p id="chat" class="chatp"></p>
+
+      <div
+        id="peer-grid"
+        class="grid grid-flow-row grid-cols-4 gap-10 mb-auto"
+      ></div>
+
+      <video id="shareview" src="" autoplay></video>
+    </div>
+    <canvas id="whiteboard"></canvas
+    >
+>>>>>>> upstream/master
   </body>
 </html>
