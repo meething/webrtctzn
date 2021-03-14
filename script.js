@@ -6,10 +6,10 @@ var start = function() {
   const byId = document.getElementById.bind(document);
   const canvas = byId("canvas");
   const whiteboard = byId("whiteboard");
-  const ctx = whiteboard.getContext('2d');
-  whiteboard.width  = window.innerWidth;
+  const ctx = whiteboard.getContext("2d");
+  whiteboard.width = window.innerWidth;
   whiteboard.height = window.innerHeight;
-  
+
   const chat = byId("chat");
   const chatbox = byId("chatbox");
   const chatbutton = byId("chatbutton");
@@ -59,7 +59,6 @@ var start = function() {
   let sendCmd;
   let sendPic;
 
-
   const peerAlias = {};
 
   var streams = [];
@@ -81,9 +80,10 @@ var start = function() {
   }
   if (urlParams.has("video")) {
     features.video = true;
-    talkbutton.innerHTML = '<i class="fa fa-video fa-2x" aria-hidden="true"></i>';
+    talkbutton.innerHTML =
+      '<i class="fa fa-video fa-2x" aria-hidden="true"></i>';
   }
-  
+
   if (urlParams.has("username")) {
     userName = urlParams.get("username");
     // remove from URL for easy sharing
@@ -117,23 +117,22 @@ var start = function() {
   document.documentElement.className = "ready";
   addCursor(selfId, true);
 
-  
   var isDrawing = false;
   var plots = [];
   var rect = canvas.getBoundingClientRect();
   var offsetX = rect.left;
   var offsetY = rect.top;
-  window.addEventListener("mouseup", (e) => {
+  window.addEventListener("mouseup", e => {
     //console.log('mouse stop');
     isDrawing = false;
-    sendCmd({ peerId: selfId, cmd: "draw", plots: plots, color: '#b2b2b2' });
+    sendCmd({ peerId: selfId, cmd: "draw", plots: plots, color: "#b2b2b2" });
     plots = [];
   });
-  window.addEventListener("mousedown", (e) => {
+  window.addEventListener("mousedown", e => {
     //console.log('mouse start');
     isDrawing = true;
   });
-  
+
   window.addEventListener("mousemove", ({ clientX, clientY, buttons }) => {
     mouseX = clientX / window.innerWidth;
     mouseY = clientY / window.innerHeight;
@@ -141,13 +140,12 @@ var start = function() {
     if (room) {
       sendMove([mouseX, mouseY]);
     }
-    
+
     if (isDrawing) {
-      plots.push({x: mouseX, y: mouseY});
-      drawOnCanvas('#c2c2c2', plots, true);
+      plots.push({ x: mouseX, y: mouseY });
+      drawOnCanvas("#c2c2c2", plots, true);
     }
   });
-  
 
   window.addEventListener("click", () => {
     const payload = [randomFruit(), mouseX, mouseY];
@@ -195,8 +193,9 @@ var start = function() {
       handleStream(stream, selfId);
       streaming = stream;
       muted = false;
-      talkbutton.innerHTML = !features.video ? 
-        '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:white;"></i>' : '<i class="fa fa-video fa-2x" aria-hidden="true" style="color:white;"></i>';
+      talkbutton.innerHTML = !features.video
+        ? '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:white;"></i>'
+        : '<i class="fa fa-video fa-2x" aria-hidden="true" style="color:white;"></i>';
       talkbutton.style.background = "red";
       // notify network
       sendCmd({ peerId: peerId, cmd: "hand", state: true });
@@ -215,8 +214,9 @@ var start = function() {
         '<i class="fa fa-microphone fa-2x" aria-hidden="true"></i>';
       muted = false;
       // reset call button
-      talkbutton.innerHTML = !features.video ? 
-        '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:green;"></i>' : '<i class="fa fa-video fa-2x" aria-hidden="true"></i>';
+      talkbutton.innerHTML = !features.video
+        ? '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:green;"></i>'
+        : '<i class="fa fa-video fa-2x" aria-hidden="true"></i>';
       talkbutton.style.background = "";
       // notify network
       sendCmd({ peerId: peerId, cmd: "stop_video" });
@@ -252,7 +252,6 @@ var start = function() {
     let getCmd;
     let getPic;
 
-
     if (members === roomCap) {
       return init(n + 1);
     }
@@ -265,7 +264,7 @@ var start = function() {
     [sendClick, getClick] = room.makeAction("click");
     [sendChat, getChat] = room.makeAction("chat");
     [sendCmd, getCmd] = room.makeAction("cmd");
-    [sendPic, getPic] = room.makeAction('pic')
+    [sendPic, getPic] = room.makeAction("pic");
 
     byId("room-num").innerText = "#" + n;
     room.onPeerJoin(addCursor);
@@ -276,22 +275,25 @@ var start = function() {
     getChat(updateChat);
     getCmd(handleCmd);
     getPic(handlePic);
-    
-     // mappings
+
+    // mappings
     window.ctl = { sendCmd: sendCmd, sendPic: sendPic, peerId: selfId };
   }
-  
+
   // binary pic handler
   function handlePic(data, id, meta) {
     if (id == selfId) return;
-    console.log('got imagery', id, meta);
+    console.log("got imagery", id, meta);
     var img = document.createElement("img");
-    img.src =  URL.createObjectURL(new Blob([data]) );
-    img.onload =  function(){
-      console.log('img.src',img.src);
-      ctx.drawImage(img, meta.pos.x * window.innerWidth, meta.pos.y * window.innerHeight); 
-    }
-    
+    img.src = URL.createObjectURL(new Blob([data]));
+    img.onload = function() {
+      console.log("img.src", img.src);
+      ctx.drawImage(
+        img,
+        meta.pos.x * window.innerWidth,
+        meta.pos.y * window.innerHeight
+      );
+    };
   }
   // command handler
   function handleCmd(data, id) {
@@ -327,37 +329,47 @@ var start = function() {
       } else if (data.cmd == "clear") {
         if (whiteboard) whiteboard.width = whiteboard.width;
       } else if (data.cmd == "screenshare") {
-        console.log('remote screenshare session incoming', data)
+        console.log("remote screenshare session incoming", data);
         screens[data.stream] = true;
+      } else if (data.cmd == "stop_screenshare") {
+        console.log("remote screenshare session stop", data);
+        screens[data.stream] = false;
+        shareView.srcObject = null;
       }
-      
+
       // whiteboard.width = whiteboard.width;
-      
-      
-      
-      
     }
   }
 
   function handleStream(stream, peerId, meta) {
-    if (stream && screens[stream.id]){
-      console.log('this is a screenshare paylaod!')
+    if (stream && screens[stream.id]) {
+      console.log("this is a screenshare paylaod!");
+      //shareView
+      var el = shareView;
+      setTimeout(function() {
+        el.setAttribute("autoplay", true);
+        el.setAttribute("inline", true);
+        //el.setAttribute("height", 240);
+        el.setAttribute("width", "100%");
+        el.srcObject = stream;
+      }, 200);
+    } else {
+      console.log("handling stream", stream, peerId);
+      if (peerId == selfId) {
+        var selfStream = stream;
+        stream = new MediaStream(selfStream.getVideoTracks());
+      }
+      var el = byId("vid_" + peerId);
+      if (!el) console.error("target video frame not found!", peerId);
+      //console.log('received stream', stream, peerId, el);
+      setTimeout(function() {
+        el.setAttribute("autoplay", true);
+        el.setAttribute("inline", true);
+        el.setAttribute("height", 240);
+        el.setAttribute("width", 480);
+        el.srcObject = stream;
+      }, 200);
     }
-    console.log('handling stream', stream, peerId)
-    if (peerId == selfId) {
-      var selfStream = stream;
-      stream = new MediaStream(selfStream.getVideoTracks());
-    }
-    var el = byId("vid_" + peerId);
-    if (!el) console.error("target video frame not found!", peerId);
-    //console.log('received stream', stream, peerId, el);
-    setTimeout(function() {
-      el.setAttribute("autoplay", true);
-      el.setAttribute("inline", true);
-      el.setAttribute("height", 240);
-      el.setAttribute("width", 480);
-      el.srcObject = stream;
-    }, 200);
   }
 
   function moveCursor([x, y], id) {
@@ -366,8 +378,7 @@ var start = function() {
     if (el) {
       el.style.left = x * window.innerWidth + "px";
       el.style.top = y * window.innerHeight + "px";
-    }   
-  
+    }
   }
 
   function addCursor(id, isSelf) {
@@ -380,7 +391,7 @@ var start = function() {
     const video = document.createElement("video");
     video.id = "vid_" + id;
     video.className = "video-circle";
-    
+
     //video.addEventListener('loadedmetadata', function(data) { console.log('metaload',data) });
 
     el.style.float = "left";
@@ -440,13 +451,18 @@ var start = function() {
       if (open) {
         console.log("opening remote link.");
         window.open(msg, "_blank");
-        chat.innerHTML = user + ": <a href='" + msg + "' target='_blank' style='color:blue;'>"+msg+"</a><br/>" + chat.innerHTML;
+        chat.innerHTML =
+          user +
+          ": <a href='" +
+          msg +
+          "' target='_blank' style='color:blue;'>" +
+          msg +
+          "</a><br/>" +
+          chat.innerHTML;
       }
     } else {
       chat.innerHTML = user + ": " + msg + "<br/>" + chat.innerHTML;
     }
-
-    
   }
 
   function dropFruit([fruit, x, y]) {
@@ -470,7 +486,7 @@ var start = function() {
   }
 
   /* globals for compatibility */
-  
+
   window.clearCanvas = function() {
     if (whiteboard) whiteboard.width = whiteboard.width;
     sendCmd({ peerId: selfId, cmd: "clear" });
@@ -498,9 +514,11 @@ var start = function() {
     document.body.removeChild(dummy);
 
     notifyMe("link shared to clipboard");
-    shareButton.innerHTML = '<i class="fa fa-share-alt-square fa-1x" aria-hidden="true"></i>';
+    shareButton.innerHTML =
+      '<i class="fa fa-share-alt-square fa-1x" aria-hidden="true"></i>';
     setTimeout(function() {
-      shareButton.innerHTML = '<i class="fa fa-share-alt fa-1x" aria-hidden="true"></i>';
+      shareButton.innerHTML =
+        '<i class="fa fa-share-alt fa-1x" aria-hidden="true"></i>';
     }, 1000);
   };
   function notifyMe(msg) {
@@ -528,7 +546,7 @@ var start = function() {
     // At last, if the user has denied notifications, and you
     // want to be respectful there is no need to bother them any more.
   }
-  
+
   function drawOnCanvas(color, plots, local) {
     // x * window.innerWidth
     if (!plots[0]) return;
@@ -536,40 +554,54 @@ var start = function() {
     ctx.beginPath();
     ctx.lineWidth = 1;
     ctx.moveTo(plots[0].x * window.innerWidth, plots[0].y * window.innerHeight);
-    for(var i=1; i<plots.length; i++) {
+    for (var i = 1; i < plots.length; i++) {
       fadeOutCanvas();
-      ctx.lineTo(plots[i].x * window.innerWidth, plots[i].y * window.innerHeight);
+      ctx.lineTo(
+        plots[i].x * window.innerWidth,
+        plots[i].y * window.innerHeight
+      );
     }
     ctx.stroke();
   }
-  
+
   function fadeOutCanvas() {
     ctx.fillStyle = "rgba(255,255,255,0.05)";
     ctx.fillRect(0, 0, whiteboard.width, whiteboard.height);
   }
-  
+
   var screenSharing = false;
-  window.shareScreen = async function(){
-    if (!screenSharing){
-      var stream = await navigator.mediaDevices.getDisplayMedia({video: true, frameRate: 5});
-      sendCmd({ peerId: selfId+"_screen", cmd: "screenshare", stream: stream.id });
-      room.addStream(stream)
+  window.shareScreen = async function() {
+    if (!screenSharing) {
+      var stream = await navigator.mediaDevices.getDisplayMedia({
+        video: true,
+        frameRate: 5
+      });
+      sendCmd({
+        peerId: selfId + "_screen",
+        cmd: "screenshare",
+        stream: stream.id
+      });
+      room.addStream(stream);
       handleStream(stream, selfId);
       screenSharing = stream;
+      shareView.srcObject = screenSharing;
     } else {
+      sendCmd({
+        peerId: peerId,
+        cmd: "stop_screenshare",
+        stream: screenSharing.id
+      });
       room.removeStream(screenSharing);
       var tracks = screenSharing.getTracks();
       tracks.forEach(function(track) {
         track.stop();
       });
-      var el = byId("vid_" + selfId);
-      el.srcObject = null;
+      //var el = byId("vid_" + selfId);
+      //el.srcObject = null;
+      shareView.srcObject = null;
       screenSharing = false;
-      sendCmd({ peerId: peerId, cmd: "stop_video" });
     }
-  }
-  
-  
+  };
 };
 
 start();
