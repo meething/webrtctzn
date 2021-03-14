@@ -1,32 +1,20 @@
 import { joinRoom, selfId } from "https://cdn.skypack.dev/trystero@0.7.9";
-<<<<<<< HEAD
-=======
 // import { apply, generate, merge } from "https://cdn.skypack.dev/json-merge-patch"
 var doc = {};
->>>>>>> upstream/master
 
 var start = function() {
   const byId = document.getElementById.bind(document);
   const canvas = byId("canvas");
-<<<<<<< HEAD
-=======
   const whiteboard = byId("whiteboard");
   const ctx = whiteboard.getContext("2d");
   whiteboard.width = window.innerWidth;
   whiteboard.height = window.innerHeight;
 
->>>>>>> upstream/master
   const chat = byId("chat");
   const chatbox = byId("chatbox");
   const chatbutton = byId("chatbutton");
   const talkbutton = byId("talkbutton");
   const mutebutton = byId("mutebutton");
-<<<<<<< HEAD
-  const iframe = byId("iframe");
-  //const peerInfo = byId("peer-info");
-  //const noPeersCopy = peerInfo.innerText;
-  const config = { appId: "trystero-glitch" };
-=======
   const shareButton = byId("share-button");
   const shareScreenButton = byId("share-screen");
   const shareView = byId("shareview");
@@ -40,7 +28,6 @@ var start = function() {
   //const peerInfo = byId("peer-info");
   //const noPeersCopy = peerInfo.innerText;
   const config = { appId: "ctzn-glitch" };
->>>>>>> upstream/master
   const cursors = {};
   const roomCap = 33;
   const fruits = [
@@ -71,66 +58,20 @@ var start = function() {
   let sendChat;
   let sendPeer;
   let sendCmd;
-<<<<<<< HEAD
-
-  const peerAlias = {};
-  
-  var streams = [];
-=======
   let sendPic;
 
   const peerAlias = {};
 
   var streams = [];
   var screens = [];
->>>>>>> upstream/master
   // sidepeer for calls only
   var peerId = selfId + "_call";
   var userName = false;
   var roomName = false;
-<<<<<<< HEAD
-  //var peer = new Peer(peerId);
-=======
->>>>>>> upstream/master
 
   // Room Selector
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-<<<<<<< HEAD
-  if (urlParams.has("room")) { 
-    roomName = urlParams.get("room");
-    init(roomName)
-  } else {
-    roomName = 99;
-    init(roomName);                            
-  }  
-  
-  if (urlParams.has("username")) { 
-    userName = urlParams.get("username");
-    // remove from URL for easy sharing
-     var refresh =
-            window.location.protocol +
-            "//" +
-            window.location.host +
-            window.location.pathname +
-            "?room=" +
-            roomName;
-            window.history.pushState({ path: refresh }, "", refresh);
-  }  else {
-    userName = prompt("Whats your name, stranger?") || selfId;
-  }
-  
-  // focus on chat input all the time
-  var focus = function(){
-      document.getElementById('chatbox').focus();
-  }; focus();
-  window.addEventListener('focus', focus);
-  
-  document.documentElement.className = "ready";
-  addCursor(selfId, true);
-
-  window.addEventListener("mousemove", ({ clientX, clientY }) => {
-=======
   if (urlParams.has("room")) {
     roomName = urlParams.get("room");
     init(roomName);
@@ -155,7 +96,7 @@ var start = function() {
       "?room=" +
       roomName;
     window.history.pushState({ path: refresh }, "", refresh);
-    console.log("set localstorage");
+    //console.log("set localstorage");
     localStorage.setItem("username", userName);
   } else {
     if (localStorage.getItem("username")) {
@@ -165,7 +106,6 @@ var start = function() {
       getUserName();
       //localStorage.setItem("username", userName);
     }
-    console.log('i am ',userName)
   }
 
   // focus on chat input all the time
@@ -196,21 +136,17 @@ var start = function() {
   });
 
   window.addEventListener("mousemove", ({ clientX, clientY, buttons }) => {
->>>>>>> upstream/master
     mouseX = clientX / window.innerWidth;
     mouseY = clientY / window.innerHeight;
     moveCursor([mouseX, mouseY], selfId);
     if (room) {
       sendMove([mouseX, mouseY]);
     }
-<<<<<<< HEAD
-=======
 
     if (isDrawing) {
       plots.push({ x: mouseX, y: mouseY });
       drawOnCanvas("#c2c2c2", plots, true);
     }
->>>>>>> upstream/master
   });
 
   window.addEventListener("click", () => {
@@ -237,13 +173,8 @@ var start = function() {
 
   window.chat = function(msg) {
     if (!msg || msg.length < 1) return;
-<<<<<<< HEAD
-    updateChat(msg, selfId);
-    if (room) sendChat(msg);
-=======
     updateChat({ msg: msg, username: userName }, selfId);
     if (room) sendChat({ msg: msg, username: userName });
->>>>>>> upstream/master
     return;
   };
   chatbox.addEventListener("keypress", function(e) {
@@ -253,40 +184,17 @@ var start = function() {
       return false;
     }
   });
-<<<<<<< HEAD
-  
-  chatbutton.addEventListener("click", () => {
-    window.chat(chatbox.value);
-    chatbox.value = "";
-    return false;
-  });
-  
-  var streaming = false;
-  var muted = false;
-  talkbutton.addEventListener("click", async () => {
-    if (!streaming){
-      var stream = await navigator.mediaDevices.getUserMedia({audio:true, video:true});
-=======
 
   var streaming = false;
   var muted = false;
   talkbutton.addEventListener("click", async () => {
-    console.log("call button");
+    //console.log("call button");
     if (!streaming) {
       var stream = await navigator.mediaDevices.getUserMedia(features);
->>>>>>> upstream/master
       room.addStream(stream);
       handleStream(stream, selfId);
       streaming = stream;
       muted = false;
-<<<<<<< HEAD
-      talkbutton.innerHTML = '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:white;"></i>';
-      talkbutton.style.background = "red";
-      // notify network
-      sendCmd({peerId: peerId, cmd: "hand", state: true });
-    } else {
-      console.log('')
-=======
       talkbutton.innerHTML = !features.video
         ? '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:white;"></i>'
         : '<i class="fa fa-video fa-2x" aria-hidden="true" style="color:white;"></i>';
@@ -294,46 +202,11 @@ var start = function() {
       // notify network
       sendCmd({ peerId: peerId, cmd: "hand", state: true });
     } else {
-      console.log("");
->>>>>>> upstream/master
       room.removeStream(streaming);
       var tracks = streaming.getTracks();
       tracks.forEach(function(track) {
         track.stop();
       });
-<<<<<<< HEAD
-      var el = byId("vid_" + selfId )
-      el.srcObject = null;
-      streaming = null;
-      // reset mute
-      mutebutton.innerHTML = '<i class="fa fa-microphone fa-2x" aria-hidden="true"></i>';
-      muted = false;
-      // reset call button
-      talkbutton.innerHTML = '<i class="fa fa-phone fa-2x" aria-hidden="true" style="color:green;"></i>';
-      talkbutton.style.background = "";
-      // notify network
-      sendCmd({peerId: peerId, cmd: "stop_video"});
-      sendCmd({peerId: peerId, cmd: "hand", state: false });
-    }  
-    mutebutton.disabled = streaming ? false : true;
-  })
-  
-  mutebutton.addEventListener("click", async () => {
-    if (!streaming) return;
-    var state = streaming.getAudioTracks()[0].enabled;
-    if (!muted){
-      mutebutton.innerHTML = '<i class="fa fa-microphone-slash fa-2x" aria-hidden="true"></i>';
-      muted = true;
-      streaming.getAudioTracks()[0].enabled = false;
-    } else {
-      mutebutton.innerHTML = '<i class="fa fa-microphone fa-2x" aria-hidden="true"></i>';
-      muted = false;
-      streaming.getAudioTracks()[0].enabled = true;
-    }
-    
-  });
-  
-=======
       var el = byId("vid_" + selfId);
       el.srcObject = null;
       streaming = null;
@@ -369,7 +242,6 @@ var start = function() {
     }
   });
 
->>>>>>> upstream/master
   async function init(n) {
     const ns = "room" + n;
     const members = 1;
@@ -379,10 +251,7 @@ var start = function() {
     let getChat;
     let getPeer;
     let getCmd;
-<<<<<<< HEAD
-=======
     let getPic;
->>>>>>> upstream/master
 
     if (members === roomCap) {
       return init(n + 1);
@@ -396,14 +265,9 @@ var start = function() {
     [sendClick, getClick] = room.makeAction("click");
     [sendChat, getChat] = room.makeAction("chat");
     [sendCmd, getCmd] = room.makeAction("cmd");
-<<<<<<< HEAD
-
-    byId("room-num").innerText = "room #" + n;
-=======
     [sendPic, getPic] = room.makeAction("pic");
 
     byId("room-num").innerText = "#" + n;
->>>>>>> upstream/master
     room.onPeerJoin(addCursor);
     room.onPeerLeave(removeCursor);
     room.onPeerStream(handleStream);
@@ -411,18 +275,6 @@ var start = function() {
     getClick(dropFruit);
     getChat(updateChat);
     getCmd(handleCmd);
-<<<<<<< HEAD
-    
-    //iframe.src = "https://excalidraw.com/#room="+selfId+",00"+selfId;
-    
-  }
-  
-  function handleCmd (data, id){
-    if(id == selfId) return;
-    console.log('got cmd', data, id)
-    if (data){
-      if (data.cmd == "stop_video" && data.peerId){
-=======
     getPic(handlePic);
 
     // mappings
@@ -432,11 +284,11 @@ var start = function() {
   // binary pic handler
   function handlePic(data, id, meta) {
     if (id == selfId) return;
-    console.log("got imagery", id, meta);
+    //console.log("got imagery", id, meta);
     var img = document.createElement("img");
     img.src = URL.createObjectURL(new Blob([data]));
     img.onload = function() {
-      console.log("img.src", img.src);
+      //console.log("img.src", img.src);
       ctx.drawImage(
         img,
         meta.pos.x * window.innerWidth,
@@ -450,44 +302,11 @@ var start = function() {
     //console.log("got cmd", data, id);
     if (data) {
       if (data.cmd == "stop_video" && data.peerId) {
->>>>>>> upstream/master
         var el = byId("vid_" + id);
         if (el) el.srcObject = null;
         // which one is it? :)
         el = byId("vid_" + peerId);
         if (el) el.srcObject = null;
-<<<<<<< HEAD
-      } else 
-      if (data.cmd == "hand"){
-        var el = byId("hand_" + id);
-        if (el && data.state) el.classList.add("handgreen");
-        else el.classList.remove("handgreen");
-      } else 
-      if (data.cmd == "username" && data.username){
-        var el = byId("name_" + id);
-        el.innerText = data.username;
-      }
-    }
-  }
-  
-  function handleStream (stream, peerId) {
-    if(peerId == selfId) { 
-      var selfStream = stream;
-      stream = new MediaStream(selfStream.getVideoTracks());
-    }
-    var el = byId("vid_" + peerId);
-    if (!el) console.error('target video frame not found!', peerId)
-    //console.log('received stream', stream, peerId, el);
-    setTimeout(function () {
-      el.setAttribute('autoplay', true);
-      el.setAttribute('inline', true);
-      el.setAttribute('height', 240);
-      el.setAttribute('width', 480);
-      el.srcObject = stream;
-    }, 200);
-  }
-  
-=======
       } else if (data.cmd == "hand") {
         if (data.focus) {
           // handle focus
@@ -504,18 +323,18 @@ var start = function() {
         var el = byId("name_" + id);
         if (el) el.innerText = data.username;
       } else if (data.cmd == "img" && data) {
-        console.log("got image", data);
+        //console.log("got image", data);
         //displayImageOnCanvas(data.img, data.pos);
       } else if (data.cmd == "draw" && data.plots) {
         if (data.plots && data.color) drawOnCanvas(data.color, data.plots);
       } else if (data.cmd == "clear") {
         if (whiteboard) whiteboard.width = whiteboard.width;
       } else if (data.cmd == "screenshare") {
-        console.log("remote screenshare session incoming", data);
+        //console.log("remote screenshare session incoming", data);
         shareScreenButton.disabled = true;
         screens[data.stream] = true;
       } else if (data.cmd == "stop_screenshare") {
-        console.log("remote screenshare session stop", data);
+        //console.log("remote screenshare session stop", data);
         shareScreenButton.disabled = false;
         screens[data.stream] = false;
         shareView.srcObject = null;
@@ -527,8 +346,7 @@ var start = function() {
 
   function handleStream(stream, peerId, meta) {
     if (stream && screens[stream.id]) {
-      console.log("this is a screenshare paylaod!");
-      //shareView
+      // screensharing payload
       var el = shareView;
       setTimeout(function() {
         el.setAttribute("autoplay", true);
@@ -538,7 +356,8 @@ var start = function() {
         el.srcObject = stream;
       }, 200);
     } else {
-      console.log("handling stream", stream, peerId);
+      // videocall payload
+      //console.log("handling stream", stream, peerId);
       if (peerId == selfId) {
         var selfStream = stream;
         stream = new MediaStream(selfStream.getVideoTracks());
@@ -556,7 +375,6 @@ var start = function() {
     }
   }
 
->>>>>>> upstream/master
   function moveCursor([x, y], id) {
     const el = cursors[id];
 
@@ -568,10 +386,7 @@ var start = function() {
 
   function addCursor(id, isSelf) {
     const el = document.createElement("div");
-<<<<<<< HEAD
-=======
     el.id = "cursor_" + id;
->>>>>>> upstream/master
     const img = document.createElement("img");
     img.id = "hand_" + id;
     const txt = document.createElement("p");
@@ -579,10 +394,7 @@ var start = function() {
     const video = document.createElement("video");
     video.id = "vid_" + id;
     video.className = "video-circle";
-<<<<<<< HEAD
-=======
 
->>>>>>> upstream/master
     //video.addEventListener('loadedmetadata', function(data) { console.log('metaload',data) });
 
     el.style.float = "left";
@@ -599,19 +411,11 @@ var start = function() {
     if (!isSelf) {
       updatePeerInfo();
     }
-<<<<<<< HEAD
-    
-    if (userName && sendCmd) {
-      sendCmd({peerId: selfId, cmd: "username", username: userName });
-    }
-    
-=======
 
     if (userName && sendCmd) {
       sendCmd({ peerId: selfId, cmd: "username", username: userName });
     }
 
->>>>>>> upstream/master
     return el;
   }
 
@@ -628,15 +432,9 @@ var start = function() {
 
   function updatePeerInfo() {
     const count = room.getPeers().length;
-<<<<<<< HEAD
-    byId("room-num").innerText = "room #" + window.roomId + ` (${count})`;
-    if (userName && sendCmd) {
-      sendCmd({peerId: selfId, cmd: "username", username: userName });
-=======
     byId("room-num").innerText = "#" + window.roomId + ` (${count})`;
     if (userName && sendCmd) {
       sendCmd({ peerId: selfId, cmd: "username", username: userName });
->>>>>>> upstream/master
     }
     /*
     peerInfo.innerHTML = count
@@ -647,34 +445,14 @@ var start = function() {
     */
   }
 
-<<<<<<< HEAD
-  function updateChat(msg, id) {
-    
-    if (isValidHttpUrl(msg) && id != selfId) { 
-      var open = window.confirm(id+' is sharing a url. Trust it?');
-      if (open) {
-        // Save it!
-        console.log('opening remote link.');
-        //iframe.src = msg; // "https://excalidraw.com/#room="+selfId+",00"+selfId;
-        window.open(msg, '_blank');
-      } else {
-        // Do nothing!
-        console.log('Ignoring remote link.', id, selfId);
-        chat.innerHTML = id + ":" + msg + "<br/>" + chat.innerHTML;
-      }  
-    } 
-    
-    chat.innerHTML = id + ":" + msg + "<br/>" + chat.innerHTML;
-    
-=======
   function updateChat(data, id) {
     var msg = data.msg;
     var user = data.username || id;
 
     if (isValidHttpUrl(msg) && id != selfId) {
-      var open = window.confirm(user + " is sharing a url. Trust it?");
-      if (open) {
-        console.log("opening remote link.");
+      //var open = window.confirm(user + " is sharing a url. Trust it?");
+      //if (open) {
+        //console.log("opening remote link.");
         window.open(msg, "_blank");
         chat.innerHTML =
           user +
@@ -684,11 +462,10 @@ var start = function() {
           msg +
           "</a><br/>" +
           chat.innerHTML;
-      }
+      //}
     } else {
       chat.innerHTML = user + ": " + msg + "<br/>" + chat.innerHTML;
     }
->>>>>>> upstream/master
   }
 
   function dropFruit([fruit, x, y]) {
@@ -700,30 +477,17 @@ var start = function() {
     canvas.appendChild(el);
     setTimeout(() => canvas.removeChild(el), 3000);
   }
-<<<<<<< HEAD
-  
-=======
 
->>>>>>> upstream/master
   function isValidHttpUrl(string) {
     let url;
     try {
       url = new URL(string);
     } catch (_) {
-<<<<<<< HEAD
-      return false;  
-=======
       return false;
->>>>>>> upstream/master
     }
     return url.protocol === "http:" || url.protocol === "https:";
   }
 
-<<<<<<< HEAD
-};
-
-start();
-=======
   /* globals for compatibility */
 
   window.clearCanvas = function() {
@@ -850,7 +614,7 @@ start();
       input: 'text',
     }).then((result) => {
       if (result.value){
-        console.log('got username',result.value)
+        //console.log('got username',result.value)
         userName = result.value || selfId;
         localStorage.setItem("username", userName);
       }
@@ -862,5 +626,4 @@ start();
 start();
 
 
->>>>>>> upstream/master
 
