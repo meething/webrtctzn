@@ -7,6 +7,8 @@ Audio & Video Chat, Whiteboarding, Image and Screensharing with a minimal interf
 
 [Try It Now](https://webrtctzn.glitch.me)
 
+![ezgif com-gif-maker (20)](https://user-images.githubusercontent.com/1423657/111086318-bad40380-851b-11eb-84b9-5246f1f08bc7.gif)
+
 ### Optional Parameters
 ```
 ?room
