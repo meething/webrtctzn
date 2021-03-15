@@ -80,8 +80,13 @@ var start = function() {
     roomName = "lobby";
     init(roomName);
   }
-  if (urlParams.has("video")) {
+  if (urlParams.has("video") || features.video) {
     features.video = true;
+    talkbutton.innerHTML =
+      '<i class="fa fa-video fa-2x" aria-hidden="true"></i>';
+  }
+  if (urlParams.has("audio")) {
+    features.video = false;
     talkbutton.innerHTML =
       '<i class="fa fa-video fa-2x" aria-hidden="true"></i>';
   }
@@ -314,9 +319,15 @@ var start = function() {
           var el = byId("cursor_" + id);
           if (el && data.focus == "hidden") el.classList.add("handoff");
           else el.classList.remove("handoff");
+          var el = byId("circle_" + id);
+          if (el && data.focus == "hidden") el.classList.add("handoff");
+          else el.classList.remove("handoff");
         } else {
           // handle state
           var el = byId("hand_" + id);
+          if (el && data.state) el.classList.add("handgreen");
+          else el.classList.remove("handgreen");
+          var el = byId("circle_" + id);
           if (el && data.state) el.classList.add("handgreen");
           else el.classList.remove("handgreen");
         }
@@ -648,7 +659,7 @@ var start = function() {
       var offsetAngle = 360 / listItems.length;
       var rotateAngle = offsetAngle * i;
       var el = byId(listItems[i].id)
-      el.style.transform = "rotate(" + rotateAngle + "deg) translate(0, -200px) rotate(-" + rotateAngle + "deg)";
+      el.style.transform = "rotate(" + rotateAngle + "deg) translate(0, -150px) rotate(-" + rotateAngle + "deg)";
     };
   };
 

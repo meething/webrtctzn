@@ -371,7 +371,7 @@ button:disabled {
 .list-item{
 	list-style: none;
   border-radius: 50%;
-	border: 3px dotted #c2c2c2;
+	border: 4px dotted #d2d2d2;
 	height: 150px;
 	width: 150px;
 	position: absolute;
@@ -380,7 +380,7 @@ button:disabled {
 }
 
 .list-text {
-    left: 45%;
+    text-align: center;
     top: 45%;
     position: relative;
 }
