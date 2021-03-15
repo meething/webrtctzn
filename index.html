@@ -111,11 +111,11 @@
     <canvas id="whiteboard"></canvas>
     <div id="mySidenav" class="sidenav">
       <a href="javascript:this.style.width = 0" class="closebtn" onclick="closeNav()"> &times;</a>
-      <a href="#" onClick="getUserName()">Change Name</a>
-      <a href="#" onClick="shareScreen()">Share Screen</a>
-      <a href="#" onClick="shareUrl()">Share Link</a>
+      <a href="#" onClick="getUserName();closeNav()">Change Name</a>
+      <a href="#" onClick="shareScreen();closeNav()">Share Screen</a>
+      <a href="#" onClick="shareUrl();closeNav()">Share Link</a>
       <a href="?video" >Enable Video</a>
-      <input type="color" id="favcolor" class="favcolor" value="#ff0000">
+      <input type="color" id="favcolor" class="favcolor" value="#c2c2c2">
     </div>
   </body>
 </html>

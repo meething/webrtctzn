@@ -26,9 +26,12 @@ var start = function() {
     sendCmd({ peerId: peerId, cmd: "hand", focus: document.visibilityState });
   });
   
-  var userStroke = '';
+  var userStroke = "#c2c2c2";
   const colorPicker = byId("favcolor");
-  colorPicker.addEventListener("change", watchColorPicker, false);
+  colorPicker.addEventListener("change", function(event){
+    userStroke = event.target.value;
+    closeNav();
+  }, false);
 
   //const peerInfo = byId("peer-info");
   //const noPeersCopy = peerInfo.innerText;
@@ -159,7 +162,7 @@ var start = function() {
         plots = [];
       }
       plots.push({ x: mouseX, y: mouseY });
-      drawOnCanvas("#c2c2c2", plots, true);
+      drawOnCanvas(userStroke, plots, true);
     }
   });
 
@@ -577,12 +580,14 @@ var start = function() {
     document.body.removeChild(dummy);
 
     notifyMe("link shared to clipboard");
-    shareButton.innerHTML =
-      '<i class="fa fa-share-alt-square fa-1x" aria-hidden="true"></i>';
-    setTimeout(function() {
+    if (shareButton) {
       shareButton.innerHTML =
-        '<i class="fa fa-share-alt fa-1x" aria-hidden="true"></i>';
-    }, 1000);
+        '<i class="fa fa-share-alt-square fa-1x" aria-hidden="true"></i>';
+      setTimeout(function() {
+        shareButton.innerHTML =
+          '<i class="fa fa-share-alt fa-1x" aria-hidden="true"></i>';
+      }, 1000);
+    }
     
   };
   
