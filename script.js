@@ -412,13 +412,20 @@ var start = function() {
     if (!isSelf) {
       updatePeerInfo();
     }
-
+    
     if (userName && sendCmd) {
       sendCmd({ peerId: selfId, cmd: "username", username: userName });
     }
     
-    circle.
-
+    
+    // video circle attempt
+    /*
+    var li = document.createElement("li");
+    li.className = "list-item"
+    li.appendChild(txt);
+    circle.appendChild(li);
+    */
+    
     return el;
   }
 
