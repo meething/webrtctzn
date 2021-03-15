@@ -371,10 +371,16 @@ button:disabled {
 .list-item{
 	list-style: none;
   border-radius: 50%;
-	background-color: gray;
+	border: 3px dotted #c2c2c2;
 	height: 150px;
 	width: 150px;
 	position: absolute;
 	top: 50%;
 	left: 50%;
+}
+
+.list-text {
+    left: 45%;
+    top: 45%;
+    position: relative;
 }

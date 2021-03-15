@@ -422,6 +422,10 @@ var start = function() {
     var li = document.createElement("li");
     li.className = "list-item";
     li.id = "circle_" + id;
+    var inner_txt = document.createElement("p")
+    inner_txt.innerText = isSelf ? "you" : id.slice(0, 4);
+    inner_txt.className = "list-text";
+    li.appendChild(inner_txt);
     li.appendChild(video);
     circle.appendChild(li);
     updateLayout(circle);
@@ -440,6 +444,7 @@ var start = function() {
     
     var li = byId("circle_" + id);
     circle.removeChild(li);
+    updateLayout();
     
     updatePeerInfo();
   }
@@ -637,12 +642,13 @@ var start = function() {
   
   /* circle layout functions */
 
-  function updateLayout(listItems){
-    //var listItems = document.getElementsByClassName('list-item');
+  function updateLayout(){
+    var listItems = document.getElementsByClassName('list-item');
     for(var i = 0; i < listItems.length; i ++){
       var offsetAngle = 360 / listItems.length;
       var rotateAngle = offsetAngle * i;
-      byId(listItems[i]).style.transform = "rotate(" + rotateAngle + "deg) translate(0, -200px) rotate(-" + rotateAngle + "deg)";
+      var el = byId(listItems[i].id)
+      el.style.transform = "rotate(" + rotateAngle + "deg) translate(0, -200px) rotate(-" + rotateAngle + "deg)";
     };
   };
 
