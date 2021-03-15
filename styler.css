@@ -370,6 +370,7 @@ button:disabled {
 
 .list-item{
 	list-style: none;
+  border-radius: 50%;
 	background-color: gray;
 	height: 150px;
 	width: 150px;

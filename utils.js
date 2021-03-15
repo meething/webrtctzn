@@ -61,23 +61,3 @@ function displayImageOnCanvas(imgx, pos) {
   };
 }
 
-/* circle layout functions */
-
-var updateLayout = function(listItems){
-	for(var i = 0; i < listItems.length; i ++){
-		var offsetAngle = 360 / listItems.length;
-		var rotateAngle = offsetAngle * i;
-    var cell = document.getElementById(listItems[i]);
-    cell.style.transform = "rotate(" + rotateAngle + "deg) translate(0, -200px) rotate(-" + rotateAngle + "deg)";
-	};
-};
-
-var addCircle = function(item){
-  var list = document.getElementById("list");
-  list.append(item);
-}
-
-var deleteCircle = function(e){
-  var list = document.getElementById("list");
-  e.parent().remove();
-}

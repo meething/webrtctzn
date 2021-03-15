@@ -417,14 +417,14 @@ var start = function() {
       sendCmd({ peerId: selfId, cmd: "username", username: userName });
     }
     
-    
     // video circle attempt
-    /*
+    
     var li = document.createElement("li");
-    li.className = "list-item"
-    li.appendChild(txt);
+    li.className = "list-item";
+    li.id = "circle_" + id;
+    li.appendChild(video);
     circle.appendChild(li);
-    */
+    updateLayout(circle);
     
     return el;
   }
@@ -437,6 +437,10 @@ var start = function() {
       room.removeStream(streams[id], id);
       streams[id] = false;
     }
+    
+    var li = byId("circle_" + id);
+    circle.removeChild(li);
+    
     updatePeerInfo();
   }
 
@@ -630,6 +634,31 @@ var start = function() {
       }
     });
   }
+  
+  /* circle layout functions */
+
+  function updateLayout(listItems){
+    //var listItems = document.getElementsByClassName('list-item');
+    for(var i = 0; i < listItems.length; i ++){
+      var offsetAngle = 360 / listItems.length;
+      var rotateAngle = offsetAngle * i;
+      byId(listItems[i]).style.transform = "rotate(" + rotateAngle + "deg) translate(0, -200px) rotate(-" + rotateAngle + "deg)";
+    };
+  };
+
+  function addCircle(item){
+    var list = document.getElementById("list");
+    list.append(item);
+  }
+
+  var deleteCircle = function(e){
+    var list = document.getElementById("list");
+    e.parent().remove();
+  }
+  
+  
+  
+  
 };
 
 start();
