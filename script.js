@@ -150,6 +150,10 @@ var start = function() {
     }
 
     if (isDrawing) {
+      if (plots.length>50){
+        sendCmd({ peerId: selfId, cmd: "draw", plots: plots, color: "#b2b2b2" });
+        plots = [];
+      }
       plots.push({ x: mouseX, y: mouseY });
       drawOnCanvas("#c2c2c2", plots, true);
     }
@@ -444,6 +448,7 @@ var start = function() {
     var inner_txt = document.createElement("p");
     inner_txt.innerText = isSelf ? "you" : id.slice(0, 4);
     inner_txt.className = "list-text";
+    inner_txt.id = "na_" + id;
     li.appendChild(inner_txt);
     //li.appendChild(video);
     circle.appendChild(li);
@@ -605,8 +610,9 @@ var start = function() {
     ctx.stroke();
   }
 
+  
   function fadeOutCanvas() {
-    ctx.fillStyle = "rgba(255,255,255,0.05)";
+    ctx.fillStyle = "rgba(255,255,255,0.02)";
     ctx.fillRect(0, 0, whiteboard.width, whiteboard.height);
   }
 
