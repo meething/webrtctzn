@@ -10,14 +10,14 @@ Audio & Video Chat, Whiteboarding, Image and Screensharing with a minimal interf
 
 ![ezgif com-gif-maker (20)](https://user-images.githubusercontent.com/1423657/111086318-bad40380-851b-11eb-84b9-5246f1f08bc7.gif)
 
-### Optional Parameters
+#### URL Parameters
 ```
-?room=my_secret_room
-?username=my_nickname
+?room
+?username
 ?video
 ```
 
-### Embedding
+#### Embedding
 ```html
 <iframe src="https://webrtctzn.glitch.me"
   width="100%" height="100%" frameBorder="0" allowusermedia 
@@ -25,7 +25,7 @@ Audio & Video Chat, Whiteboarding, Image and Screensharing with a minimal interf
 </iframe>
 ```
 
-### Ingredients
+##### Ingredients
 
 * [Meething](https://github.com/meething)
 * [Trystero](https://github.com/dmotz/trystero)
