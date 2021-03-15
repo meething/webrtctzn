@@ -2,68 +2,15 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
-<<<<<<< HEAD
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no"
-    />
-    <link href="images/favicon.png" rel="icon" type="image/png" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-=======
     <meta name="viewport" content="width=device-width, user-scalable=yes" />
-    <title>Openhouse</title>
+    <title>OpenCircle</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link href="static/hand.png" rel="icon" type="image/png" />
->>>>>>> upstream/master
     <link
       href="https://fonts.googleapis.com/css2?family=Space+Mono:ital@0;1&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
-<<<<<<< HEAD
-    <title>dWebRTC</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css" integrity="sha256-gsmEoJAws/Kd3CjuOQzLie5Q3yshhvmo7YNtBG7aaEY=" crossorigin="anonymous">
-    <script type="module" src="./script.js"></script>
-    <link rel="icon" 
-      type="image/png" 
-      href="static/hand.png"/>
-  </head>
-  <body>
-    
-    <div id="canvas"></div>
-    <header>
-      <!--<h1>📯</h1>-->
-      <div class="splitleft" style="float: left;">
-        <h2>CTZN Matchmaking
-          <div id="room-num"></div>
-        </h2>
-      </div>
-      <div class="splitright">
-          <button type="button" id="talkbutton" class="bigbutton"><i class="fa fa-phone fa-2x" aria-hidden="true"></i></button>
-          <button type="button" id="mutebutton" class="bigbutton" disabled><i class="fa fa-microphone fa-2x" aria-hidden="true"></i></button>
-      </div>
-      
-    <div style=" clear: both;"></div>  
-    </header>
-    <main>
-      <p id="peer-info">
-      </p>
-      <input id="chatbox" name="text" type="text" class="chatbox" placeholder=" type your message here..." autocomplete="off">
-
-      <button type="button" id="chatbutton" class="chatbutton"><i class="fa fa-paper-plane-o fa-2x" aria-hidden="true"></i></button>
-      
-      <p id="chat" class="chatp"></p>
-      
-      <iframe width="100%" height="50%" border="0" class="iframe" id="iframe"></iframe>
-      
-      <div class="footerWrap">
-          <div class="footer">
-            Made with ❤ 
-        </div>
-      </div>
- 
-    </main>
-=======
     <link rel="stylesheet" href="styler.css" />
     <link
       rel="stylesheet"
@@ -151,7 +98,7 @@
 
       <h1 class="text-5xl" style="margin-top: 0.5em" id="room-num"></h1>
       <p id="chat" class="chatp"></p>
-
+      <ul id="list"></ul>
       <div
         id="peer-grid"
         class="grid grid-flow-row grid-cols-4 gap-10 mb-auto"
@@ -159,8 +106,6 @@
 
       <video id="shareview" src="" autoplay></video>
     </div>
-    <canvas id="whiteboard"></canvas
-    >
->>>>>>> upstream/master
+    <canvas id="whiteboard"></canvas>
   </body>
 </html>

@@ -10,6 +10,7 @@ var start = function() {
   whiteboard.width = window.innerWidth;
   whiteboard.height = window.innerHeight;
 
+  const circle = byId("list");
   const chat = byId("chat");
   const chatbox = byId("chatbox");
   const chatbutton = byId("chatbutton");
@@ -79,8 +80,13 @@ var start = function() {
     roomName = "lobby";
     init(roomName);
   }
-  if (urlParams.has("video")) {
+  if (urlParams.has("video") || features.video) {
     features.video = true;
+    talkbutton.innerHTML =
+      '<i class="fa fa-video fa-2x" aria-hidden="true"></i>';
+  }
+  if (urlParams.has("audio")) {
+    features.video = false;
     talkbutton.innerHTML =
       '<i class="fa fa-video fa-2x" aria-hidden="true"></i>';
   }
@@ -313,9 +319,15 @@ var start = function() {
           var el = byId("cursor_" + id);
           if (el && data.focus == "hidden") el.classList.add("handoff");
           else el.classList.remove("handoff");
+          var el = byId("circle_" + id);
+          if (el && data.focus == "hidden") el.classList.add("handoff");
+          else el.classList.remove("handoff");
         } else {
           // handle state
           var el = byId("hand_" + id);
+          if (el && data.state) el.classList.add("handgreen");
+          else el.classList.remove("handgreen");
+          var el = byId("circle_" + id);
           if (el && data.state) el.classList.add("handgreen");
           else el.classList.remove("handgreen");
         }
@@ -411,11 +423,24 @@ var start = function() {
     if (!isSelf) {
       updatePeerInfo();
     }
-
+    
     if (userName && sendCmd) {
       sendCmd({ peerId: selfId, cmd: "username", username: userName });
     }
-
+    
+    // video circle attempt
+    
+    var li = document.createElement("li");
+    li.className = "list-item";
+    li.id = "circle_" + id;
+    var inner_txt = document.createElement("p")
+    inner_txt.innerText = isSelf ? "you" : id.slice(0, 4);
+    inner_txt.className = "list-text";
+    li.appendChild(inner_txt);
+    li.appendChild(video);
+    circle.appendChild(li);
+    updateLayout(circle);
+    
     return el;
   }
 
@@ -427,6 +452,11 @@ var start = function() {
       room.removeStream(streams[id], id);
       streams[id] = false;
     }
+    
+    var li = byId("circle_" + id);
+    circle.removeChild(li);
+    updateLayout();
+    
     updatePeerInfo();
   }
 
@@ -452,16 +482,16 @@ var start = function() {
     if (isValidHttpUrl(msg) && id != selfId) {
       //var open = window.confirm(user + " is sharing a url. Trust it?");
       //if (open) {
-        //console.log("opening remote link.");
-        window.open(msg, "_blank");
-        chat.innerHTML =
-          user +
-          ": <a href='" +
-          msg +
-          "' target='_blank' style='color:blue;'>" +
-          msg +
-          "</a><br/>" +
-          chat.innerHTML;
+      //console.log("opening remote link.");
+      window.open(msg, "_blank");
+      chat.innerHTML =
+        user +
+        ": <a href='" +
+        msg +
+        "' target='_blank' style='color:blue;'>" +
+        msg +
+        "</a><br/>" +
+        chat.innerHTML;
       //}
     } else {
       chat.innerHTML = user + ": " + msg + "<br/>" + chat.innerHTML;
@@ -605,15 +635,15 @@ var start = function() {
       shareView.srcObject = null;
       screenSharing = false;
     }
-  }
-  
+  };
+
   function getUserName() {
     Swal.fire({
       title: "Hey Stranger!",
       text: "Choose a Username:",
-      input: 'text',
-    }).then((result) => {
-      if (result.value){
+      input: "text"
+    }).then(result => {
+      if (result.value) {
         //console.log('got username',result.value)
         userName = result.value || selfId;
         localStorage.setItem("username", userName);
@@ -621,9 +651,31 @@ var start = function() {
     });
   }
   
+  /* circle layout functions */
+
+  function updateLayout(){
+    var listItems = document.getElementsByClassName('list-item');
+    for(var i = 0; i < listItems.length; i ++){
+      var offsetAngle = 360 / listItems.length;
+      var rotateAngle = offsetAngle * i;
+      var el = byId(listItems[i].id)
+      el.style.transform = "rotate(" + rotateAngle + "deg) translate(0, -150px) rotate(-" + rotateAngle + "deg)";
+    };
+  };
+
+  function addCircle(item){
+    var list = document.getElementById("list");
+    list.append(item);
+  }
+
+  var deleteCircle = function(e){
+    var list = document.getElementById("list");
+    e.parent().remove();
+  }
+  
+  
+  
+  
 };
 
 start();
-
-
-

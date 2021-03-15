@@ -334,14 +334,53 @@ button:disabled {
   z-index: -10000;
 }
 
-
-.blinking{
-    animation:blinkingText 1.2s infinite;
+.blinking {
+  animation: blinkingText 1.2s infinite;
 }
-@keyframes blinkingText{
-    0%{     color: #000;    }
-    49%{    color: #000; }
-    60%{    color: transparent; }
-    99%{    color:transparent;  }
-    100%{   color: #000;    }
+@keyframes blinkingText {
+  0% {
+    color: #000;
+  }
+  49% {
+    color: #000;
+  }
+  60% {
+    color: transparent;
+  }
+  99% {
+    color: transparent;
+  }
+  100% {
+    color: #000;
+  }
+}
+
+
+/* circle list */
+
+#list{
+	background-color: transparent;
+	height: 50%;
+	width: 50%;
+  top: 25%;
+  left: 25%;
+	border-radius: 50%;
+	position: fixed;
+}
+
+.list-item{
+	list-style: none;
+  border-radius: 50%;
+	border: 4px dotted #d2d2d2;
+	height: 150px;
+	width: 150px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+}
+
+.list-text {
+    text-align: center;
+    top: 45%;
+    position: relative;
 }
