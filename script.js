@@ -25,6 +25,10 @@ var start = function() {
   document.addEventListener("visibilitychange", function(event) {
     sendCmd({ peerId: peerId, cmd: "hand", focus: document.visibilityState });
   });
+  
+  var userStroke = '';
+  const colorPicker = byId("favcolor");
+  colorPicker.addEventListener("change", watchColorPicker, false);
 
   //const peerInfo = byId("peer-info");
   //const noPeersCopy = peerInfo.innerText;
@@ -579,7 +583,9 @@ var start = function() {
       shareButton.innerHTML =
         '<i class="fa fa-share-alt fa-1x" aria-hidden="true"></i>';
     }, 1000);
+    
   };
+  
   function notifyMe(msg) {
     // Let's check if the browser supports notifications
     if (!("Notification" in window)) {
@@ -674,9 +680,11 @@ var start = function() {
         //console.log('got username',result.value)
         userName = result.value || selfId;
         localStorage.setItem("username", userName);
+        sendCmd({ peerId: selfId, cmd: "username", username: userName });
       }
     });
   }
+  window.getUserName = getUserName;
 
   /* circle layout functions */
 
@@ -704,6 +712,9 @@ var start = function() {
     var list = document.getElementById("list");
     e.parent().remove();
   };
+  
+  
+  
 };
 
 start();

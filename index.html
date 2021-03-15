@@ -83,17 +83,19 @@
         >
           <i class="fa fa-object-group fa-1x" aria-hidden="true"></i>
         </button>
-        <!-- share link -->
+        
+        <!-- settings link -->
         <button
-          title="share room"
+          title="settings"
           type="button"
-          id="share-button"
-          onClick="shareUrl()"
-          style="margin-left: 0.5em; float: right;"
+          id="settings-button"
+          onClick="openNav()"
+          style="margin-left: 0.5em; float: right; bottom: 10px;"
           class="bg-gray-300 hover:bg-pink-400 text-white-800 font-bold py-2 px-6 rounded-full"
         >
-          <i class="fa fa-chain fa-1x" aria-hidden="true"></i>
+          <i class="fa fa-gears fa-1x" aria-hidden="true"></i>
         </button>
+        
       </div>
 
       <h1 class="text-5xl" style="margin-top: 0.5em" id="room-num"></h1>
@@ -107,5 +109,13 @@
       <video id="shareview" class="overtop" src="" autoplay></video>
     </div>
     <canvas id="whiteboard"></canvas>
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:this.style.width = 0" class="closebtn" onclick="closeNav()"> &times;</a>
+      <a href="#" onClick="getUserName()">Change Name</a>
+      <a href="#" onClick="shareScreen()">Share Screen</a>
+      <a href="#" onClick="shareUrl()">Share Link</a>
+      <a href="?video" >Enable Video</a>
+      <input type="color" id="favcolor" class="favcolor" value="#ff0000">
+    </div>
   </body>
 </html>
