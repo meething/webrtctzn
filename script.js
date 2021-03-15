@@ -61,6 +61,7 @@ var start = function() {
   let mouseX = 0;
   let mouseY = 0;
   let room;
+  let rooms;
   let sendMove;
   let sendClick;
   let sendChat;
@@ -268,6 +269,7 @@ var start = function() {
     }
   });
 
+  
   async function init(n) {
     const ns = "room" + n;
     const members = 1;
@@ -306,6 +308,24 @@ var start = function() {
     // mappings
     window.ctl = { sendCmd: sendCmd, sendPic: sendPic, peerId: selfId };
   }
+  
+  // EXPERIMENTAL ROOM INDEXING!
+  async function allrooms(n) {
+    const ns = "rooms";
+    rooms = joinRoom({ appId: "ctzn-glitch-index" }, ns);
+    window.rooms = rooms;
+    rooms.onPeerJoin(addRooms);
+    rooms.onPeerLeave(removeRooms);
+  }
+  function addRooms(id, isSelf){
+    console.log('new room created', id);
+    // add div
+  }
+  function removeRooms(id){
+    console.log('room destroyed', id)
+    // remove div
+  }
+  
 
   // binary pic handler
   function handlePic(data, id, meta) {
