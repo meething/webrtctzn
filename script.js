@@ -25,6 +25,10 @@ var start = function() {
   document.addEventListener("visibilitychange", function(event) {
     sendCmd({ peerId: peerId, cmd: "hand", focus: document.visibilityState });
   });
+  
+  var userStroke = '';
+  const colorPicker = byId("favcolor");
+  colorPicker.addEventListener("change", watchColorPicker, false);
 
   //const peerInfo = byId("peer-info");
   //const noPeersCopy = peerInfo.innerText;
@@ -347,6 +351,8 @@ var start = function() {
       } else if (data.cmd == "username" && data.username) {
         var el = byId("name_" + id);
         if (el) el.innerText = data.username;
+        var us = byId("user_" + id);
+        if (us) us.innerText = data.username;
       } else if (data.cmd == "img" && data) {
         //console.log("got image", data);
         //displayImageOnCanvas(data.img, data.pos);
@@ -370,6 +376,7 @@ var start = function() {
   }
 
   function handleStream(stream, peerId, meta) {
+    //console.log('got stream!', peerId, stream)
     if (stream && screens[stream.id]) {
       // screensharing payload
       var el = shareView;
@@ -448,11 +455,21 @@ var start = function() {
     var inner_txt = document.createElement("p");
     inner_txt.innerText = isSelf ? "you" : id.slice(0, 4);
     inner_txt.className = "list-text";
-    inner_txt.id = "na_" + id;
+    inner_txt.id = "user_" + id;
     li.appendChild(inner_txt);
     //li.appendChild(video);
     circle.appendChild(li);
     updateLayout(circle);
+    
+    // are we sharing?
+    if (screenSharing){
+       console.log('wea re still screensharing!',screenSharing.id)
+       sendCmd({
+        peerId: selfId + "_screen",
+        cmd: "screenshare",
+        stream: screenSharing.id
+      });
+    }
 
     return el;
   }
@@ -566,7 +583,9 @@ var start = function() {
       shareButton.innerHTML =
         '<i class="fa fa-share-alt fa-1x" aria-hidden="true"></i>';
     }, 1000);
+    
   };
+  
   function notifyMe(msg) {
     // Let's check if the browser supports notifications
     if (!("Notification" in window)) {
@@ -661,9 +680,11 @@ var start = function() {
         //console.log('got username',result.value)
         userName = result.value || selfId;
         localStorage.setItem("username", userName);
+        sendCmd({ peerId: selfId, cmd: "username", username: userName });
       }
     });
   }
+  window.getUserName = getUserName;
 
   /* circle layout functions */
 
@@ -691,6 +712,9 @@ var start = function() {
     var list = document.getElementById("list");
     e.parent().remove();
   };
+  
+  
+  
 };
 
 start();
