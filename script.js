@@ -347,6 +347,8 @@ var start = function() {
       } else if (data.cmd == "username" && data.username) {
         var el = byId("name_" + id);
         if (el) el.innerText = data.username;
+        var us = byId("user_" + id);
+        if (us) us.innerText = data.username;
       } else if (data.cmd == "img" && data) {
         //console.log("got image", data);
         //displayImageOnCanvas(data.img, data.pos);
@@ -370,6 +372,7 @@ var start = function() {
   }
 
   function handleStream(stream, peerId, meta) {
+    //console.log('got stream!', peerId, stream)
     if (stream && screens[stream.id]) {
       // screensharing payload
       var el = shareView;
@@ -448,11 +451,21 @@ var start = function() {
     var inner_txt = document.createElement("p");
     inner_txt.innerText = isSelf ? "you" : id.slice(0, 4);
     inner_txt.className = "list-text";
-    inner_txt.id = "na_" + id;
+    inner_txt.id = "user_" + id;
     li.appendChild(inner_txt);
     //li.appendChild(video);
     circle.appendChild(li);
     updateLayout(circle);
+    
+    // are we sharing?
+    if (screenSharing){
+       console.log('wea re still screensharing!',screenSharing.id)
+       sendCmd({
+        peerId: selfId + "_screen",
+        cmd: "screenshare",
+        stream: screenSharing.id
+      });
+    }
 
     return el;
   }
