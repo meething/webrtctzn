@@ -101,15 +101,6 @@ var start = function() {
 
   if (urlParams.has("username")) {
     userName = urlParams.get("username");
-    // remove from URL for easy sharing
-    var refresh =
-      window.location.protocol +
-      "//" +
-      window.location.host +
-      window.location.pathname +
-      "?room=" +
-      roomName;
-    window.history.pushState({ path: refresh }, "", refresh);
     //console.log("set localstorage");
     localStorage.setItem("username", userName);
   } else {
@@ -122,8 +113,18 @@ var start = function() {
     }
   }
 
+  // reformat URL for easy sharing
+  var refresh =
+      window.location.protocol +
+      "//" +
+      window.location.host +
+      window.location.pathname +
+      "?room=" +
+      roomName;
+  window.history.pushState({ path: refresh }, "", refresh);
+  
+  
   // focus on chat input all the time
-
   var focus = function() {
     document.getElementById("chatbox").focus();
   };
