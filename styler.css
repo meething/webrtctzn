@@ -418,6 +418,15 @@ button:disabled {
   color: #f1f1f1;
 }
 
+.sidenav p {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 15px;
+  color: #ffffff;
+  display: block;
+  transition: 0.3s;
+}
+
 .sidenav .closebtn {
   position: absolute;
   top: 0;
@@ -434,5 +443,5 @@ button:disabled {
 .favcolor{
   height: 30px;
   background: transparent;
-  width: 99%;
+  width: 40%;
 }
