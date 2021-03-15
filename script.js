@@ -452,16 +452,16 @@ var start = function() {
     if (isValidHttpUrl(msg) && id != selfId) {
       //var open = window.confirm(user + " is sharing a url. Trust it?");
       //if (open) {
-        //console.log("opening remote link.");
-        window.open(msg, "_blank");
-        chat.innerHTML =
-          user +
-          ": <a href='" +
-          msg +
-          "' target='_blank' style='color:blue;'>" +
-          msg +
-          "</a><br/>" +
-          chat.innerHTML;
+      //console.log("opening remote link.");
+      window.open(msg, "_blank");
+      chat.innerHTML =
+        user +
+        ": <a href='" +
+        msg +
+        "' target='_blank' style='color:blue;'>" +
+        msg +
+        "</a><br/>" +
+        chat.innerHTML;
       //}
     } else {
       chat.innerHTML = user + ": " + msg + "<br/>" + chat.innerHTML;
@@ -605,25 +605,21 @@ var start = function() {
       shareView.srcObject = null;
       screenSharing = false;
     }
-  }
-  
+  };
+
   function getUserName() {
     Swal.fire({
       title: "Hey Stranger!",
       text: "Choose a Username:",
-      input: 'text',
-    }).then((result) => {
-      if (result.value){
+      input: "text"
+    }).then(result => {
+      if (result.value) {
         //console.log('got username',result.value)
         userName = result.value || selfId;
         localStorage.setItem("username", userName);
       }
     });
   }
-  
 };
 
 start();
-
-
-

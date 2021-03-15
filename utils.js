@@ -1,6 +1,9 @@
 function drop(ev) {
   ev.preventDefault();
-  var position = { x: ev.clientX / window.innerWidth, y: ev.clientY / window.innerHeight };
+  var position = {
+    x: ev.clientX / window.innerWidth,
+    y: ev.clientY / window.innerHeight
+  };
   var imageTypes = ["image/png", "image/gif", "image/bmp", "image/jpg"];
   if (ev.dataTransfer && ev.dataTransfer.files && ev.dataTransfer.files[0]) {
     // ev.dataTransfer.files is a FileList
@@ -32,29 +35,28 @@ function displayImage(imgx) {
   cell.appendChild(img);
 }
 
-function displayImageOnCanvas(imgx, pos){
+function displayImageOnCanvas(imgx, pos) {
   var newx = pos.x * window.innerWidth;
   var newy = pos.y * window.innerHeight;
   if (newx > window.innerWidth || newy > window.innerHeight) {
-    console.log('out of bounds!', newx, newy)
+    console.log("out of bounds!", newx, newy);
   }
-  var whiteboard = document.getElementById('whiteboard');
-  var ctx = whiteboard.getContext('2d');
+  var whiteboard = document.getElementById("whiteboard");
+  var ctx = whiteboard.getContext("2d");
   var img = document.createElement("img");
   img.src = imgx.result;
-  img.onload =  function(){
+  img.onload = function() {
     ctx.drawImage(img, newx, newy);
-      // network share
-      if (ctl) {
-        var canvas = document.createElement('canvas');
-        canvas.width  = img.width;
-        canvas.height = img.height;
-        var newctx = canvas.getContext('2d');
-        newctx.drawImage(img, 0, 0);
-        canvas.toBlob(function(blob) { 
-          ctl.sendPic(blob, null, { pos: pos, peerId: ctl.peerId } );
-        });
-      }
-  }
-  
+    // network share
+    if (ctl) {
+      var canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      var newctx = canvas.getContext("2d");
+      newctx.drawImage(img, 0, 0);
+      canvas.toBlob(function(blob) {
+        ctl.sendPic(blob, null, { pos: pos, peerId: ctl.peerId });
+      });
+    }
+  };
 }
