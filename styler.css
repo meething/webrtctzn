@@ -310,6 +310,10 @@ pre {
     height: 60px;
     font-family: "Space Mono", monospace;
   }
+
+  #list {
+    left: 12% !important;
+  }
 }
 
 button:hover:disabled {
@@ -355,32 +359,36 @@ button:disabled {
   }
 }
 
-
 /* circle list */
 
-#list{
-	background-color: transparent;
-	height: 50%;
-	width: 50%;
-  top: 25%;
-  left: 25%;
-	border-radius: 50%;
-	position: fixed;
+#list {
+  background-color: transparent;
+  height: 50%;
+  width: 50%;
+  top: 15%;
+  left: 20%;
+  border-radius: 50%;
+  position: fixed;
 }
 
-.list-item{
-	list-style: none;
+.list-item {
+  list-style: none;
   border-radius: 50%;
-	border: 4px dotted #d2d2d2;
-	height: 150px;
-	width: 150px;
-	position: absolute;
-	top: 50%;
-	left: 50%;
+  border: 4px dotted #d2d2d2;
+  height: 150px;
+  width: 150px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
 
 .list-text {
-    text-align: center;
-    top: 45%;
-    position: relative;
+  text-align: center;
+  top: 45%;
+  position: relative;
+}
+
+.overtop {
+  z-index: 999999;
+  position: relative;
 }

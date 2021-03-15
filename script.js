@@ -176,6 +176,15 @@ var start = function() {
       sendClick(payload);
     }
   });
+  
+
+  window.addEventListener("click", () => {
+    const payload = [randomFruit(), mouseX, mouseY];
+    dropFruit(payload);
+    if (room) {
+      sendClick(payload);
+    }
+  });
 
   window.chat = function(msg) {
     if (!msg || msg.length < 1) return;
@@ -423,24 +432,23 @@ var start = function() {
     if (!isSelf) {
       updatePeerInfo();
     }
-    
+
     if (userName && sendCmd) {
       sendCmd({ peerId: selfId, cmd: "username", username: userName });
     }
-    
+
     // video circle attempt
-    
     var li = document.createElement("li");
     li.className = "list-item";
     li.id = "circle_" + id;
-    var inner_txt = document.createElement("p")
+    var inner_txt = document.createElement("p");
     inner_txt.innerText = isSelf ? "you" : id.slice(0, 4);
     inner_txt.className = "list-text";
     li.appendChild(inner_txt);
-    li.appendChild(video);
+    //li.appendChild(video);
     circle.appendChild(li);
     updateLayout(circle);
-    
+
     return el;
   }
 
@@ -452,11 +460,11 @@ var start = function() {
       room.removeStream(streams[id], id);
       streams[id] = false;
     }
-    
+
     var li = byId("circle_" + id);
     circle.removeChild(li);
     updateLayout();
-    
+
     updatePeerInfo();
   }
 
@@ -650,32 +658,33 @@ var start = function() {
       }
     });
   }
-  
+
   /* circle layout functions */
 
-  function updateLayout(){
-    var listItems = document.getElementsByClassName('list-item');
-    for(var i = 0; i < listItems.length; i ++){
+  function updateLayout() {
+    var listItems = document.getElementsByClassName("list-item");
+    for (var i = 0; i < listItems.length; i++) {
       var offsetAngle = 360 / listItems.length;
       var rotateAngle = offsetAngle * i;
-      var el = byId(listItems[i].id)
-      el.style.transform = "rotate(" + rotateAngle + "deg) translate(0, -150px) rotate(-" + rotateAngle + "deg)";
-    };
-  };
+      var el = byId(listItems[i].id);
+      el.style.transform =
+        "rotate(" +
+        rotateAngle +
+        "deg) translate(0, -120px) rotate(-" +
+        rotateAngle +
+        "deg)";
+    }
+  }
 
-  function addCircle(item){
+  function addCircle(item) {
     var list = document.getElementById("list");
     list.append(item);
   }
 
-  var deleteCircle = function(e){
+  var deleteCircle = function(e) {
     var list = document.getElementById("list");
     e.parent().remove();
-  }
-  
-  
-  
-  
+  };
 };
 
 start();
