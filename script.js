@@ -10,6 +10,7 @@ var start = function() {
   whiteboard.width = window.innerWidth;
   whiteboard.height = window.innerHeight;
 
+  const circle = byId("list");
   const chat = byId("chat");
   const chatbox = byId("chatbox");
   const chatbutton = byId("chatbutton");
@@ -415,6 +416,8 @@ var start = function() {
     if (userName && sendCmd) {
       sendCmd({ peerId: selfId, cmd: "username", username: userName });
     }
+    
+    circle.
 
     return el;
   }

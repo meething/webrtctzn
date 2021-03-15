@@ -354,3 +354,26 @@ button:disabled {
     color: #000;
   }
 }
+
+
+/* circle list */
+
+#list{
+	background-color: transparent;
+	height: 50%;
+	width: 50%;
+  top: 25%;
+  left: 25%;
+	border-radius: 50%;
+	position: fixed;
+}
+
+.list-item{
+	list-style: none;
+	background-color: red;
+	height: 50px;
+	width: 50px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+}
