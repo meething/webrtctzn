@@ -1,5 +1,6 @@
 import { joinRoom, selfId } from "https://cdn.skypack.dev/trystero@0.7.9";
 // import { apply, generate, merge } from "https://cdn.skypack.dev/json-merge-patch"
+import quickLru from 'https://cdn.skypack.dev/quick-lru';
 var doc = {};
 
 var start = function() {
