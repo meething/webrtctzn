@@ -726,7 +726,7 @@ var start = function() {
       el.style.transform =
         "rotate(" +
         rotateAngle +
-        "deg) translate(0, -120px) rotate(-" +
+        "deg) translate(0, -80px) rotate(-" +
         rotateAngle +
         "deg)";
     }
