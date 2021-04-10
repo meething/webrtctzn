@@ -310,6 +310,12 @@ pre {
   .chatp {
     max-height: 17em;
   }
+  .sidenav .closebtn {
+    top: -20px;
+    right: -5px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
   h1 {
     position: static;
     transform: none;
@@ -448,7 +454,7 @@ button:disabled {
 
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  .sidenav a {font-size: 16px;}
 }
 
 .favcolor{
