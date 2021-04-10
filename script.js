@@ -88,8 +88,9 @@ var start = function() {
     roomName = urlParams.get("room");
     init(roomName);
   } else {
-    roomName = "lobby";
-    init(roomName);
+    getRoomName();
+    //roomName = "lobby";
+    //init(roomName);
   }
   if (urlParams.has("video") || features.video) {
     features.video = true;
@@ -714,6 +715,23 @@ var start = function() {
     });
   }
   window.getUserName = getUserName;
+  
+  function getRoomName() {
+    Swal.fire({
+      title: "Welcome Stranger!",
+      text: "Create or Join a Room",
+      input: "text",
+      inputPlaceholder: "lobby"
+    }).then(result => {
+      if (result.value) {
+        //console.log('got username',result.value)
+        if (!result.value || result.value.length < 4) result.value = 'lobby';
+        var target = location.protocol + '//' + location.host + location.pathname + '?room=' + result.value;
+        window.location = target;
+      }
+    });
+  }
+  window.getRoomName = getRoomName;
   
   function reJoinRoom() {
     window.room.leave();
