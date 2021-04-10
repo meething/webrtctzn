@@ -714,6 +714,16 @@ var start = function() {
     });
   }
   window.getUserName = getUserName;
+  
+  function reJoinRoom() {
+    Swal.fire(
+      "Disconnected!",
+      "Click to Rejoin",
+      "success"
+    ).then(result => {
+        window.location.reload();
+    });
+  }
 
   /* circle layout functions */
 
