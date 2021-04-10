@@ -716,6 +716,7 @@ var start = function() {
   window.getUserName = getUserName;
   
   function reJoinRoom() {
+    window.room.leave();
     Swal.fire(
       "Disconnected!",
       "Click to Rejoin",
@@ -724,6 +725,7 @@ var start = function() {
         window.location.reload();
     });
   }
+  window.reJoinRoom = reJoinRoom;
 
   /* circle layout functions */
 
