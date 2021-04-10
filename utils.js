@@ -61,10 +61,14 @@ function displayImageOnCanvas(imgx, pos) {
   };
 }
 
-  function openNav() {
-    document.getElementById("mySidenav").style.width = "200px";
-  }
+var navState = false;
+function openNav() {
+  if(navState){ closeNav(); return }
+  document.getElementById("mySidenav").style.width = "200px";
+  navState = true;
+}
 
-  function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-  }
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  navState = false;
+}

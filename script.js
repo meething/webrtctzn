@@ -1,5 +1,8 @@
 import { joinRoom, selfId } from "https://cdn.skypack.dev/trystero@0.7.9";
 // import { apply, generate, merge } from "https://cdn.skypack.dev/json-merge-patch"
+import quickLru from 'https://cdn.skypack.dev/quick-lru';
+const lru = new quickLru({maxSize: 1000});
+
 var doc = {};
 
 var start = function() {
@@ -61,6 +64,7 @@ var start = function() {
   let mouseX = 0;
   let mouseY = 0;
   let room;
+  let rooms;
   let sendMove;
   let sendClick;
   let sendChat;
@@ -84,8 +88,9 @@ var start = function() {
     roomName = urlParams.get("room");
     init(roomName);
   } else {
-    roomName = "lobby";
-    init(roomName);
+    getRoomName();
+    //roomName = "lobby";
+    //init(roomName);
   }
   if (urlParams.has("video") || features.video) {
     features.video = true;
@@ -100,15 +105,6 @@ var start = function() {
 
   if (urlParams.has("username")) {
     userName = urlParams.get("username");
-    // remove from URL for easy sharing
-    var refresh =
-      window.location.protocol +
-      "//" +
-      window.location.host +
-      window.location.pathname +
-      "?room=" +
-      roomName;
-    window.history.pushState({ path: refresh }, "", refresh);
     //console.log("set localstorage");
     localStorage.setItem("username", userName);
   } else {
@@ -121,8 +117,18 @@ var start = function() {
     }
   }
 
+  // reformat URL for easy sharing
+  var refresh =
+      window.location.protocol +
+      "//" +
+      window.location.host +
+      window.location.pathname +
+      "?room=" +
+      roomName;
+  window.history.pushState({ path: refresh }, "", refresh);
+  
+  
   // focus on chat input all the time
-
   var focus = function() {
     document.getElementById("chatbox").focus();
   };
@@ -268,6 +274,7 @@ var start = function() {
     }
   });
 
+  
   async function init(n) {
     const ns = "room" + n;
     const members = 1;
@@ -306,6 +313,24 @@ var start = function() {
     // mappings
     window.ctl = { sendCmd: sendCmd, sendPic: sendPic, peerId: selfId };
   }
+  
+  // EXPERIMENTAL ROOM INDEXING!
+  async function allrooms(n) {
+    const ns = "rooms";
+    rooms = joinRoom({ appId: "ctzn-glitch-index" }, ns);
+    window.rooms = rooms;
+    rooms.onPeerJoin(addRooms);
+    rooms.onPeerLeave(removeRooms);
+  }
+  function addRooms(id, isSelf){
+    console.log('new room created', id);
+    // add div
+  }
+  function removeRooms(id){
+    console.log('room destroyed', id)
+    // remove div
+  }
+  
 
   // binary pic handler
   function handlePic(data, id, meta) {
@@ -690,6 +715,35 @@ var start = function() {
     });
   }
   window.getUserName = getUserName;
+  
+  function getRoomName() {
+    Swal.fire({
+      title: "Welcome Stranger!",
+      text: "Create or Join a Room",
+      input: "text",
+      inputPlaceholder: "lobby"
+    }).then(result => {
+      if (result.value) {
+        //console.log('got username',result.value)
+        if (!result.value || result.value.length < 4) result.value = 'lobby';
+        var target = location.protocol + '//' + location.host + location.pathname + '?room=' + result.value;
+        window.location = target;
+      }
+    });
+  }
+  window.getRoomName = getRoomName;
+  
+  function reJoinRoom() {
+    window.room.leave();
+    Swal.fire(
+      "Disconnected!",
+      "Click to Rejoin",
+      "success"
+    ).then(result => {
+        window.location.reload();
+    });
+  }
+  window.reJoinRoom = reJoinRoom;
 
   /* circle layout functions */
 
@@ -702,7 +756,7 @@ var start = function() {
       el.style.transform =
         "rotate(" +
         rotateAngle +
-        "deg) translate(0, -120px) rotate(-" +
+        "deg) translate(0, -80px) rotate(-" +
         rotateAngle +
         "deg)";
     }

@@ -20,6 +20,7 @@ body {
   background-color: #fff;
   color: #000;
   max-width: 100%;
+  max-height: 100%;
   margin: 0 auto;
   font-family: "Space Mono", monospace;
   padding: 1rem;
@@ -298,7 +299,23 @@ pre {
   html {
     font-size: 12px;
   }
-
+  body {
+    padding: 0;
+    padding-bottom: 0;
+    overflow: hidden;
+  }
+  #list {
+    display: none;
+  }
+  .chatp {
+    max-height: 17em;
+  }
+  .sidenav .closebtn {
+    top: -20px;
+    right: -5px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
   h1 {
     position: static;
     transform: none;
@@ -363,7 +380,7 @@ button:disabled {
 
 #list {
   background-color: transparent;
-  height: 50%;
+  height: 70%;
   width: 50%;
   top: 15%;
   left: 20%;
@@ -375,8 +392,8 @@ button:disabled {
   list-style: none;
   border-radius: 50%;
   border: 4px dotted #d2d2d2;
-  height: 150px;
-  width: 150px;
+  height: 100px;
+  width: 100px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -384,7 +401,7 @@ button:disabled {
 
 .list-text {
   text-align: center;
-  top: 45%;
+  top: 41%;
   position: relative;
 }
 
@@ -418,6 +435,15 @@ button:disabled {
   color: #f1f1f1;
 }
 
+.sidenav p {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 15px;
+  color: #ffffff;
+  display: block;
+  transition: 0.3s;
+}
+
 .sidenav .closebtn {
   position: absolute;
   top: 0;
@@ -428,11 +454,11 @@ button:disabled {
 
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  .sidenav a {font-size: 16px;}
 }
 
 .favcolor{
   height: 30px;
   background: transparent;
-  width: 99%;
+  width: 40%;
 }
