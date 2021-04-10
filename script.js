@@ -515,7 +515,6 @@ var start = function() {
     updateLayout();
 
     updatePeerInfo();
-    updateChat({ msg: 'left the room', username: userName }, selfId);
   }
 
   function updatePeerInfo() {
