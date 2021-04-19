@@ -3,7 +3,7 @@
 
 #### Decentralized p2p dWebRTC for CTZN with multi-network peer discovery.
 
-## [Try It](https://webrtctzn.glitch.me)
+## [Try It](https://rtctzn.com)
 Audio & Video Chat, Whiteboarding, Image and Screensharing with a minimal interface.
 
 
