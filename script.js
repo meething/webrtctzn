@@ -1,5 +1,4 @@
-import { joinRoom, selfId } from "https://cdn.skypack.dev/trystero";
-// import { apply, generate, merge } from "https://cdn.skypack.dev/json-merge-patch"
+import { joinRoom, selfId } from "https://esm.run/trystero";
 import quickLru from 'https://cdn.skypack.dev/quick-lru@6.1.2';
 const lru = new quickLru({maxSize: 1000});
 
