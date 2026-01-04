@@ -1,4 +1,4 @@
-<img width="435" height="75" alt="image" src="https://github.com/user-attachments/assets/ac178e0f-cdb0-4646-94df-8e01d3e92125" />
+<img width="434" height="75" alt="image" src="https://github.com/user-attachments/assets/4354b88f-a10b-4841-a30d-dec9b5a12a3d" />
 
 #### Decentralized p2p dWebRTC for CTZN with multi-network peer discovery.
 
