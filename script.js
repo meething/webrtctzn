@@ -503,10 +503,10 @@ var start = function() {
        console.log('wea re still screensharing!',screenSharing.id)
        if (sendCmd) {
          sendCmd({
-          peerId: selfId + "_screen",
-          cmd: "screenshare",
-          stream: screenSharing.id
-        });
+           peerId: selfId + "_screen",
+           cmd: "screenshare",
+           stream: screenSharing.id
+         });
        }
     }
 
