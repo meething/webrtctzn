@@ -25,7 +25,9 @@ var start = function() {
   var features = { audio: true, video: false };
 
   document.addEventListener("visibilitychange", function(event) {
-    sendCmd({ peerId: peerId, cmd: "hand", focus: document.visibilityState });
+    if (sendCmd) {
+      sendCmd({ peerId: peerId, cmd: "hand", focus: document.visibilityState });
+    }
   });
   
   var userStroke = "#c2c2c2";
@@ -145,7 +147,9 @@ var start = function() {
   window.addEventListener("mouseup", e => {
     //console.log('mouse stop');
     isDrawing = false;
-    sendCmd({ peerId: selfId, cmd: "draw", plots: plots, color: "#b2b2b2" });
+    if (sendCmd) {
+      sendCmd({ peerId: selfId, cmd: "draw", plots: plots, color: "#b2b2b2" });
+    }
     plots = [];
   });
   window.addEventListener("mousedown", e => {
@@ -163,7 +167,9 @@ var start = function() {
 
     if (isDrawing) {
       if (plots.length>50){
-        sendCmd({ peerId: selfId, cmd: "draw", plots: plots, color: "#b2b2b2" });
+        if (sendCmd) {
+          sendCmd({ peerId: selfId, cmd: "draw", plots: plots, color: "#b2b2b2" });
+        }
         plots = [];
       }
       plots.push({ x: mouseX, y: mouseY });
@@ -231,7 +237,9 @@ var start = function() {
         : '<i class="fa fa-video fa-2x" aria-hidden="true" style="color:white;"></i>';
       talkbutton.style.background = "red";
       // notify network
-      sendCmd({ peerId: peerId, cmd: "hand", state: true });
+      if (sendCmd) {
+        sendCmd({ peerId: peerId, cmd: "hand", state: true });
+      }
     } else {
       room.removeStream(streaming);
       var tracks = streaming.getTracks();
@@ -251,8 +259,10 @@ var start = function() {
         : '<i class="fa fa-video fa-2x" aria-hidden="true"></i>';
       talkbutton.style.background = "";
       // notify network
-      sendCmd({ peerId: peerId, cmd: "stop_video" });
-      sendCmd({ peerId: peerId, cmd: "hand", state: false });
+      if (sendCmd) {
+        sendCmd({ peerId: peerId, cmd: "stop_video" });
+        sendCmd({ peerId: peerId, cmd: "hand", state: false });
+      }
     }
     mutebutton.disabled = streaming ? false : true;
   });
@@ -491,11 +501,13 @@ var start = function() {
     // are we sharing?
     if (screenSharing){
        console.log('wea re still screensharing!',screenSharing.id)
-       sendCmd({
-        peerId: selfId + "_screen",
-        cmd: "screenshare",
-        stream: screenSharing.id
-      });
+       if (sendCmd) {
+         sendCmd({
+           peerId: selfId + "_screen",
+           cmd: "screenshare",
+           stream: screenSharing.id
+         });
+       }
     }
 
     return el;
@@ -579,7 +591,9 @@ var start = function() {
 
   window.clearCanvas = function() {
     if (whiteboard) whiteboard.width = whiteboard.width;
-    sendCmd({ peerId: selfId, cmd: "clear" });
+    if (sendCmd) {
+      sendCmd({ peerId: selfId, cmd: "clear" });
+    }
   };
 
   window.shareUrl = function() {
@@ -671,21 +685,25 @@ var start = function() {
         video: true,
         frameRate: 5
       });
-      sendCmd({
-        peerId: selfId + "_screen",
-        cmd: "screenshare",
-        stream: stream.id
-      });
+      if (sendCmd) {
+        sendCmd({
+          peerId: selfId + "_screen",
+          cmd: "screenshare",
+          stream: stream.id
+        });
+      }
       room.addStream(stream);
       shareScreenButton.classList.add("blinking");
       screenSharing = stream;
       shareView.srcObject = screenSharing;
     } else {
-      sendCmd({
-        peerId: peerId,
-        cmd: "stop_screenshare",
-        stream: screenSharing.id
-      });
+      if (sendCmd) {
+        sendCmd({
+          peerId: peerId,
+          cmd: "stop_screenshare",
+          stream: screenSharing.id
+        });
+      }
       room.removeStream(screenSharing);
       var tracks = screenSharing.getTracks();
       tracks.forEach(function(track) {
@@ -709,7 +727,9 @@ var start = function() {
         //console.log('got username',result.value)
         userName = result.value || selfId;
         localStorage.setItem("username", userName);
-        sendCmd({ peerId: selfId, cmd: "username", username: userName });
+        if (sendCmd) {
+          sendCmd({ peerId: selfId, cmd: "username", username: userName });
+        }
       }
     });
   }
