@@ -37,7 +37,7 @@ webRTCTZN is a decentralized peer-to-peer WebRTC application for audio/video cha
 
 ### JavaScript
 
-1. **Variable Declarations**: Use `var` for function scope, `const` for constants, `let` for block scope
+1. **Variable Declarations**: Prefer `const` by default, use `let` when reassignment is needed. The existing code uses `var` in some places, but new code should follow modern JavaScript best practices
 2. **Naming**: Use camelCase for variables and functions (e.g., `userName`, `getUserName`, `sendChat`)
 3. **ES6 Features**: Use arrow functions, destructuring, and template literals where appropriate
 4. **Module Imports**: Use ES6 import syntax from CDNs (e.g., `import { joinRoom } from "https://esm.run/trystero"`)
