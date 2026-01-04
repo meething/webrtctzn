@@ -1,5 +1,4 @@
-<img src="https://user-images.githubusercontent.com/1423657/111089259-5882ff00-852b-11eb-90fc-781e4b61858b.png" width=400>
-
+<img width="435" height="75" alt="image" src="https://github.com/user-attachments/assets/ac178e0f-cdb0-4646-94df-8e01d3e92125" />
 
 #### Decentralized p2p dWebRTC for CTZN with multi-network peer discovery.
 
@@ -19,7 +18,7 @@ Audio & Video Chat, Whiteboarding, Image and Screensharing with a minimal interf
 
 #### Embedding
 ```html
-<iframe src="https://webrtctzn.glitch.me"
+<iframe src="https://meething.github.io/webrtctzn/?room=mycustomtag"
   width="100%" height="100%" frameBorder="0" allowusermedia 
   allow="microphone; camera; encrypted-media;">
 </iframe>
