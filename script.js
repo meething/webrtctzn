@@ -25,7 +25,9 @@ var start = function() {
   var features = { audio: true, video: false };
 
   document.addEventListener("visibilitychange", function(event) {
-    sendCmd({ peerId: peerId, cmd: "hand", focus: document.visibilityState });
+    if (sendCmd) {
+      sendCmd({ peerId: peerId, cmd: "hand", focus: document.visibilityState });
+    }
   });
   
   var userStroke = "#c2c2c2";
@@ -145,7 +147,9 @@ var start = function() {
   window.addEventListener("mouseup", e => {
     //console.log('mouse stop');
     isDrawing = false;
-    sendCmd({ peerId: selfId, cmd: "draw", plots: plots, color: "#b2b2b2" });
+    if (sendCmd) {
+      sendCmd({ peerId: selfId, cmd: "draw", plots: plots, color: "#b2b2b2" });
+    }
     plots = [];
   });
   window.addEventListener("mousedown", e => {
@@ -163,7 +167,9 @@ var start = function() {
 
     if (isDrawing) {
       if (plots.length>50){
-        sendCmd({ peerId: selfId, cmd: "draw", plots: plots, color: "#b2b2b2" });
+        if (sendCmd) {
+          sendCmd({ peerId: selfId, cmd: "draw", plots: plots, color: "#b2b2b2" });
+        }
         plots = [];
       }
       plots.push({ x: mouseX, y: mouseY });
